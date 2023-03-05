@@ -1,5 +1,9 @@
 @import '~ngx-toastr/toastr.css';
-
+@import url(./assets/styles/breakpoints.scss);
+@import url(./assets/styles/common.scss);
+@import url(./assets/styles/custom.scss);
+@import url(./assets/styles/index.scss);
+@import url(./assets/styles/variables.scss);
 body {
   font-family: "Roboto", sans-serif;
 }
