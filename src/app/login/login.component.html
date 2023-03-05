@@ -1,0 +1,35 @@
+<div class="custom-content">
+  <div class="main-wrapper">
+    <div class="banner_leftContent ps-5 ms-5">
+      <h1>Welcome, <br />
+        BoringOMeter.</h1>
+      <button><img src="/assets/img/play.png" /> WATCH VIDEO</button>
+      <div class="form">
+        <form class="form-build" [formGroup]="loginform" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <input type="text" formControlName="email" placeholder="Email"
+              [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
+            <img src="/assets/img/ticks.png" />
+            <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+              <div *ngIf="f['email'].errors['required']">Email is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="password" formControlName="password" placeholder="Password"
+              [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
+            <img src="/assets/img/close.png" />
+            <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+              <div *ngIf="f['password'].errors['required']">Password is required</div>
+            </div>
+          </div>
+          <button type="submit" class="mt-4"><span><img src="/assets/img/arrow.png"></span><img
+              src="/assets/img/lock.png" /> User Login</button>
+          <button type="button" [routerLink]="['/register']"><img src="/assets/img/sign.png" /> Sign Up</button>
+        </form>
+      </div>
+    </div>
+    <div class="banner_rightImg">
+      <img src="/assets/img/building.png" />
+    </div>
+  </div>
+</div>
