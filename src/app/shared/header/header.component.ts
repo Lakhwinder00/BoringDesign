@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
     if(localStorage.getItem('token')==null)
     {
       this.isLogin=false;
-      this.router.navigate(['/login']);
+      this.router.navigate(['/welcome-boring-O-Meter']);
     }else{
       this.isLogin=true;
     }

@@ -1,66 +1,5 @@
-@media screen and (min-width: 1450px) {
-    .custom-content {
-        .main-wrapper {
-            align-items: center;
-            .banner_leftContent {
-                margin-top: 0;
-            }
-        }
-    }
-}  
-@media screen and (max-width: 1366px) {
-    .custom-content {
-        .main-wrapper {
-            overflow: hidden;
-        }
-    }
-}
-@media screen and (max-width: 1024px) {
-    .form {
-        max-width: 80%;
-    }
-    .custom-content {
-        .main-wrapper {
-            .banner_rightImg{
-                img {
-                    object-fit: contain;
-                    padding-top: 0;
-                }
-            }
-        }
-    }
-}
 @media screen and (max-width: 992px) {
-    .custom-content {
-        .main-wrapper {
-            .banner_leftContent {
-                width: 49%;
-                h1 {
-                    font-size: 48px;
-                }
-            }
-        }
-    }
-    #navbarSupportedContent {
-        position: absolute;
-        background: $white-color;
-        width: 90%;
-        top: 40px;
-        z-index: 99;
-        padding: 10px;
-        border-radius: 7px;
-    }
-    header{
-        button{
-            &.navbar-toggler {
-                padding: 0;
-                border: none;
-            }
-        }
-    }
-    .form {
-        max-width: 90%;
-    }
+    
 }  
 @media screen and (max-width: 767px) {
     .main-container {
@@ -72,39 +11,6 @@
         height: auto;
         .main-wrapper {
             flex-direction: column;
-            .banner_leftContent {
-                width: 100%;
-                margin: 0 !important;
-                padding-top: 60px;
-            }
-            .banner_rightImg {
-                width: 100%;
-                padding: 0;
-                img {
-                    padding: 60px;
-                }
-            }
         }
-    }
-}
-@media screen and (max-width: 480px) {
-    .custom-content {
-        .main-wrapper {
-            .banner_rightImg{
-                img {
-                    padding: 40px 15px 30px;
-                }
-            }
-            .banner_leftContent {
-                padding: 20px !important;
-                h1 {
-                    font-size: 32px;
-                    line-height: 42px;
-                }
-            }
-        }
-    }
-    .form {
-        max-width: 100%;
     }
 }

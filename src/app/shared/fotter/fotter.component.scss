@@ -1,11 +1,37 @@
+@import '../../../assets/styles/variables.scss';
+
 footer {
-    height: 45px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    p {
-        margin: 0;
-        font-size: 12px;
+    width: 100%;
+    display: inline-block;
+    padding: 0 20px;
+    position: relative;
+    .cus-footer{
+        width: auto;
+        float: left;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        p {
+            margin: 0;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 0.1px;
+            color: $black-color;
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            li{
+                a{
+                    font-weight: 500;
+                    font-size: 14px;
+                    letter-spacing: 0.1px;
+                    color: $grey-color3;
+                    text-decoration: none;
+                }
+            }
+        }
     }
 }

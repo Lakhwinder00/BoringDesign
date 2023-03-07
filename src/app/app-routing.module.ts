@@ -9,14 +9,15 @@ import { WelcomPageComponent } from './welcom-page/welcom-page.component';
 
 const routes: Routes = [
   {
-    path:'',component:LayoutComponent,
+    path:'', component:LayoutComponent,
   children: [ 
-    { path: '', component: LoginComponent, pathMatch: 'full' },
+    { path: '', component: WelcomPageComponent, pathMatch: 'full' },
+    { path: 'welcome-boring-O-Meter', component: WelcomPageComponent},
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'activate-account/:id', component: RegisterComponent },
     { path: 'process', component: ProcessFileComponent,canActivate:[AuthGuard] },
-    { path: 'welcome-boring-O-Meter', component: WelcomPageComponent,canActivate:[AuthGuard] }
+    
 ]
 }
 ];
