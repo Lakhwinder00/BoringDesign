@@ -33,7 +33,6 @@ $BoringClient-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($BoringClient-theme);
 
-
 body{
   font-family: "Roboto", sans-serif;
   background: $primary-color;
@@ -43,6 +42,15 @@ body{
   margin: 0;
   box-sizing: border-box;
 }
+
+/* Common Css Start */
+.w-full{
+  width: 100%;
+}
+.d-flex{
+  display: flex;
+}
+/* Common Css Ends */
 
 .main-container {
   display: inline-block;
@@ -88,16 +96,18 @@ header{
   }
 }
 .custom-content {
-  height: calc(100vh - 70px);
+  min-height: calc(100vh - 150px);
   overflow: auto;
   .main-wrapper {
     display: flex;
     height: 100%;
     .banner_leftContent {
       width: 100%;
-      padding: 50px 30px;
+      padding: 40px 60px;
+      position: relative;
+      z-index: 2;
       h1 {
-        font-size: 70px;
+        font-size: 80px;
         color: $black-color;
         margin: 0;
         font-weight: bold;
@@ -152,82 +162,97 @@ header{
           margin: 0;
         }
       }
-      .form-build{
-        button{
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: $white-color;
-          padding: 6px 10px;
-          width: 100%;
-          max-width: 100%;
-          border-radius: 10px;
-          margin-top: 10px;
-          font-size: 14px;
-          height: 46px;
-          font-weight: 600;
-          color: $grey-color;
-          position: relative;
-          img {
-            background: transparent;
-            border-radius: 0;
-            max-width: 22px;
-            margin-right: 8px;
-          }
-          span {
-            background: $grey-color1;
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 46px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            margin: 0 auto;
-            border-radius: 10px 0px 0px 10px;
-            img {
-              margin-right: 10px;
-              margin-left: 10px;
-              max-width: 15px;
-            }
-          }            
-        }
-      }
     }
     .building-img{
       img{
-        position: absolute;
+        position: fixed;
         right: 0;
         bottom: 0;
         width: 100%;
         height: 100%;
         max-width: 75%;
+        z-index: -1;
       }
     }
   }
 }
-.form {
-  margin-top: 30px;
+.cus-form {
   width: 100%;
-  max-width: 60%;
-  .form-group {
-    position: relative;
-    margin: 20px 0;
-    img {
-      position: absolute;
-      right: 10px;
-      top: 9px;
-      width: 100%;
-      max-width: 22px;
-    }
-    input {
-      width: 100%;
-      padding: 6px 8px;
-      border-radius: 14px;
+  max-width: 350px;
+  padding: 30px 0;
+  h3 {
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.1px;
+    color: $black-color;
+  }
+  .form-build{
+    width: 100%;
+    display: inline-block;
+    .invalid-feedback{
+      color: $red-color; 
       font-size: 14px;
-      height: 40px;
-      border: 1px dotted $grey-color2;
+    }
+    .rep-field{
+      margin-bottom: 12px;
+      .mat-form-field-wrapper{
+        padding: .6em 1.25em;
+        border-radius: 4px 4px 0px 0px;
+        border-bottom: 1px solid $grey-color3;
+        background-color: $white-color;
+        .mat-form-field-underline{
+          background-color: transparent;
+        }
+      }
+    }
+    .mat-form-field-appearance-legacy{
+      .mat-form-field-infix {
+        padding: 0.5em 0;
+        border-top: 0.6em solid transparent;
+      }
+      .mat-form-field-underline {
+        bottom: -1px;
+        left: 0;
+      }
+    }
+    .button-group{
+      width: calc(100% + 10px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-left: -8px;
+      margin-right: -8px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: $white-color;
+        padding: 6px 10px;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 100px;
+        font-size: 16px;
+        height: 50px;
+        font-weight: 500;
+        color: $black-color;
+        flex: 1;
+        letter-spacing: 0.1px;
+        margin: 8px;
+      }
+    }
+  }
+  .form-bootm{
+    width: 100%;
+    display: inline-block;
+    margin-top: 5px;
+    a{
+      font-size: 14px;
+      color: $grey-color3;
+      font-weight: 500;
+      letter-spacing: 0.1px;
+      text-decoration: none;
     }
   }
 }

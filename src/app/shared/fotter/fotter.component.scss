@@ -4,13 +4,10 @@ footer {
     width: 100%;
     display: inline-block;
     padding: 0 30px;
-    position: relative;
+    height: 80px;
     .cus-footer{
         width: auto;
         float: left;
-        position: absolute;
-        bottom: 0;
-        left: 0;
         p {
             margin: 0;
             font-weight: 500;
