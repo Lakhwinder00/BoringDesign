@@ -32,3 +32,23 @@ footer {
         }
     }
 }
+
+@media screen and (max-width: 575px) {
+    footer{
+        height: 70px;
+        padding: 0 20px;
+        .cus-footer{
+            p {
+                font-size: 12px;
+            }
+            ul{
+                li{
+                    line-height: normal;
+                    a{
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+}

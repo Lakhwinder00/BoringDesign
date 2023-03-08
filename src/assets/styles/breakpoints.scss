@@ -1,16 +1,119 @@
-@media screen and (max-width: 992px) {
-    
-}  
-@media screen and (max-width: 767px) {
-    .main-container {
-        height: auto;
-        min-height: auto;
-        max-height: none;
+@media screen and (max-width: 1199px) {
+    .custom-content{
+        .main-wrapper{
+            .banner_leftContent{
+                h1 {
+                    font-size: 75px;
+                }
+            }
+            .building-img{
+                img {
+                    max-width: 70%;
+                }
+            }
+        }
     }
-    .custom-content {
-        height: auto;
-        .main-wrapper {
-            flex-direction: column;
+}
+@media screen and (max-width: 992px) {
+    .custom-content{
+        .main-wrapper{
+            .banner_leftContent{
+                h1 {
+                    font-size: 65px;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 767px) {
+    .custom-content{
+        .main-wrapper{
+            .banner_leftContent{
+                padding: 40px 30px;
+                h1 {
+                    font-size: 50px;
+                }
+            }
+            .building-img{
+                img {
+                    min-height: 400px;
+                }
+            }
+        }
+    }
+    header {
+        .cus-navbar {
+            ul{
+                li{
+                    button {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+    .cus-form {
+        max-width: 300px;
+        h3 {
+            font-size: 18px;
+        }
+        .form-build{
+            .button-group{
+                button {
+                    font-size: 14px;
+                    height: 45px;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 575px) {
+    .custom-content{
+        min-height: calc(100vh - 140px);
+        .main-wrapper{
+            .banner_leftContent{
+                padding: 40px 20px;
+                h1 {
+                    font-size: 40px;
+                }
+                .video-button-row{
+                    button{
+                        .play-btn {
+                            width: 45px;
+                            height: 45px;
+                        }
+                        span {
+                            font-size: 16px;
+                        }
+                    }
+                }
+                .start-button-row{
+                    button {
+                        min-width: 100px;
+                        height: 40px;
+                        font-size: 16px;
+                    }
+                }
+            }
+            .building-img{
+                img {
+                    min-height: 350px;
+                    max-width: 80%;
+                }
+            }
+        }
+    }
+    header {
+        justify-content: center;
+        .cus-navbar {
+            padding-right: 0;
+        }
+    }
+    .cus-form{
+        .form-bootm{
+            a {
+                font-size: 12px;
+            }
         }
     }
 }
