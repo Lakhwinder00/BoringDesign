@@ -23,8 +23,6 @@ import { AuthGuard } from './core/guard/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { ProcessFileComponent } from './process-file/process-file.component';
 import { DropzoneModule, DropzoneConfigInterface, DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatButtonModule} from '@angular/material/button';
 import { MaterialModule } from './core/modules/material.module';
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   url: 'https://google.com', // this is due to package issue and should be ignored

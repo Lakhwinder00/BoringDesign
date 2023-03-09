@@ -11,9 +11,9 @@
                 <li>
                     <button mat-button>Contact Us</button>
                 </li>
-                <!-- <li class="nav-item">
-                    <a *ngIf="isLogin" (click)="logout()">Logout</a>
-                </li> -->
+                <li>
+                    <button mat-button *ngIf="isLogin" (click)="logout()">Logout</button>
+                </li>
             </ul>
         </div>
     </mat-grid-list>
