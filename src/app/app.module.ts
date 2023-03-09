@@ -24,6 +24,7 @@ import { AuthService } from './services/auth.service';
 import { ProcessFileComponent } from './process-file/process-file.component';
 import { DropzoneModule, DropzoneConfigInterface, DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { MaterialModule } from './core/modules/material.module';
+import { MyAccountComponent } from './my-account/my-account.component';
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   url: 'https://google.com', // this is due to package issue and should be ignored
   createImageThumbnails: true
@@ -39,7 +40,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     RegisterComponent,
     LoaderComponent,
     WelcomPageComponent,
-    ProcessFileComponent
+    ProcessFileComponent,
+    MyAccountComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
