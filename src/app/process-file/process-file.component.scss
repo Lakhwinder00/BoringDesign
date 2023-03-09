@@ -1,52 +1,359 @@
-.dropzone-wrapper {
-  height: 400px;
-  width: 500px;
-  border: 1px solid black;
-  background-color: #cacaca;
-  text-align: center;
-  padding: 10px;
+.header-inner {
+  width: 100%;
+  display: inline-block;
+  padding: 20px 30px;
+  h1 {
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 0.1px;
+    color: #000000;
+    margin: 0;
+  }
 }
-
-.dropzone {
-  height: 100%;
+.main-container {
   width: 100%;
 }
-.center_div {
+.inner-container{
+  width: 100%;
+  max-width: 85%;
+  padding: 0 20px;
   margin: 0 auto;
-  width: 80%; /* value of your choice which suits your alignment */
+  .cus-pro-container {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    .project-left {
+      flex: 1;
+      padding: 40px;
+      .new-project-head{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        .cus-form{
+          max-width: 100%;
+          padding: 0;
+          margin-bottom: 10px;
+        }
+        .new-project-btn{
+          width: 100%;
+          display: flex;
+          align-items: center;
+          margin-bottom: 15px;
+          h2{
+            margin: 0;
+            min-width: 140px;
+            background-color: #ffffff;
+            border-radius: 20px;
+            font-weight: 400;
+            font-size: 16px;
+            color: #1C1B1F;
+            text-align: center;
+            padding: 5px 16px;
+          }
+        }
+      }
+    }
+    .project-right {
+      flex: 1;
+      padding: 40px;
+      .project-head{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        .project-btn{
+          width: 100%;
+          display: flex;
+          align-items: center;
+          margin-bottom: 15px;
+          h2{
+            margin: 0;
+            min-width: 140px;
+            background-color: #ffffff;
+            border-radius: 20px;
+            font-weight: 400;
+            font-size: 16px;
+            color: #1C1B1F;
+            text-align: left;
+            padding: 5px 16px;
+          }
+        }
+      }
+      .project-listing {
+        width: 100%;
+        display: inline-block;
+        background: #FFFFFF;
+        border-radius: 20px;
+        padding: 0;
+        min-height: 550px;
+        max-height: 550px;
+        overflow: auto;
+        ul {
+          padding: 0;
+          margin: 0;
+          list-style: none;
+          li {
+            border-bottom: 1px solid #D6D6D6;
+            height: 65px;
+            justify-content: space-between;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            .pro-left-icon{
+              width: calc(100% - 70px);
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              img{
+                width: 20px;
+              }
+              h6{
+                font-weight: 400;
+                font-size: 16px;
+                letter-spacing: 0.5px;
+                margin: 0;
+                padding-left: 15px;
+                width: calc(100% - 20px);
+              }
+            }
+            .list-right-icons{
+              width: 70px;
+              display: flex;
+              align-items: center;
+              justify-content: flex-end;
+              button{
+                border: none;
+                background-color: transparent;
+                cursor: pointer;
+                &:first-child{
+                  margin-right: 20px;
+                }
+              }
+            }
+          }
+        }
+      }
+      .pro-btn-group{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 40px;
+        button{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #ffffff;
+          padding: 6px 10px;
+          width: 100%;
+          max-width: 120px;
+          border-radius: 100px;
+          font-size: 16px;
+          height: 50px;
+          font-weight: 500;
+          color: #000000;
+          flex: 1;
+          letter-spacing: 0.1px;
+          margin: 0;
+          border: none;
+          cursor: pointer;
+          &:first-child{
+            margin-right: 15px;
+          }
+        }
+      }
+    }
+  }
 }
-.dz-hidden-input {
-  display: none;
+.cus-dropzone {
+  width: 100%;
+  display: inline-block;
+  background: #FFFFFF;
+  border-radius: 25px;
+  padding: 20px;
+  .dropzone-wrapper {
+    height: 250px;
+    width: 100%;
+    border: none;
+    background-color: #D9D9D9;
+    text-align: center;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 25px;
+    .dropzone {
+      height: 100%;
+      width: 100%;
+      .upload-head {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 100%;
+        .upload-plus-icon {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 20px;
+          img {
+            width: 35px;
+          }
+        }
+        h5{
+          margin: 0;
+          font-weight: 400;
+          font-size: 15px;
+          line-height: 32px;
+        }
+      }
+    }
+  }
+}
+.cus-progress-bar {
+  width: 100%;
+  background-color: #ffffff;
+  margin: 22px 0;
+  border-radius: 25px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  min-height: 75px;
+  p {
+    font-weight: 400;
+    font-size: 14px;
+    color: #5A5A5A;
+    margin: 0;
+    padding-right: 15px;
+  }
+  .mat-progress-bar-buffer {
+    background-color: #EDEDED;
+  }
+  .mat-progress-bar-fill::after {
+    background-color: #E4DCAF;
+  }
+}
+.uploaded-btn{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    padding: 6px 10px;
+    width: 100%;
+    max-width: 120px;
+    border-radius: 100px;
+    font-size: 16px;
+    height: 50px;
+    font-weight: 500;
+    color: #000000;
+    flex: 1;
+    letter-spacing: 0.1px;
+    margin: 0;
+    border: none;
+    cursor: pointer;
+  }
 }
 .default-btn {
-  background-color: white;
-  width: 100px;
+  background-color: #ffffff;
   border-radius: 20px;
-}
-#boxupload {
-  border-style: dotted;
-  border-radius: 13px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
 }
 canvas {
   display: block;
   width: 100%;
   height: 100vh;
 }
-
 .dropZone {
   position: absolute !important;
   top: 40% !important;
   left: 23% !important;
 }
-.main-div {
-  background-color: #e7e7e7;
-  border-radius: 5px;
-  height: 77vh;
-  border-style: dotted;
+
+@media screen and (max-width: 992px) {
+  .inner-container {
+    max-width: 100%;
+    .cus-pro-container {
+      .project-left, .project-right{
+        padding: 20px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 767px) {
+  .header-inner {
+    padding: 20px;
+    h1{
+      font-size: 18px;
+    }
+  }
+  .inner-container {
+    .cus-pro-container {
+      flex-direction: column;
+      .project-left, .project-right{
+        width: 100%;
+        padding: 20px 0;
+      }
+      .project-left{
+        border-bottom: 2px solid #fff;
+        margin-bottom: 20px;
+        padding-bottom: 40px;
+      }
+      .project-right{
+        .pro-btn-group {
+          justify-content: center;
+        }
+        .pro-btn-group{
+          button{
+            margin: 0 8px;
+            &::first-child {
+              margin-right: 8px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 575px) {
+  .cus-dropzone{
+    .dropzone-wrapper{
+      .dropzone{
+        .upload-head{
+          h5 {
+            font-size: 13px;
+            line-height: 30px;
+          }
+        }
+      }
+    }
+  }
+  .cus-progress-bar{
+    p {
+      font-size: 12px;
+    }
+  }
+  .inner-container{
+    .cus-pro-container{
+      .project-right{
+        .project-listing{
+          ul{
+            li{
+              .pro-left-icon{
+                h6 {
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

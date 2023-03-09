@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { ProcessFileComponent } from './process-file/process-file.component';
 import { RegisterComponent } from './register/register.component';
+import { ForgotPasswordComponent } from './forgot-passowrd/forgot-password.component';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { WelcomPageComponent } from './welcom-page/welcom-page.component';
 
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: 'welcome-boring-O-Meter', component: WelcomPageComponent},
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
+    { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'activate-account/:id', component: RegisterComponent },
     
 ]
