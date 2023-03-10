@@ -19,7 +19,6 @@
                     matInput
                     type="text"
                     matInput
-                    formControlName="text"
                     placeholder="Input"
                   >
                 </mat-form-field>
@@ -30,13 +29,15 @@
 
         <div class="cus-dropzone">
           <div class="dropzone-wrapper" id="boxupload">
-            <div class="dropzone" [dropzone]="config" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"
-              (addedFile)="fileAdded($event)">
+            <div class="dropzone">
               <div class="upload-head">
-                <div class="upload-plus-icon">
-                  <img src="../../assets/img/upload-plus.png" />
+                <div class="upload-plus-icon" class="upload-head" [dropzone]="config" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"
+                (addedFile)="fileAdded($event)">
+                  <img src="../../assets/img/upload-plus.png" [dropzone]="config" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"
+                  (addedFile)="fileAdded($event)" />
+                  <h5 [dropzone]="config" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"
+                  (addedFile)="fileAdded($event)">Drag and drop or browse your file <br />.OBJ</h5>
                 </div>
-                <h5>Drag and drop or browse your file <br />.OBJ .STL .FBX</h5>
               </div>
               <div style="font-size:large; font-weight: bold; color: #ffffff" *ngIf="filename!=undefined && filename!=''">{{filename}}</div>
             </div>
@@ -177,6 +178,7 @@
     </canvas>
     <div style="margin-left: 117px;">
       <button class="default-btn" type="submit">Ok</button>&nbsp;
+      <button type="button" mat-button [routerLink]="['/register']">Register</button>
       <button class="default-btn" (click)="CancelFile()" type="submit">Cancel</button>
     </div>
   </div>
