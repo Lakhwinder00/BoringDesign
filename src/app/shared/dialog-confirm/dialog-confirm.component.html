@@ -1,13 +1,13 @@
-<h1 mat-dialog-title>Delete Confirmation</h1>
+<h1 mat-dialog-title>{{header}}</h1>
 <div mat-dialog-content>
-  <p><strong>{{fName}}</strong> will be deleted. Do you confirm?</p>
+  <p>{{message}}</p>
 </div>
-<div mat-dialog-actions>
-  <button mat-button
+<div  mat-dialog-actions>
+  <button  type="button" mat-button
           (click)="cancel()">
     Cancel
   </button>
-  <button mat-button cdkFocusInitial
+  <button type="button" mat-button cdkFocusInitial
           (click)="confirm()">
     Confirm
   </button>

@@ -3,13 +3,7 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
-  AfterViewInit,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  OnDestroy,
-  EventEmitter,
-  Output,
+  AfterViewInit
 } from '@angular/core';
 import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
@@ -32,6 +26,7 @@ export class ProcessFileComponent implements OnInit, AfterViewInit {
   public isUpload: boolean = true;
   public filename: any;
   public offset: any;
+  public isLoadFile:boolean=false;
   @ViewChild('mainCanvas', { static: false })
   rendererContainer!: ElementRef;
   private light: THREE.AmbientLight | any;
@@ -57,7 +52,7 @@ export class ProcessFileComponent implements OnInit, AfterViewInit {
   // User this part for Upload 3d model file
   ShowFile() {
     if (this.filename == '' || this.filename == undefined) {
-      this.toasterService.error('Please upload the .obj file');
+      this.toasterService.error('Please upload .obj file only');
     } else {
       this.isUpload = false;
       this.isDisplay = true;
@@ -90,16 +85,27 @@ export class ProcessFileComponent implements OnInit, AfterViewInit {
     console.log('onUploadSuccess:', args);
   }
 
+  // call this function uplad the files
   fileAdded(file: File): void {
     this.parseObj = null;
     this.filename = file.name;
-    var reader = new FileReader();
-    reader.onload = (e: any) => {
-      // The file's text will be printed here
-      this.parseObj = e.target.result;
-      this.loadCube(this.scene, this.renderer);
-    };
-    reader.readAsText(file);
+    let ext=this.filename.split(".");
+    if(ext!=undefined && ext!=null && ext[1]=="obj")
+    {
+      this.isLoadFile=true;
+      var reader = new FileReader();
+      reader.onload = (e: any) => {
+        // The file's text will be printed here
+        this.parseObj = e.target.result;
+        setTimeout(()=>{ 
+          this.loadCube(this.scene, this.renderer);
+          this.isLoadFile=false;
+        },1000)
+      };
+      reader.readAsText(file);
+    }else{
+      this.toasterService.error("Please upload .obj file only")
+    }
     //  console.log('onFileAdded:', file);
     //  this.uploadedFileName = file.name;
   }
@@ -114,6 +120,7 @@ export class ProcessFileComponent implements OnInit, AfterViewInit {
     });
     this.renderer.setSize(800, 600, false);
   }
+
   // Use this function making the 3d model
   loadCube(scene: any, renderer: any) {
     let container: any;
@@ -211,6 +218,7 @@ export class ProcessFileComponent implements OnInit, AfterViewInit {
     }
     animate();
   }
+  // call this function set the camera postion
   initGL() {
     this.scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(

@@ -1,0 +1,54 @@
+@import '../../../assets/styles/variables.scss';
+
+footer {
+    width: 100%;
+    display: inline-block;
+    padding: 0 30px;
+    height: 80px;
+    .cus-footer{
+        width: auto;
+        float: left;
+        p {
+            margin: 0;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 0.1px;
+            color: $black-color;
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            li{
+                a{
+                    font-weight: 500;
+                    font-size: 14px;
+                    letter-spacing: 0.1px;
+                    color: $grey-color3;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 575px) {
+    footer{
+        height: 70px;
+        padding: 0 20px;
+        .cus-footer{
+            p {
+                font-size: 12px;
+            }
+            ul{
+                li{
+                    line-height: normal;
+                    a{
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+}

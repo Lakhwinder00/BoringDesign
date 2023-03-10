@@ -7,13 +7,16 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dialog-confirm.component.scss']
 })
 export class DialogConfirmComponent implements OnInit {
-
+  public header:any
   public fName: any;
   public fIndex: any;
-
-  constructor(private modalRef: MatDialogRef<DialogConfirmComponent>) { }
+  public message:any;
+  constructor(private modalRef: MatDialogRef<DialogConfirmComponent>) { debugger}
 
   ngOnInit() {
+    debugger
+  let modal=this.modalRef;
+   
   }
 
   confirm() {

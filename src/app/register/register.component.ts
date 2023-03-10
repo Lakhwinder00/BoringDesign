@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterModel } from '../core/model/register.model';
@@ -17,7 +18,9 @@ export class RegisterComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private _registerService: RegisterService,
      private toasterService: ToastrService,
      private readonly route: ActivatedRoute,
-     private readonly router: Router) {
+     private readonly router: Router,
+     public dialog:MatDialog
+     ) {
       this.ActivateAccount();
    }
 
