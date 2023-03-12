@@ -353,12 +353,24 @@ canvas {
 }
 
 
+@media screen and (max-width: 1199px) {
+  .inner-container {
+    .cus-container {
+      .cus-pro-container {
+        max-width: 90%;
+        padding: 0;
+        .project-left, .project-right{
+          padding: 30px;
+        }
+      }
+    }
+  }
+}
 @media screen and (max-width: 992px) {
   .inner-container {
     .cus-container {
       .cus-pro-container {
         max-width: 100%;
-        padding: 0 20px;
         .project-left, .project-right{
           padding: 20px;
         }
@@ -383,7 +395,7 @@ canvas {
           padding: 20px 0;
         }
         .project-left{
-          border-bottom: 2px solid #fff;
+          border-bottom: 2px solid #ffffff;
           margin-bottom: 20px;
           padding-bottom: 40px;
         }
@@ -398,6 +410,22 @@ canvas {
                 margin-right: 8px;
               }
             }
+          }
+        }
+      }
+    }
+  }
+  .canvas-bottom-btns{
+    ul {
+      padding: 10px;
+      li{
+        width: 55px;
+        .canvas-btn {
+          width: 45px;
+          height: 45px;
+          img{
+            max-width: 18px;
+            max-height: 16px;
           }
         }
       }
@@ -441,4 +469,24 @@ canvas {
       }
     }
   }
+}
+@media screen and (max-width: 420px) {
+  .canvas-bottom-btns{
+    ul {
+      padding: 10px 8px;
+      li{
+        width: 50px;
+        margin: 2px;
+        .canvas-btn {
+          width: 40px;
+          height: 40px;
+          border-radius: 12px;
+          img{
+            max-width: 16px;
+            max-height: 14px;
+          }
+        }
+      }
+    }
+  } 
 }
