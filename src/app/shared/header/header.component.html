@@ -12,8 +12,13 @@
                     <button mat-button>Contact Us</button>
                 </li>
                 <li>
-                    <button mat-button *ngIf="isLogin" (click)="logout()">Logout</button>
+                    <button mat-button [matMenuTriggerFor]="menu">Logout</button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>Item 1</button>
+                        <button mat-menu-item >Logout</button>
+                    </mat-menu>
                 </li>
+                <!-- *ngIf="isLogin" (click)="logout()" -->
             </ul>
         </div>
     </mat-grid-list>
