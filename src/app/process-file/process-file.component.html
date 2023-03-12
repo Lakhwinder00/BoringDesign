@@ -1,5 +1,25 @@
 <div class="header-inner">
   <h1>BoringOMeter</h1>
+  <div class="profile-dropdown">
+    <ul>
+      <li>
+        <button mat-button [matMenuTriggerFor]="menu">
+          <span>name@email.com</span>
+          <img src="../../assets/img/icon-profile.png" />
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <img src="../../assets/img/icon-profile.png" />
+            <span>Account</span>
+          </button>
+          <button mat-menu-item>
+            <img src="../../assets/img/icon-logout.png" />
+            <span>Log Out</span>
+          </button>
+        </mat-menu>
+      </li>
+    </ul>
+  </div>
 </div>
 
 <div class="inner-container">
