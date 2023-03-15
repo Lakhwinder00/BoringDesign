@@ -22,8 +22,7 @@ const routes: Routes = [
     
 ]
   },
-  { path: 'process', component: ProcessFileComponent, canActivate: [AuthGuard] },
-  { path: 'my-account', component: MyAccountComponent, canActivate: [AuthGuard] }
+  { path: 'process', component: ProcessFileComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

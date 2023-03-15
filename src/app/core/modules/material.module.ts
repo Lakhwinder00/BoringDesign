@@ -23,7 +23,7 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatRadioModule } from "@angular/material/radio";
-import { MatRippleModule } from "@angular/material/core";
+import { MatCommonModule, MatRippleModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
@@ -74,9 +74,12 @@ import { MatTreeModule } from "@angular/material/tree";
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule
+    MatTreeModule,
+    MatButtonModule,
+    MatCommonModule,
   ],
   declarations: [],
+  
   exports: [
     MatAutocompleteModule,
     MatBadgeModule,
@@ -112,7 +115,8 @@ import { MatTreeModule } from "@angular/material/tree";
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule
-  ]
+    MatTreeModule,
+    CommonModule
+  ],
 })
 export class MaterialModule {}

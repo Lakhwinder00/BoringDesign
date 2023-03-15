@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterModel } from '../core/model/register.model';
 import { RegisterService } from '../services/register.service';
+import { UtilService } from '../services/util.service';
+import { DialogConfirmComponent } from '../shared/dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-register',
@@ -19,8 +21,13 @@ export class RegisterComponent implements OnInit {
      private toasterService: ToastrService,
      private readonly route: ActivatedRoute,
      private readonly router: Router,
-     public dialog:MatDialog
+     public dialog:MatDialog,
+     private utilServices: UtilService,
      ) {
+      let isLogged = this.utilServices.IsUserLoggedIn();
+    if (isLogged) {
+      this.router.navigate(['/process'])
+    }
       this.ActivateAccount();
    }
 
@@ -82,12 +89,20 @@ export class RegisterComponent implements OnInit {
     this._registerService.registerUser(this.registerModel).subscribe(result => {
       if(result.message!=undefined && result.message!='')
       {
-        this.toasterService.success(result.message);
+        this.registartionDialog(result.message);
       }else if(result[0]?.message)
       {
         this.toasterService.warning(result[0]?.message);
       }
     })
+  }
+  registartionDialog(registerMessage:any)
+  {
+    this.dialog.open(DialogConfirmComponent,{data:{
+      title:"Registration Complete",
+      message:registerMessage,
+      buttonText:"Ok"
+    }})
   }
 }
 

@@ -15,4 +15,14 @@ export class UtilService {
   getClickEvent(): Observable<any>{ 
     return this.subject.asObservable();
   }
+  IsUserLoggedIn()
+  {
+    if(localStorage.getItem('token')!=null)
+    {
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 }

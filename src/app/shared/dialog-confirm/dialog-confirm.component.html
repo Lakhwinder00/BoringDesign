@@ -1,14 +1,10 @@
-<h1 mat-dialog-title>{{header}}</h1>
+<h1 mat-dialog-title>{{title}}</h1>
 <div mat-dialog-content>
-  <p>{{message}}</p>
+	<p>
+		{{message}}
+	</p>
 </div>
-<div  mat-dialog-actions>
-  <button  type="button" mat-button
-          (click)="cancel()">
-    Cancel
-  </button>
-  <button type="button" mat-button cdkFocusInitial
-          (click)="confirm()">
-    Confirm
-  </button>
+<div mat-dialog-actions>
+  <div class="button-group" style="text-align: right;">
+  <button type="button" mat-button (click)="onConfirmClick()">Ok</button></div>
 </div>

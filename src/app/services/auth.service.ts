@@ -9,7 +9,10 @@ export class AuthService {
   setToken(token:any){
     localStorage.setItem('token',token)
   }
-
+  setEmail(email:any)
+  {
+    localStorage.setItem('userEmail',email);
+  }
   loggedIn(){
     return !!localStorage.getItem('token');
   }

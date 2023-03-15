@@ -1,0 +1,65 @@
+  .mat-dialog-container{
+          background-color: #D6D6D6!important;
+        }
+        .main-container-dialog{
+              width: 800px;
+              overflow: auto;                                                                                      
+        }
+ 
+ .project-listing {
+         width: 500px;
+          display: inline-block;
+          background: #FFFFFF;
+          border-radius: 20px;
+          padding: 0;
+          max-height: 550px;
+          overflow: auto;
+          ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            li {
+              border-bottom: 1px solid #D6D6D6;
+              height: 65px;
+              justify-content: space-between;
+              padding: 10px 20px;
+              display: flex;
+              align-items: center;
+              .pro-left-icon{
+                width: calc(100% - 70px);
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                img{
+                  width: 20px;
+                }
+                h6{
+                  font-weight: 400;
+                  font-size: 16px;
+                  letter-spacing: 0.5px;
+                  margin: 0;
+                  padding-left: 15px;
+                  width: calc(100% - 20px);
+                }
+              }
+              .list-right-icons{
+                width: 70px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                button{
+                  border: none;
+                  background-color: transparent;
+                  cursor: pointer;
+                  &:first-child{
+                    margin-right: 20px;
+                  }
+                }
+              }
+            }
+          }
+        }
+       .project-btn-dialog{
+    background: white;
+    border-radius: 12px;
+       }

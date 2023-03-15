@@ -4,15 +4,15 @@
     <ul>
       <li>
         <button mat-button [matMenuTriggerFor]="menu">
-          <span>name@email.com</span>
+          <span>{{loginEmail}}</span>
           <img src="../../assets/img/icon-profile.png" />
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
+          <button mat-menu-item  (click)="myAccount()" >
             <img src="../../assets/img/icon-profile.png" />
             <span>Account</span>
           </button>
-          <button mat-menu-item>
+          <button mat-menu-item (click)="logout()">
             <img src="../../assets/img/icon-logout.png" />
             <span>Log Out</span>
           </button>
@@ -190,40 +190,50 @@
 
   </div>
 
-  <div class="canvas-container" style="" [ngStyle]="isDisplay?{'display': 'block'} : {'display': 'none'}">
-    <!-- <input type="text" placeholder="Name" class="form-control" style="width: 20%;margin-left: 117px;"> -->
-
+  <div class="canvas-container"  [ngStyle]="isDisplay?{'display': 'block'} : {'display': 'none'}">
     <div class="main-canvas-sec">
-      <canvas id="main-canvas" #mainCanvas></canvas>
+      <div id="main-canvas"></div>
     </div>
     <div class="canvas-bottom-btns">
       <ul>
         <li>
-          <button class="canvas-btn">
-            <img src="../../assets/img/icon-plane.png" />
+          <button class="canvas-btn" (click)="createLine()" matTooltip="Create Line" >
+            <img src="../../assets/img/icon-plane.png"/>
           </button>
           <p>Plane</p>
         </li>
         <li>
-          <button class="canvas-btn" (click)="CancelFile()" type="submit">
+          <button class="canvas-btn"  (click)="clear()" matTooltip="Clear Line">
             <img src="../../assets/img/icon-clear.png" />
           </button>
           <p>Clear</p>
         </li>
         <li>
-          <button class="canvas-btn">
+          <button class="canvas-btn" (click)="analyseModel()" matTooltip="Analyse Model">
             <img src="../../assets/img/icon-analyse.png" />
           </button>
           <p>Analyse</p>
         </li>
         <li>
-          <button class="canvas-btn">
+          <button class="canvas-btn" (click)="clearAnalyse()" matTooltip="Clear Analyse">
             <img src="../../assets/img/icon-reset.png" />
           </button>
-          <p>Reset</p>
+          <p>Clear Analyse</p>
         </li>
         <li>
-          <button class="canvas-btn">
+          <button class="canvas-btn" (click)="resetView()" matTooltip="Reset View">
+            <img src="../../assets/img/resetview.png" />
+          </button>
+          <p>Reset View</p>
+        </li>
+        <li>
+          <button class="canvas-btn" (click)="flipLight()" matTooltip="Flip Light">
+            <img src="../../assets/img/flip.png" />
+          </button>
+          <p>Flip Light</p>
+        </li>
+        <li>
+          <button class="canvas-btn" (click)="openProjects()" matTooltip="Projects Details">
             <img src="../../assets/img/icon-projects.png" />
           </button>
           <p>Projects</p>

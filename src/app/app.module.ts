@@ -26,6 +26,8 @@ import { ProcessFileComponent } from './process-file/process-file.component';
 import { DropzoneModule, DropzoneConfigInterface, DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { MaterialModule } from './core/modules/material.module';
 import { MyAccountComponent } from './my-account/my-account.component';
+import { DialogConfirmComponent } from './shared/dialog-confirm/dialog-confirm.component';
+import { ProjectsComponent } from './shared/projects/projects.component';
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   url: 'https://google.com', // this is due to package issue and should be ignored
   createImageThumbnails: true
@@ -43,8 +45,11 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     LoaderComponent,
     WelcomPageComponent,
     ProcessFileComponent,
-    MyAccountComponent
+    MyAccountComponent,
+    DialogConfirmComponent,
+    ProjectsComponent
   ],
+  entryComponents: [DialogConfirmComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA
@@ -57,7 +62,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     ToastrModule.forRoot({ timeOut: 5000 }),
     BrowserAnimationsModule,
     DropzoneModule,
-    MaterialModule
+    MaterialModule,
   ],
   providers: [RegisterService,AuthService,JwtInterceptor,AlertService,ToastrService,LoaderService,
     {

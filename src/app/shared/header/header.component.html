@@ -1,5 +1,5 @@
 <header>
-    <mat-grid-list>
+    <mat-grid-list cols="3">
         <div class="cus-navbar">
             <ul>
                 <li>
@@ -11,14 +11,6 @@
                 <li>
                     <button mat-button>Contact Us</button>
                 </li>
-                <li>
-                    <button mat-button [matMenuTriggerFor]="menu">Log Out</button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item>Account</button>
-                        <button mat-menu-item >Log Out</button>
-                    </mat-menu>
-                </li>
-                <!-- *ngIf="isLogin" (click)="logout()" -->
             </ul>
         </div>
     </mat-grid-list>

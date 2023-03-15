@@ -9,28 +9,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class HeaderComponent implements OnInit {
  isLogin:boolean=false;
   constructor(private router:Router,private utilService:UtilService) {
-    this.utilService.getClickEvent().subscribe(() => {
-    this.isLoginSession();
-  }) 
-  this.isLoginSession();
 }
-
   ngOnInit(): void {
-  }
-  logout()
-  {
-    localStorage.removeItem('token')
-    this.utilService.sendClickEvent();
-    this.router.navigate(['/login']);
-  }
-  isLoginSession()
-  {
-    if(localStorage.getItem('token')==null)
-    {
-      this.isLogin=false;
-      this.router.navigate(['/welcome-boring-O-Meter']);
-    }else{
-      this.isLogin=true;
-    }
   }
 }
