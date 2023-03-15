@@ -97,9 +97,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/assets/styles/index.scss"
+              "./src/assets/styles/index.scss"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           }
         }
       }

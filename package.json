@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
+  "type": "module",
   "private": true,
   "dependencies": {
     "@angular/animations": "^14.2.0",
@@ -22,12 +23,15 @@
     "@angular/router": "^14.2.0",
     "bootstrap": "^5.2.3",
     "font-awesome": "^4.7.0",
+    "jquery": "^3.6.4",
     "ngx-dropzone-wrapper": "^14.0.0",
     "ngx-toastr": "^14.3.0",
     "postcss": "^8.3.11",
     "rxjs": "~7.5.0",
     "tailwindcss": "^2.2.19",
     "three": "^0.150.1",
+    "three-effectcomposer": "^0.0.1",
+    "three-mesh-bvh": "^0.5.23",
     "tslib": "^2.3.0",
     "uglify-js": "github:mishoo/UglifyJS2#harmony",
     "zone.js": "~0.11.4"
