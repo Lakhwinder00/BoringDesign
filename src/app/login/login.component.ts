@@ -6,12 +6,13 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { LoginModel } from '../core/model/login.model';
 import { AuthService } from '../services/auth.service';
 import { RegisterService } from '../services/register.service';
 import { UtilService } from '../services/util.service';
+import { DialogConfirmComponent } from '../shared/dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-login',
@@ -24,10 +25,11 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private _registerService: RegisterService,
-    private toasterService: ToastrService,
     private router: Router,
     private utilServices: UtilService,
-    private authService: AuthService
+    private authService: AuthService,
+    public dialog:MatDialog,
+    
   ) {
     let isLogged = this.utilServices.IsUserLoggedIn();
     if (isLogged) {
@@ -60,19 +62,37 @@ export class LoginComponent implements OnInit {
     this._registerService.loginUser(this.loginModel).subscribe((result) => {
       if (result.message != undefined && result.message != '') {
         if (result.message == 'Email and password is invalid') {
-          this.toasterService.error(result.message);
+          this.inValidUser(result.message);
         } else {
           if (result.token) {
+            this.authService.setUserLoggedIn(true);
             this.authService.setToken(result.token);
             this.authService.setEmail(result.email);
             this.utilServices.sendClickEvent();
           }
-          this.toasterService.success(result.message);
           this.router.navigate(['/process']);
         }
       } else if (result[0]?.message) {
-        this.toasterService.warning(result[0]?.message);
+        this.warning(result[0]?.message);
       }
     });
+  }
+  inValidUser(message:any)
+  {
+    this.dialog.open(DialogConfirmComponent,{data:{
+      title:"Invalid User",
+      message:message,
+      buttonText:"Ok",
+      width: '400px'
+    },panelClass:'dialog'})
+  }
+  warning(message:any)
+  {
+    this.dialog.open(DialogConfirmComponent,{data:{
+      title:"Warning",
+      message:message,
+      buttonText:"Ok",
+      width: '400px'
+    },panelClass:'dialog'})
   }
 }

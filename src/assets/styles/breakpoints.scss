@@ -6,11 +6,6 @@
                     font-size: 75px;
                 }
             }
-            .building-img{
-                img {
-                    max-width: 70%;
-                }
-            }
         }
     }
 }
@@ -57,19 +52,11 @@
         h3 {
             font-size: 18px;
         }
-        .form-build{
-            .button-group{
-                button {
-                    font-size: 14px;
-                    height: 45px;
-                }
-            }
-        }
     }
 }
 @media screen and (max-width: 575px) {
     .custom-content{
-        min-height: calc(100vh - 140px);
+        min-height: calc(100vh - 130px);
         .main-wrapper{
             .banner_leftContent{
                 padding: 40px 20px;

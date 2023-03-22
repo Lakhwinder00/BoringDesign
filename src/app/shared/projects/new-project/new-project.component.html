@@ -1,0 +1,59 @@
+<div class="inner-container" style="">
+      <div class="project-left">
+        <div class="new-project-head">
+          <div class="cus-form">
+            <form class="form-build">
+              <div class="new-project-btn">
+                <h2>New Project</h2>
+              </div>
+              <div class="rep-field w-full">
+                <mat-form-field class="w-full">
+                  <mat-label>Project Name</mat-label>
+                  <input tabindex="-1" 
+                    matInput
+                    type="text"
+                    placeholder="Input"
+                  >
+                </mat-form-field>
+              </div>
+            </form>
+          </div>
+        </div>
+    <div class="cus-pro-container">
+      <div class="project-left">
+        <div class="cus-dropzone" id="boxupload" appFileUpload (fileDropped)="onFileDropped($event)">
+          <div class="dropzone-wrapper">
+            <input type="file"  (change)="fileBrowseHandler($event)" id="fileDropRef" />
+            <div class="dropzone">
+              <div class="upload-head">
+                <div class="upload-plus-icon" class="upload-head">
+                  <img src="../../assets/img/upload-plus.png"/>
+                  <h5 *ngIf="filename==''; else files">Drag and drop or browse your file <br />.OBJ</h5>
+                  <ng-template #files>
+                    <br>
+                    <h4>{{filename}}</h4>
+                    <mat-icon matTooltip="Delete" style="color: #646464; margin-top: -5px;z-index: 999;" (click)="deleteModel()">delete_forever</mat-icon>
+                  </ng-template>
+                   
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cus-progress-bar" *ngIf="isLoadFile">
+          <p>Uploading...</p>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+
+        <div class="uploaded-btn" align="end">
+          <button  (click)="CreateFile()" mat-button>Create</button>
+          &nbsp;
+          <button  (click)="cancelCreate()"  mat-button>Cancel</button>
+        </div>
+      </div>
+    </div>
+
+ 
+  
+</div>

@@ -1,29 +1,28 @@
-<div class="header-inner">
-  <h1>BoringOMeter</h1>
-  <div class="profile-dropdown">
-    <ul>
-      <li>
-        <button mat-button [matMenuTriggerFor]="menu">
-          <span>{{loginEmail}}</span>
-          <img src="../../assets/img/icon-profile.png" />
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item  (click)="myAccount()" >
-            <img src="../../assets/img/icon-profile.png" />
-            <span>Account</span>
-          </button>
-          <button mat-menu-item (click)="logout()">
-            <img src="../../assets/img/icon-logout.png" />
-            <span>Log Out</span>
-          </button>
-        </mat-menu>
-      </li>
-    </ul>
-  </div>
-</div>
-
 <div class="inner-container">
   <div class="cus-container" [ngStyle]="isUpload?{'display': 'block'} : {'display': 'none'}">
+    <div class="header-inner">
+      <h1  [routerLink]="['/welcome-boring-O-Meter']">BoringOMeter</h1>
+      <div class="profile-dropdown">
+        <ul>
+          <li>
+            <button mat-button [matMenuTriggerFor]="menu">
+              <span>{{loginEmail}}</span>
+              <img src="../../assets/img/icon-profile.png" />
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item  (click)="myAccount()" >
+                <img src="../../assets/img/icon-profile.png" />
+                <span>Account</span>
+              </button>
+              <button mat-menu-item (click)="logout()">
+                <img src="../../assets/img/icon-logout.png" />
+                <span>Log Out</span>
+              </button>
+            </mat-menu>
+          </li>
+        </ul>
+      </div>
+    </div>
     <div class="cus-pro-container">
       <div class="project-left">
         <div class="new-project-head">
@@ -38,7 +37,6 @@
                   <input
                     matInput
                     type="text"
-                    matInput
                     placeholder="Input"
                   >
                 </mat-form-field>
@@ -47,19 +45,22 @@
           </div>
         </div>
 
-        <div class="cus-dropzone">
-          <div class="dropzone-wrapper" id="boxupload">
+        <div class="cus-dropzone" id="boxupload" appFileUpload (fileDropped)="onFileDropped($event)">
+          <div class="dropzone-wrapper">
+            <input type="file"  (change)="fileBrowseHandler($event)" id="fileDropRef" />
             <div class="dropzone">
               <div class="upload-head">
-                <div class="upload-plus-icon" class="upload-head" [dropzone]="config" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"
-                (addedFile)="fileAdded($event)">
-                  <img src="../../assets/img/upload-plus.png" [dropzone]="config" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"
-                  (addedFile)="fileAdded($event)" />
-                  <h5 [dropzone]="config" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"
-                  (addedFile)="fileAdded($event)">Drag and drop or browse your file <br />.OBJ</h5>
+                <div class="upload-plus-icon" class="upload-head">
+                  <img src="../../assets/img/upload-plus.png"/>
+                  <h5 *ngIf="filename==''; else files">Drag and drop or browse your file <br />.OBJ</h5>
+                  <ng-template #files>
+                    <br>
+                    <h4>{{filename}}</h4>
+                    <mat-icon matTooltip="Delete" style="color: #646464; margin-top: -5px;z-index: 999;" (click)="deleteModel()">delete_forever</mat-icon>
+                  </ng-template>
+                   
                 </div>
               </div>
-              <div style="font-size:large; font-weight: bold; color: #ffffff" *ngIf="filename!=undefined && filename!=''">{{filename}}</div>
             </div>
           </div>
         </div>
@@ -68,10 +69,9 @@
           <p>Uploading...</p>
           <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         </div>
-
-        <div class="uploaded-btn">
+        <!-- <div class="uploaded-btn">
           <button  (click)="ShowFile()" type="submit" mat-button type="submit">Ok</button>
-        </div>
+        </div> -->
       </div>
       <div class="project-right">
         <div class="project-head">
@@ -83,106 +83,106 @@
           <ul>
             <li>
               <div class="pro-left-icon">
-                <img src="../../assets/img/pro-list.png" />
+                <mat-icon>business</mat-icon>
                 <h6>List item</h6>
               </div>
               <div class="list-right-icons">
                 <button>
-                  <img src="../../assets/img/search-icon.png" />
+                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
                 </button>
                 <button>
-                  <img src="../../assets/img/delete-icon.png" />
+                  <mat-icon class="delete-icon">delete</mat-icon>
                 </button>
               </div>
             </li>
             <li>
               <div class="pro-left-icon">
-                <img src="../../assets/img/pro-list.png" />
+                <mat-icon>business</mat-icon>
                 <h6>List item</h6>
               </div>
               <div class="list-right-icons">
                 <button>
-                  <img src="../../assets/img/search-icon.png" />
+                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
                 </button>
                 <button>
-                  <img src="../../assets/img/delete-icon.png" />
+                  <mat-icon class="delete-icon">delete</mat-icon>
                 </button>
               </div>
             </li>
             <li>
               <div class="pro-left-icon">
-                <img src="../../assets/img/pro-list.png" />
+                <mat-icon>business</mat-icon>
                 <h6>List item</h6>
               </div>
               <div class="list-right-icons">
                 <button>
-                  <img src="../../assets/img/search-icon.png" />
+                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
                 </button>
                 <button>
-                  <img src="../../assets/img/delete-icon.png" />
+                  <mat-icon class="delete-icon">delete</mat-icon>
                 </button>
               </div>
             </li>
             <li>
               <div class="pro-left-icon">
-                <img src="../../assets/img/pro-list.png" />
+                <mat-icon>business</mat-icon>
                 <h6>List item</h6>
               </div>
               <div class="list-right-icons">
                 <button>
-                  <img src="../../assets/img/search-icon.png" />
+                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
                 </button>
                 <button>
-                  <img src="../../assets/img/delete-icon.png" />
+                  <mat-icon class="delete-icon">delete</mat-icon>
                 </button>
               </div>
             </li>
             <li>
               <div class="pro-left-icon">
-                <img src="../../assets/img/pro-list.png" />
+                <mat-icon>business</mat-icon>
                 <h6>List item</h6>
               </div>
               <div class="list-right-icons">
                 <button>
-                  <img src="../../assets/img/search-icon.png" />
+                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
                 </button>
                 <button>
-                  <img src="../../assets/img/delete-icon.png" />
+                  <mat-icon class="delete-icon">delete</mat-icon>
                 </button>
               </div>
             </li>
             <li>
               <div class="pro-left-icon">
-                <img src="../../assets/img/pro-list.png" />
+                <mat-icon>business</mat-icon>
                 <h6>List item</h6>
               </div>
               <div class="list-right-icons">
                 <button>
-                  <img src="../../assets/img/search-icon.png" />
+                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
                 </button>
                 <button>
-                  <img src="../../assets/img/delete-icon.png" />
+                  <mat-icon class="delete-icon">delete</mat-icon>
                 </button>
               </div>
             </li>
             <li>
               <div class="pro-left-icon">
-                <img src="../../assets/img/pro-list.png" />
+                <mat-icon>business</mat-icon>
                 <h6>List item</h6>
               </div>
               <div class="list-right-icons">
                 <button>
-                  <img src="../../assets/img/search-icon.png" />
+                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
                 </button>
                 <button>
-                  <img src="../../assets/img/delete-icon.png" />
+                  <mat-icon class="delete-icon">delete</mat-icon>
                 </button>
               </div>
             </li>
           </ul>
         </div>
         <div class="pro-btn-group">
-          <button type="button" mat-button type="submit">Ok</button>
+          <button type="button" mat-button type="submit" (click)="ShowFile()">Ok</button>
           <button type="button" mat-button type="submit" [routerLink]="['/welcome-boring-O-Meter']" >Back</button>
         </div>
       </div>
@@ -191,51 +191,88 @@
   </div>
 
   <div class="canvas-container"  [ngStyle]="isDisplay?{'display': 'block'} : {'display': 'none'}">
+    
+    <div class="header-inner white-header">
+      <h1>BoringOMeter</h1>
+      <div class="profile-dropdown">
+        <ul>
+          <li>
+            <button mat-button [matMenuTriggerFor]="menu">
+              <span>{{loginEmail}}</span>
+              <img src="../../assets/img/icon-profile.png" />
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item  (click)="myAccount()" >
+                <img src="../../assets/img/icon-profile.png" />
+                <span>Account</span>
+              </button>
+              <button mat-menu-item (click)="logout()">
+                <img src="../../assets/img/icon-logout.png" />
+                <span>Log Out</span>
+              </button>
+            </mat-menu>
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <div class="main-canvas-sec">
-      <div id="main-canvas"></div>
+      <div id="main-canvas"  #el></div>
     </div>
     <div class="canvas-bottom-btns">
       <ul>
         <li>
-          <button class="canvas-btn" (click)="createLine()" matTooltip="Create Line" >
-            <img src="../../assets/img/icon-plane.png"/>
-          </button>
+          <div class="canvas-btn"  (click)="createLine()">
+            <mat-icon>timeline</mat-icon >
+          </div>
           <p>Plane</p>
         </li>
-        <li>
-          <button class="canvas-btn"  (click)="clear()" matTooltip="Clear Line">
-            <img src="../../assets/img/icon-clear.png" />
-          </button>
+        <li  *ngIf="isClear" >
+          <div class="canvas-btn" (click)="clear()">
+            <mat-icon>close</mat-icon>
+          </div>
           <p>Clear</p>
         </li>
         <li>
-          <button class="canvas-btn" (click)="analyseModel()" matTooltip="Analyse Model">
-            <img src="../../assets/img/icon-analyse.png" />
-          </button>
+          <div class="canvas-btn"  (click)="analyseModel()">
+            <mat-icon>bar_chart</mat-icon>
+          </div>
           <p>Analyse</p>
         </li>
-        <li>
-          <button class="canvas-btn" (click)="clearAnalyse()" matTooltip="Clear Analyse">
-            <img src="../../assets/img/icon-reset.png" />
-          </button>
+        <li  *ngIf="isAnalyse">
+          <div class="canvas-btn"  (click)="clearAnalyse()">
+            <mat-icon>restart_alt</mat-icon>
+          </div>
           <p>Clear Analyse</p>
         </li>
         <li>
-          <button class="canvas-btn" (click)="resetView()" matTooltip="Reset View">
-            <img src="../../assets/img/resetview.png" />
-          </button>
+          <div class="canvas-btn"  (click)="resetView()">
+            <mat-icon>view_in_ar</mat-icon>
+          </div>
           <p>Reset View</p>
         </li>
         <li>
-          <button class="canvas-btn" (click)="flipLight()" matTooltip="Flip Light">
-            <img src="../../assets/img/flip.png" />
-          </button>
+          <div class="canvas-btn"  (click)="flipLight()">
+            <mat-icon>light_mode</mat-icon>
+          </div>
           <p>Flip Light</p>
         </li>
         <li>
-          <button class="canvas-btn" (click)="openProjects()" matTooltip="Projects Details">
-            <img src="../../assets/img/icon-projects.png" />
-          </button>
+          <div class="canvas-btn"  (click)="snap()">
+            <mat-icon>check_box_outline_blank</mat-icon>
+          </div>
+          <p>Snap</p>
+        </li>
+        <li>
+          <div class="canvas-btn"  (click)="rotateModel()">
+            <mat-icon>settings_backup_restore</mat-icon>
+          </div>
+          <p>Roate Model</p>
+        </li>
+        <li>
+          <div class="canvas-btn"  (click)="openProjects()">
+            <mat-icon>business</mat-icon>
+          </div>
           <p>Projects</p>
         </li>
       </ul>

@@ -72,10 +72,10 @@ export class RegisterComponent implements OnInit {
       this._registerService.ActivateUserAccount(activateCode).subscribe(result => {
         if(result.message!=undefined && result.message!='')
         {
-          this.toasterService.success(result.message);
+          this.activateAccount(result.message);
         }else if(result[0]?.message)
         {
-          this.toasterService.warning(result[0]?.message);
+          this.warning(result[0]?.message)
         }
      })
      }});
@@ -92,7 +92,7 @@ export class RegisterComponent implements OnInit {
         this.registartionDialog(result.message);
       }else if(result[0]?.message)
       {
-        this.toasterService.warning(result[0]?.message);
+        this.warning(result[0]?.message)
       }
     })
   }
@@ -103,6 +103,22 @@ export class RegisterComponent implements OnInit {
       message:registerMessage,
       buttonText:"Ok"
     }})
+  }
+  warning(message:any)
+  {
+    this.dialog.open(DialogConfirmComponent,{data:{
+      title:"Warning",
+      message:message,
+      buttonText:"Ok"
+    },panelClass:'dialog'})
+  }
+  activateAccount(message:any)
+  {
+    this.dialog.open(DialogConfirmComponent,{data:{
+      title:"Activate Account",
+      message:message,
+      buttonText:"Ok"
+    },panelClass:'dialog'})
   }
 }
 

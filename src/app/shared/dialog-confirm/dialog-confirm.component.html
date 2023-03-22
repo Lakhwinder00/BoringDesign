@@ -1,10 +1,9 @@
-<h1 mat-dialog-title>{{title}}</h1>
-<div mat-dialog-content>
-	<p>
-		{{message}}
-	</p>
-</div>
-<div mat-dialog-actions>
-  <div class="button-group" style="text-align: right;">
-  <button type="button" mat-button (click)="onConfirmClick()">Ok</button></div>
+<div class="cus-modal">
+  <div mat-dialog-content>
+    <h1>{{title}}</h1>
+    <p>{{message}}</p>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button  cdkFocusInitial class="btn-dialog" (click)="onConfirmClick()">Ok</button>
+  </div>
 </div>

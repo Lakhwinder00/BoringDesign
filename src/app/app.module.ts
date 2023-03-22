@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './shared/header/header.component';
-import { FooterComponent } from './shared/footer/footer.component';
+import { HeaderComponent } from './shared/layout/header/header.component';
+import { FooterComponent } from './shared/layout/footer/footer.component';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -23,15 +23,13 @@ import { UtilService } from './services/util.service';
 import { AuthGuard } from './core/guard/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { ProcessFileComponent } from './process-file/process-file.component';
-import { DropzoneModule, DropzoneConfigInterface, DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { MaterialModule } from './core/modules/material.module';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { DialogConfirmComponent } from './shared/dialog-confirm/dialog-confirm.component';
 import { ProjectsComponent } from './shared/projects/projects.component';
-const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
-  url: 'https://google.com', // this is due to package issue and should be ignored
-  createImageThumbnails: true
-};
+import { NewProjectComponent } from './shared/projects/new-project/new-project.component';
+import { FileUploadDirective } from './directives/file-upload.directive';
+import { ProcessAnalysisComponent } from './shared/process-analysis/process-analysis.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +45,10 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     ProcessFileComponent,
     MyAccountComponent,
     DialogConfirmComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    NewProjectComponent,
+    FileUploadDirective,
+    ProcessAnalysisComponent
   ],
   entryComponents: [DialogConfirmComponent],
   schemas: [
@@ -61,7 +62,6 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     HttpClientModule,
     ToastrModule.forRoot({ timeOut: 5000 }),
     BrowserAnimationsModule,
-    DropzoneModule,
     MaterialModule,
   ],
   providers: [RegisterService,AuthService,JwtInterceptor,AlertService,ToastrService,LoaderService,
@@ -70,12 +70,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
       useClass: CustomHttpInterceptor,
       multi: true,
     },
-    UtilService,
-    AuthGuard,
-    {
-      provide: DROPZONE_CONFIG,
-      useValue: DEFAULT_DROPZONE_CONFIG
-    }
+    UtilService
   ],
   bootstrap: [AppComponent],
 })

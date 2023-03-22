@@ -1,7 +1,7 @@
 .project-listing {
   width: 500px;
   display: inline-block;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 20px;
   padding: 0;
   max-height: 550px;
@@ -11,21 +11,21 @@
     margin: 0;
     list-style: none;
     li {
-      border-bottom: 1px solid #D6D6D6;
+      border-bottom: 1px solid #d6d6d6;
       height: 65px;
       justify-content: space-between;
       padding: 10px 20px;
       display: flex;
       align-items: center;
-      .pro-left-icon{
+      .pro-left-icon {
         width: calc(100% - 70px);
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        img{
+        img {
           width: 20px;
         }
-        h6{
+        h6 {
           font-weight: 400;
           font-size: 16px;
           letter-spacing: 0.5px;
@@ -34,22 +34,29 @@
           width: calc(100% - 20px);
         }
       }
-      .list-right-icons{
+      .list-right-icons {
         width: 70px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        button{
+        button {
           border: none;
           background-color: transparent;
           cursor: pointer;
-          &:first-child{
+          &:first-child {
             margin-right: 20px;
           }
         }
       }
     }
   }
+}
+.project-btn-dialog {
+  background: #ffffff;
+  border-radius: 12px;
+}
+::ng-deep .mat-button {
+  background-color: #ffffff !important;
 }
 
 .search-icon {
@@ -63,7 +70,4 @@
   background: #ffffff !important;
 }
 
-::ng-deep .project-btn-dialog{
-  background: #ffffff!important;
-  border-radius: 12px;
-}
+

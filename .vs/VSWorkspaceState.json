@@ -3,7 +3,8 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\core"
+    "\\src\\assets",
+    "\\src\\assets\\js"
   ],
   "PreviewInSolutionExplorer": false
 }

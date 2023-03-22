@@ -8,7 +8,7 @@ export class UtilService {
 
   constructor() { }
   private subject = new Subject<void>();
-  public isUserLoggedOut: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  
   sendClickEvent() {
     this.subject.next();
   }

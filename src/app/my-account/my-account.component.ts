@@ -16,5 +16,20 @@ export class MyAccountComponent implements OnInit {
   {
     this.modalRef.close(true);
   }
+  // call this function update the email if exist in database and recent account disabled.
+  updateEmail()
+  {
 
+  }
+  
+  // call this function reset the password
+  updatePassword()
+  {
+
+  }
+  // call this function delete the inactivate account 
+  deleteAccount()
+  {
+
+  }
 }

@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  constructor() { }
+  private userLoggedIn = new Subject<boolean>();
+  constructor() { 
+    this.userLoggedIn.next(false);
+  }
   setToken(token:any){
     localStorage.setItem('token',token)
   }
@@ -20,10 +23,15 @@ export class AuthService {
   getToken(){
     return localStorage.getItem('token');
   }
+  setUserLoggedIn(userLoggedIn: boolean) {
+    this.userLoggedIn.next(userLoggedIn);
+  }
+  getUserLoggedIn(): Observable<boolean> {
+    return this.userLoggedIn.asObservable();
+  }
   logout()
   {
     localStorage.clear();
     localStorage.removeItem("token");
   }
-
 }
