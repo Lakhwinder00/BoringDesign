@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
@@ -6,11 +7,25 @@ import { Observable, Subject } from 'rxjs';
 })
 export class AuthService {
   private userLoggedIn = new Subject<boolean>();
-  constructor() { 
+  constructor(private router:Router) { 
     this.userLoggedIn.next(false);
   }
   setToken(token:any){
     localStorage.setItem('token',token)
+  }
+  isTokenExpire()
+  {
+    let token= localStorage.getItem('token')
+    if(token !=null)
+    {
+      const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+      if(expiry * 1000 < Date.now())
+      {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    }
+    
   }
   setEmail(email:any)
   {

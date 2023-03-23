@@ -4,7 +4,7 @@
     <p [innerHTML]="message"></p>
   </div>
   <div mat-dialog-actions align="end">
-    <button mat-button  cdkFocusInitial *ngIf="isShow" class="btn-dialog" (click)="onConfirmClick()">{{ButtonYesText}}</button>
-    <button mat-button  cdkFocusInitial class="btn-dialog" (click)="onConfirmClick()">{{ButtonText}}</button>
+    <button mat-button tabindex="-1"   *ngIf="isShow" class="btn-dialog" (click)="onConfirmClick()">{{ButtonYesText}}</button>
+    <button mat-button tabindex="-1"   class="btn-dialog" (click)="onConfirmClick()">{{ButtonText}}</button>
   </div>
 </div>

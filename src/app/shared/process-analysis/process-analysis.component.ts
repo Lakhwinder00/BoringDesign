@@ -23,7 +23,7 @@ export class ProcessAnalysisComponent implements OnInit {
   {
     this.dialog.open(DialogConfirmComponent,{data: {
       title: 'Delete Project Analysis',
-      message: "Are you sure you want delete this project? <br> This action cannot be undone.",
+      message: "Are you sure you want delete this project Analysis? <br> This action cannot be undone.",
       buttonText: 'No',
       buttonYesText:'Yes',
       isShow:true
@@ -33,7 +33,6 @@ export class ProcessAnalysisComponent implements OnInit {
   }
   analysesScore()
   {
-    debugger
     this.dialog.open(AnalysisResultComponent,{panelClass:'project-analysis-cls'})
   }
 

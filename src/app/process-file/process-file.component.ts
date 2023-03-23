@@ -19,8 +19,6 @@ import { DialogConfirmComponent } from '../shared/dialog-confirm/dialog-confirm.
 import { AuthService } from '../services/auth.service';
 import { ProcessAnalysisComponent } from '../shared/process-analysis/process-analysis.component';
 
-//var SceneViewer = require("SceneViewer");
-declare function RemoveCanvas(): any;
 const { SceneViewer } = require('../../assets/js/scene.js');
 @Component({
   selector: 'app-process-file',
@@ -57,6 +55,7 @@ export class ProcessFileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.isTokenExpire();
     this.loginEmail = localStorage.getItem('userEmail');
   }
   // User this part for Upload 3d model file
