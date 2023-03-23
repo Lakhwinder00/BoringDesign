@@ -9,8 +9,8 @@ export class UtilService {
   constructor() { }
   private subject = new Subject<void>();
   
-  sendClickEvent() {
-    this.subject.next();
+  sendClickEvent(param:any) {
+    this.subject.next(param);
   }
   getClickEvent(): Observable<any>{ 
     return this.subject.asObservable();

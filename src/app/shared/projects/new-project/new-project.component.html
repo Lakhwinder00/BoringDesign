@@ -28,7 +28,7 @@
               <div class="upload-head">
                 <div class="upload-plus-icon" class="upload-head">
                   <img src="../../assets/img/upload-plus.png"/>
-                  <h5 *ngIf="filename==''; else files">Drag and drop or browse your file <br />.OBJ</h5>
+                  <h5 *ngIf="filename==''; else files">Drag and drop or <u>browse</u> your file <br />.OBJ</h5>
                   <ng-template #files>
                     <br>
                     <h4>{{filename}}</h4>
@@ -46,7 +46,7 @@
           <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         </div>
 
-        <div class="uploaded-btn" align="end">
+        <div class="uploaded-btn modal-btn-group" align="end">
           <button  (click)="CreateFile()" mat-button>Create</button>
           &nbsp;
           <button  (click)="cancelCreate()"  mat-button>Cancel</button>

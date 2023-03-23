@@ -1,3 +1,15 @@
+@media screen and (min-width: 1441px) {
+    .custom-content{
+        .main-wrapper{
+            .building-img{
+                img {
+                    min-height: 100%;
+                    max-height: 100%;
+                }
+            }
+        }
+    }
+}
 @media screen and (max-width: 1199px) {
     .custom-content{
         .main-wrapper{
@@ -36,17 +48,6 @@
             }
         }
     }
-    header {
-        .cus-navbar {
-            ul{
-                li{
-                    button {
-                        font-size: 14px;
-                    }
-                }
-            }
-        }
-    }
     .cus-form {
         max-width: 300px;
         h3 {
@@ -56,7 +57,7 @@
 }
 @media screen and (max-width: 575px) {
     .custom-content{
-        min-height: calc(100vh - 130px);
+        min-height: calc(100vh - 150px);
         .main-wrapper{
             .banner_leftContent{
                 padding: 40px 20px;
@@ -86,17 +87,6 @@
                 img {
                     min-height: 350px;
                     max-width: 80%;
-                }
-            }
-        }
-    }
-    header {
-        justify-content: center;
-        .cus-navbar {
-            padding-right: 0;
-            ul{
-                li {
-                    margin: 0 6px;
                 }
             }
         }

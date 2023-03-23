@@ -1,8 +1,87 @@
-.header-inner{
-    position: absolute;
-    right: 89%;
+header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 3;
+  padding: 15px 30px;
+  height: 70px;
+  .header-inner{
+    h1{
+      font-weight: 500;
+      font-size: 20px;
+      letter-spacing: 0.1px;
+      color: #000000;
+      margin: 0;
+      cursor: pointer;
+    }
+  }
+  .cus-navbar{
+    width: 100%;
+    display: inline-block;
+    ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      li{
+        margin: 0 12px;
+        button{
+          font-weight: 500;
+          font-size: 16px;
+          letter-spacing: 0.1px;
+          color: #000000;
+          padding: 0;
+          min-width: auto;
+          line-height: normal;
+          &:hover, &:focus{
+            background-color: transparent;
+            .mat-button-focus-overlay{
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
 }
-::ng-deep .mat-typography h1
-{
-  margin: 0 0 0px;                                                                                          
+
+@media screen and (max-width: 767px) {
+  header {
+    padding: 20px;
+    .header-inner{
+      h1{
+        font-size: 20px;
+      }
+    }
+    .cus-navbar {
+      ul{
+        li{
+          button {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 575px) {
+  header {
+    .cus-navbar {
+      ul{
+        li {
+          margin: 0 6px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 420px) {
+  header {
+    flex-direction: column;
+    justify-content: center;
+    .cus-navbar {
+      margin-top: 10px;
+    }
+  }
 }

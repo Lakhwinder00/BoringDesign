@@ -22,13 +22,15 @@ export class RegisterComponent implements OnInit {
      private readonly route: ActivatedRoute,
      private readonly router: Router,
      public dialog:MatDialog,
-     private utilServices: UtilService,
+     private utilService: UtilService,
      ) {
-      let isLogged = this.utilServices.IsUserLoggedIn();
+      this.utilService.sendClickEvent(true);
+      let isLogged = this.utilService.IsUserLoggedIn();
     if (isLogged) {
       this.router.navigate(['/process'])
     }
       this.ActivateAccount();
+      
    }
 
 

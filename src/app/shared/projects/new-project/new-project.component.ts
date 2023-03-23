@@ -73,11 +73,11 @@ warning(message:any)
     title:"Warning",
     message:message,
     buttonText:"Ok"
-  }})
+  },panelClass:'dialog'})
 }
 cancelCreate()
 {
   this.dialog.closeAll();
-  this.dialog.open(ProjectsComponent);
+  this.dialog.open(ProjectsComponent,{panelClass:'project-cls'});
 }
 }

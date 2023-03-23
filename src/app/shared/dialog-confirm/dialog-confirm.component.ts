@@ -10,11 +10,15 @@ export class DialogConfirmComponent  {
   message:any;
   title:any;
   ButtonText:any;
+  isShow:boolean=false;
+  ButtonYesText:any;
   constructor(
      @Inject(MAT_DIALOG_DATA)private data: any,private modalRef: MatDialogRef<DialogConfirmComponent>) {
      this.message=data.message;
      this.title=data.title;
      this.ButtonText=data.buttonText;
+     this.ButtonYesText=data.buttonYesText
+     this.isShow=data.isShow==undefined || data.isShow==null?false:data.isShow
     }
   onConfirmClick() {
     this.modalRef.close(true);

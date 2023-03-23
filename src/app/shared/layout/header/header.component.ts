@@ -8,6 +8,11 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class HeaderComponent implements OnInit {
   isLogin: boolean = false;
-  constructor(private router: Router, private utilService: UtilService) {}
+  isLogo:boolean=true;
+  constructor(private router: Router, private utilService: UtilService) {
+    this.utilService.getClickEvent().subscribe((result)=>{
+      this.isLogo=result;
+    })
+  }
   ngOnInit(): void {}
 }

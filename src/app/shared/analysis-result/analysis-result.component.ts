@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-analysis-result',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnalysisResultComponent implements OnInit {
 
-  constructor() { }
+  constructor(@Inject(MAT_DIALOG_DATA) private data: any,
+  private modalRef: MatDialogRef<AnalysisResultComponent>, public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
-
+  closeDialog(){
+  this.modalRef.close();
+  }
 }

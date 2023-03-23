@@ -10,6 +10,7 @@
     letter-spacing: 0.1px;
     color: #000000;
     margin: 0;
+    cursor: pointer;
   }
   &.white-header{
     background-color: transparent;
@@ -113,12 +114,14 @@
               display: flex;
               align-items: center;
               .pro-left-icon{
-                width: calc(100% - 70px);
+                width: calc(100% - 60px);
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
-                img{
+                .mat-icon{
                   width: 20px;
+                  height: 20px;
+                  color: #757575;
                 }
                 h6{
                   font-weight: 400;
@@ -130,7 +133,7 @@
                 }
               }
               .list-right-icons{
-                width: 70px;
+                width: 60px;
                 display: flex;
                 align-items: center;
                 justify-content: flex-end;
@@ -138,8 +141,25 @@
                   border: none;
                   background-color: transparent;
                   cursor: pointer;
+                  width: 20px;
+                  height: 20px;
+                  color: #ffffff;
+                  .mat-icon{
+                    width: 20px;
+                    height: 20px;
+                    font-size: 20px;
+                  }
                   &:first-child{
-                    margin-right: 20px;
+                    margin-right: 10px;
+                  }
+                  .search-icon {
+                    background: #bfbfbf;
+                    color: #ffffff;
+                    border-radius: 4px;
+                  }
+                  .delete-icon{
+                    font-size: 24px;
+                    margin-top: -2px;
                   }
                 }
               }
@@ -215,10 +235,10 @@
   display: inline-block;
   background: #FFFFFF;
   border-radius: 25px;
-  padding: 20px;
+  padding: 30px;
   .dropzone-wrapper {
     position: relative;
-    height: 250px;
+    height: 200px;
     width: 100%;
     border: none;
     background-color: #D9D9D9;
@@ -232,6 +252,7 @@
     .dropzone {
       height: 100%;
       width: 100%;
+      cursor: pointer;
       .upload-head {
         width: 100%;
         display: flex;
@@ -255,6 +276,7 @@
           font-size: 15px;
           line-height: 32px;
           padding-top: 15px;
+          color: #5A5A5A;
         }
       }
     }
@@ -266,6 +288,7 @@
       height: 100%;
       top: 0;
       left: 0;
+      cursor: pointer;
     }
   }
 }
@@ -307,8 +330,8 @@
     width: 100%;
     max-width: 120px;
     border-radius: 100px;
-    font-size: 16px;
-    height: 50px;
+    font-size: 14px;
+    height: 40px;
     font-weight: 500;
     color: #000000;
     flex: 1;
@@ -316,6 +339,13 @@
     margin: 0;
     border: none;
     cursor: pointer;
+  }
+  &.modal-btn-group{
+    button{
+      &:first-child{
+        margin-right: 10px;
+      }
+    }
   }
 }
 .default-btn {
@@ -482,15 +512,6 @@ canvas {
           }
         }
       }
-      #fileDropRef{
-        opacity: 0;
-        position: absolute;
-        z-index: 2;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-      }
     }
   }
   .cus-progress-bar{
@@ -598,13 +619,5 @@ canvas {
 ::ng-deep .mat-progress-bar {
   border-radius: 2px;
 }
-::ng-deep .mat-form-field-wrapper{
-  background: #ffffff!important;
-}
 
-::ng-deep .mat-dialog-container{
-  background-color:#D6D6D6;
-}
-::ng-deep .mat-button {
-  background-color: #ffffff;
-}
+

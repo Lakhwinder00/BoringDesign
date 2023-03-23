@@ -24,166 +24,168 @@
       </div>
     </div>
     <div class="cus-pro-container">
-      <div class="project-left">
-        <div class="new-project-head">
-          <div class="cus-form">
-            <form class="form-build">
-              <div class="new-project-btn">
-                <h2>New Project</h2>
-              </div>
-              <div class="rep-field w-full">
-                <mat-form-field class="w-full">
-                  <mat-label>Project Name</mat-label>
-                  <input
-                    matInput
-                    type="text"
-                    placeholder="Input"
-                  >
-                </mat-form-field>
-              </div>
-            </form>
+      <div class="center-container">
+        <div class="project-left">
+          <div class="new-project-head">
+            <div class="cus-form">
+              <form class="form-build">
+                <div class="new-project-btn">
+                  <h2>New Project</h2>
+                </div>
+                <div class="rep-field w-full">
+                  <mat-form-field class="w-full">
+                    <mat-label>Project Name</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      placeholder="Input"
+                    >
+                  </mat-form-field>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
 
-        <div class="cus-dropzone" id="boxupload" appFileUpload (fileDropped)="onFileDropped($event)">
-          <div class="dropzone-wrapper">
-            <input type="file"  (change)="fileBrowseHandler($event)" id="fileDropRef" />
-            <div class="dropzone">
-              <div class="upload-head">
-                <div class="upload-plus-icon" class="upload-head">
-                  <img src="../../assets/img/upload-plus.png"/>
-                  <h5 *ngIf="filename==''; else files">Drag and drop or browse your file <br />.OBJ</h5>
-                  <ng-template #files>
-                    <br>
-                    <h4>{{filename}}</h4>
-                    <mat-icon matTooltip="Delete" style="color: #646464; margin-top: -5px;z-index: 999;" (click)="deleteModel()">delete_forever</mat-icon>
-                  </ng-template>
-                   
+          <div class="cus-dropzone" id="boxupload" appFileUpload (fileDropped)="onFileDropped($event)">
+            <div class="dropzone-wrapper">
+              <input type="file"  (change)="fileBrowseHandler($event)" id="fileDropRef" />
+              <div class="dropzone">
+                <div class="upload-head">
+                  <div class="upload-plus-icon" class="upload-head">
+                    <img src="../../assets/img/upload-plus.png"/>
+                    <h5 *ngIf="filename==''; else files">Drag and drop or <u>browse</u> your file <br />.OBJ</h5>
+                    <ng-template #files>
+                      <br>
+                      <h4>{{filename}}</h4>
+                      <mat-icon matTooltip="Delete" style="color: #646464; margin-top: -5px;z-index: 999;" (click)="deleteModel()">delete_forever</mat-icon>
+                    </ng-template>
+                    
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="cus-progress-bar" *ngIf="isLoadFile">
-          <p>Uploading...</p>
-          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </div>
-        <!-- <div class="uploaded-btn">
-          <button  (click)="ShowFile()" type="submit" mat-button type="submit">Ok</button>
-        </div> -->
-      </div>
-      <div class="project-right">
-        <div class="project-head">
-          <div class="project-btn">
-            <h2>Projects</h2>
+          <div class="cus-progress-bar" *ngIf="isLoadFile">
+            <p>Uploading...</p>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
           </div>
+          <!-- <div class="uploaded-btn">
+            <button  (click)="ShowFile()" type="submit" mat-button type="submit">Ok</button>
+          </div> -->
         </div>
-        <div class="project-listing">
-          <ul>
-            <li>
-              <div class="pro-left-icon">
-                <mat-icon>business</mat-icon>
-                <h6>List item</h6>
-              </div>
-              <div class="list-right-icons">
-                <button>
-                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
-                </button>
-                <button>
-                  <mat-icon class="delete-icon">delete</mat-icon>
-                </button>
-              </div>
-            </li>
-            <li>
-              <div class="pro-left-icon">
-                <mat-icon>business</mat-icon>
-                <h6>List item</h6>
-              </div>
-              <div class="list-right-icons">
-                <button>
-                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
-                </button>
-                <button>
-                  <mat-icon class="delete-icon">delete</mat-icon>
-                </button>
-              </div>
-            </li>
-            <li>
-              <div class="pro-left-icon">
-                <mat-icon>business</mat-icon>
-                <h6>List item</h6>
-              </div>
-              <div class="list-right-icons">
-                <button>
-                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
-                </button>
-                <button>
-                  <mat-icon class="delete-icon">delete</mat-icon>
-                </button>
-              </div>
-            </li>
-            <li>
-              <div class="pro-left-icon">
-                <mat-icon>business</mat-icon>
-                <h6>List item</h6>
-              </div>
-              <div class="list-right-icons">
-                <button>
-                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
-                </button>
-                <button>
-                  <mat-icon class="delete-icon">delete</mat-icon>
-                </button>
-              </div>
-            </li>
-            <li>
-              <div class="pro-left-icon">
-                <mat-icon>business</mat-icon>
-                <h6>List item</h6>
-              </div>
-              <div class="list-right-icons">
-                <button>
-                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
-                </button>
-                <button>
-                  <mat-icon class="delete-icon">delete</mat-icon>
-                </button>
-              </div>
-            </li>
-            <li>
-              <div class="pro-left-icon">
-                <mat-icon>business</mat-icon>
-                <h6>List item</h6>
-              </div>
-              <div class="list-right-icons">
-                <button>
-                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
-                </button>
-                <button>
-                  <mat-icon class="delete-icon">delete</mat-icon>
-                </button>
-              </div>
-            </li>
-            <li>
-              <div class="pro-left-icon">
-                <mat-icon>business</mat-icon>
-                <h6>List item</h6>
-              </div>
-              <div class="list-right-icons">
-                <button>
-                  <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
-                </button>
-                <button>
-                  <mat-icon class="delete-icon">delete</mat-icon>
-                </button>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="pro-btn-group">
-          <button type="button" mat-button type="submit" (click)="ShowFile()">Ok</button>
-          <button type="button" mat-button type="submit" [routerLink]="['/welcome-boring-O-Meter']" >Back</button>
+        <div class="project-right">
+          <div class="project-head">
+            <div class="project-btn">
+              <h2>Projects</h2>
+            </div>
+          </div>
+          <div class="project-listing">
+            <ul>
+              <li>
+                <div class="pro-left-icon">
+                  <mat-icon>business</mat-icon>
+                  <h6>List item</h6>
+                </div>
+                <div class="list-right-icons">
+                  <button>
+                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
+                  </button>
+                  <button>
+                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
+                  </button>
+                </div>
+              </li>
+              <li>
+                <div class="pro-left-icon">
+                  <mat-icon>business</mat-icon>
+                  <h6>List item</h6>
+                </div>
+                <div class="list-right-icons">
+                  <button>
+                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
+                  </button>
+                  <button>
+                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
+                  </button>
+                </div>
+              </li>
+              <li>
+                <div class="pro-left-icon">
+                  <mat-icon>business</mat-icon>
+                  <h6>List item</h6>
+                </div>
+                <div class="list-right-icons">
+                  <button>
+                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
+                  </button>
+                  <button>
+                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
+                  </button>
+                </div>
+              </li>
+              <li>
+                <div class="pro-left-icon">
+                  <mat-icon>business</mat-icon>
+                  <h6>List item</h6>
+                </div>
+                <div class="list-right-icons">
+                  <button>
+                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
+                  </button>
+                  <button>
+                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
+                  </button>
+                </div>
+              </li>
+              <li>
+                <div class="pro-left-icon">
+                  <mat-icon>business</mat-icon>
+                  <h6>List item</h6>
+                </div>
+                <div class="list-right-icons">
+                  <button>
+                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
+                  </button>
+                  <button>
+                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
+                  </button>
+                </div>
+              </li>
+              <li>
+                <div class="pro-left-icon">
+                  <mat-icon>business</mat-icon>
+                  <h6>List item</h6>
+                </div>
+                <div class="list-right-icons">
+                  <button>
+                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
+                  </button>
+                  <button>
+                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
+                  </button>
+                </div>
+              </li>
+              <li>
+                <div class="pro-left-icon">
+                  <mat-icon>business</mat-icon>
+                  <h6>List item</h6>
+                </div>
+                <div class="list-right-icons">
+                  <button>
+                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
+                  </button>
+                  <button>
+                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="pro-btn-group">
+            <button type="button" mat-button type="submit" (click)="ShowFile()">Ok</button>
+            <button type="button" mat-button type="submit" [routerLink]="['/welcome-boring-O-Meter']" >Back</button>
+          </div>
         </div>
       </div>
     </div>

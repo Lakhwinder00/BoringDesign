@@ -53,7 +53,7 @@ export class ProcessFileComponent implements OnInit {
     private host: ElementRef,
     private authService: AuthService
   ) {
-    this.utilService.getClickEvent().subscribe(() => {});
+    this.utilService.sendClickEvent(true)
   }
 
   ngOnInit(): void {
@@ -178,7 +178,7 @@ export class ProcessFileComponent implements OnInit {
     this.router.navigate(['/login']);
   }
   myAccount() {
-    this.dialog.open(MyAccountComponent,{panelClass:'account'});
+    this.dialog.open(MyAccountComponent,{panelClass:'account',width:'500px'});
   }
   deleteModel() {
     this.filename = '';
@@ -188,6 +188,18 @@ export class ProcessFileComponent implements OnInit {
     //    this.renderer.removeChild(this.host.nativeElement, element);
     //  });
     // }
+  }
+  deleteProject()
+  {
+    this.dialog.open(DialogConfirmComponent,{data: {
+      title: 'Delete Project',
+      message: "Are you sure you want delete this project? <br> This action cannot be undone.",
+      buttonText: 'No',
+      buttonYesText:'Yes',
+      isShow:true
+    },
+    width:"400px",
+    panelClass:'dialog'})
   }
   projectAnalysis()
   {
@@ -218,6 +230,7 @@ export class ProcessFileComponent implements OnInit {
         message: message,
         buttonText: 'Ok',
       },
+      width:"400px",
       panelClass:'dialog'
     });
   }

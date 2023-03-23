@@ -10,7 +10,7 @@
             </mat-form-field>
         </div>
         <div class="uploaded-btn">
-            <button type="submit" mat-button type="submit">Save</button>
+            <button type="button" (click)="updateEmail()" mat-button type="submit">Save</button>
         </div>
     </form>
     <form class="form-build">
@@ -27,11 +27,11 @@
             </mat-form-field>
         </div>
         <div class="uploaded-btn">
-            <button type="submit" mat-button type="submit">Update</button>
+            <button type="submit" (click)="updatePassword()" mat-button type="submit">Update</button>
         </div>
     </form>
     <div class="delete-acc-btn">
-        <button type="submit" mat-button type="submit">Delete Account</button>&nbsp;
-        <button type="button" mat-button (click)="closeDialog()">Close</button>
+        <button type="button" mat-button class="delete-btn" type="submit">Delete Account</button>&nbsp;
+        <button type="button" mat-button class="close-btn" (click)="closeDialog()">Close</button>
     </div>
 </div>

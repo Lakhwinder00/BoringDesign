@@ -1,9 +1,10 @@
 <div class="cus-modal">
   <div mat-dialog-content>
     <h1>{{title}}</h1>
-    <p>{{message}}</p>
+    <p [innerHTML]="message"></p>
   </div>
   <div mat-dialog-actions align="end">
-    <button mat-button  cdkFocusInitial class="btn-dialog" (click)="onConfirmClick()">Ok</button>
+    <button mat-button  cdkFocusInitial *ngIf="isShow" class="btn-dialog" (click)="onConfirmClick()">{{ButtonYesText}}</button>
+    <button mat-button  cdkFocusInitial class="btn-dialog" (click)="onConfirmClick()">{{ButtonText}}</button>
   </div>
 </div>

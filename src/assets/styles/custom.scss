@@ -58,45 +58,8 @@ body{
   min-height: 100vh;
   max-height: 100vh;
 }
-header{
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  position: relative;
-  z-index: 3;
-  .cus-navbar{
-    width: 100%;
-    display: inline-block;
-    padding-right: 15px;
-    ul {
-      list-style: none;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      li{
-        margin: 0 12px;
-        button{
-          font-weight: 500;
-          font-size: 16px;
-          letter-spacing: 0.1px;
-          color: $black-color;
-          padding: 0;
-          min-width: auto;
-          line-height: normal;
-          &:hover, &:focus{
-            background-color: transparent;
-            .mat-button-focus-overlay{
-              display: none;
-            }
-          }
-        }
-      }
-    }
-  }
-}
 .custom-content {
-  min-height: calc(100vh - 140px);
+  min-height: calc(100vh - 160px);
   overflow: auto;
   .main-wrapper {
     display: flex;
@@ -172,8 +135,8 @@ header{
         height: auto;
         max-width: 80%;
         z-index: -1;
-        min-height: 500px;
-        max-height: 80%;
+        min-height: 600px;
+        max-height: 95%;
         object-fit: contain;
       }
     }
@@ -339,11 +302,10 @@ header{
 }
 
 body{
-  
   .cdk-global-overlay-wrapper{
     .cdk-overlay-pane{
       width: 100%;
-      max-width: 450px !important;
+      max-width: 650px !important;
       margin: 15px;
       max-height: calc(100% - 30px);
       overflow: auto;
@@ -354,13 +316,13 @@ body{
         .form-build{
           .rep-field{
             .mat-form-field-wrapper {
-              background-color: #F3F3F3;
+              background-color: white;
             }
           }
         }
         .uploaded-btn{
           button{
-            background-color: #F3F3F3;
+            background-color: white;
             max-width: 120px;
             font-size: 14px;
             height: 40px;
@@ -369,8 +331,9 @@ body{
       }
     }
     .mat-button {
-      background-color: #F3F3F3;
+      background-color: white;
       min-width: 120px;
+      color: #1D192B;
     }
     .pro-btn-group {
       margin-top: 15px;
@@ -393,25 +356,31 @@ body{
 .mat-form-field{
   &.mat-focused{
     .mat-form-field-label {
-      color: #E96464;
+      color: #000000;
     }
     .mat-form-field-ripple{
-      background-color: #E96464;
+      background-color: #000000;
     }
   }
 }
-.process-cls .mat-dialog-container{
-  background: #d6d6d6 !important;
+
+.process-cls, .project-cls, .project-analysis-cls{
+  .mat-dialog-container{
+    background: #d6d6d6 !important;
+  }
 }
-.project-cls .mat-dialog-container{
-  background: #d6d6d6 !important;
+.dialog{
+  .mat-dialog-container{
+    background-color: #ffffff !important;
+  }
 }
-.project-analysis-cls .mat-dialog-container{
-  background: #d6d6d6 !important;
+.account{
+  .mat-dialog-container{
+    background: #d6d6d6 !important;
+  }
 }
-.dialog .mat-dialog-container{
-  background-color: #ffffff!important;
-}
-.account.mat-dialog-container{
-  background: #d6d6d6 !important;
+.new-project-cls{
+  .mat-dialog-container{
+    background: #d6d6d6 !important;
+  }
 }

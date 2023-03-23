@@ -30,6 +30,7 @@ import { ProjectsComponent } from './shared/projects/projects.component';
 import { NewProjectComponent } from './shared/projects/new-project/new-project.component';
 import { FileUploadDirective } from './directives/file-upload.directive';
 import { ProcessAnalysisComponent } from './shared/process-analysis/process-analysis.component';
+import { AnalysisResultComponent } from './shared/analysis-result/analysis-result.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ProcessAnalysisComponent } from './shared/process-analysis/process-anal
     ProjectsComponent,
     NewProjectComponent,
     FileUploadDirective,
-    ProcessAnalysisComponent
+    ProcessAnalysisComponent,
+    AnalysisResultComponent
   ],
   entryComponents: [DialogConfirmComponent],
   schemas: [

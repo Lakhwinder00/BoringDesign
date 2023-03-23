@@ -1,1 +1,25 @@
-<p>analysis-result works!</p>
+<div class="cus-form">
+    <div class="my-project">
+        <h2>Analysis Result</h2>
+    </div>
+    <form class="form-build">
+        <div class="rep-field w-full">
+            <mat-form-field class="w-full">
+                <mat-label>Name</mat-label>
+                <input matInput type="text" matInput placeholder="Input">
+            </mat-form-field>
+        </div>
+    </form>
+    <form class="form-build">
+        <div class="rep-field">
+            <img src="../../../assets/img/building.png" style="width:200px">
+            <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+            <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+        </div>
+    </form>
+    <div class="delete-acc-btn">
+         <button type="button" mat-button class="close-btn">Download</button>
+         <button type="button" mat-button class="close-btn">Save</button>
+        <button type="button" mat-button class="close-btn" (click)="closeDialog()">Close</button>
+    </div>
+</div>

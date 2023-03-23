@@ -17,15 +17,17 @@
       padding: 10px 20px;
       display: flex;
       align-items: center;
-      .pro-left-icon {
-        width: calc(100% - 70px);
+      .pro-left-icon{
+        width: calc(100% - 60px);
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        img {
+        .mat-icon{
           width: 20px;
+          height: 20px;
+          color: #757575;
         }
-        h6 {
+        h6{
           font-weight: 400;
           font-size: 16px;
           letter-spacing: 0.5px;
@@ -35,16 +37,33 @@
         }
       }
       .list-right-icons {
-        width: 70px;
+        width: 60px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        button {
+        button{
           border: none;
           background-color: transparent;
           cursor: pointer;
-          &:first-child {
-            margin-right: 20px;
+          width: 20px;
+          height: 20px;
+          color: #bfbfbf;
+          .mat-icon{
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+          }
+          &:first-child{
+            margin-right: 10px;
+          }
+          .search-icon {
+            background: #bfbfbf;
+            color: #ffffff;
+            border-radius: 4px;
+          }
+          .delete-icon{
+            font-size: 24px;
+            margin-top: -2px;
           }
         }
       }
@@ -55,19 +74,21 @@
   background: #ffffff;
   border-radius: 12px;
 }
-::ng-deep .mat-button {
-  background-color: #ffffff !important;
-}
-
-.search-icon {
-  background: lightgrey;
-  color: white;
-}
-.delete-icon {
-  color: lightgrey;
-}
 .project-listing {
   background: #ffffff !important;
 }
 
 
+@media screen and (max-width: 575px) {
+  .project-listing{
+    ul{
+      li{
+        .pro-left-icon{
+          h6 {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}

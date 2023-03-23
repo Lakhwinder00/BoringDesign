@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
+    this.utilServices.sendClickEvent(true)
   }
   get f(): { [key: string]: AbstractControl } {
     return this.loginform.controls;
@@ -68,7 +69,6 @@ export class LoginComponent implements OnInit {
             this.authService.setUserLoggedIn(true);
             this.authService.setToken(result.token);
             this.authService.setEmail(result.email);
-            this.utilServices.sendClickEvent();
           }
           this.router.navigate(['/process']);
         }
@@ -83,8 +83,8 @@ export class LoginComponent implements OnInit {
       title:"Invalid User",
       message:message,
       buttonText:"Ok",
-      width: '400px'
-    },panelClass:'dialog'})
+      
+    },width: '400px',panelClass:'dialog'})
   }
   warning(message:any)
   {
@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit {
       title:"Warning",
       message:message,
       buttonText:"Ok",
-      width: '400px'
-    },panelClass:'dialog'})
+    
+    },width: '400px',panelClass:'dialog'})
   }
 }
