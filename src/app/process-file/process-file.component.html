@@ -85,29 +85,31 @@
           </div>
           <div class="project-listing">
             <ng-container  *ngIf="ProjectList?.result?.length!=0 else nodata" >
-            <ul *ngFor="let item of ProjectList?.result">
-              <li style="cursor:pointer;">
-                <div class="pro-left-icon"  (click)="updateProject(item)">
-                  <mat-icon>business</mat-icon>
-                  <h6>{{item.projectName}}</h6>
-                </div>
-                <div class="list-right-icons">
-                  <button>
-                    <mat-icon class="search-icon" (click)="projectAnalysis(item)">search</mat-icon>
-                  </button>
-                  <button>
-                    <mat-icon class="delete-icon" (click)="deleteProject(item)">delete</mat-icon>
-                  </button>
-                </div>
-              </li>
-            </ul>
-          </ng-container>
-          <ng-template #nodata><span style="position: absolute;top: 50%;left: 47%;"> No record found</span></ng-template><br>
+              <ul *ngFor="let item of ProjectList?.result">
+                <li style="cursor:pointer;">
+                  <div class="pro-left-icon"  (click)="updateProject(item)">
+                    <mat-icon>business</mat-icon>
+                    <h6>{{item.projectName}}</h6>
+                  </div>
+                  <div class="list-right-icons">
+                    <button>
+                      <mat-icon class="search-icon" (click)="projectAnalysis(item)">search</mat-icon>
+                    </button>
+                    <button>
+                      <mat-icon class="delete-icon" (click)="deleteProject(item)">delete</mat-icon>
+                    </button>
+                  </div>
+                </li>
+              </ul>
+            </ng-container>
+            <ng-template #nodata><span style="position: absolute; top: 50%; left: 47%;"> No record found</span></ng-template>
+            <div class="pagination-div" *ngIf="ProjectList?.result?.length!=0">
+              <app-pagination [pageIndex]="pageIndex" [limit]="pageSize" [total]="count" (pageChange)="pageChanged($event)">
+              </app-pagination
+            ></div>
           </div>
-          <div class="pagination-div flex" style="margin-left: 20px;" *ngIf="ProjectList?.result?.length!=0"><app-pagination [pageIndex]="pageIndex" [limit]="pageSize" [total]="count" (pageChange)="pageChanged($event)">
-          </app-pagination></div>
           <div class="pro-btn-group">
-            <button type="button" mat-button type="submit" (click)="newproject()">New</button>
+            <button type="button" mat-button type="submit" (click)="newproject()">New Project</button>
             <!-- <button type="button" mat-button type="submit" [routerLink]="['/welcome-boring-O-Meter']" >Back</button> -->
           </div>
         </div>

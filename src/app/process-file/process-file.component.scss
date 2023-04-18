@@ -235,9 +235,6 @@
     margin: 0;
     border: none;
     cursor: pointer;
-    &:first-child{
-      margin-right: 15px;
-    }
   }
 }
 .cus-dropzone {
@@ -476,6 +473,7 @@ canvas {
     .cus-container {
       .cus-pro-container {
         flex-direction: column;
+        max-width: 100%;
         .center-container{
           flex-direction: column;
         }
@@ -489,10 +487,8 @@ canvas {
           padding-bottom: 40px;
         }
         .project-right{
-          .pro-btn-group {
-            justify-content: center;
-          }
           .pro-btn-group{
+            justify-content: center;
             button{
               margin: 0 8px;
               &::first-child {
@@ -641,6 +637,9 @@ canvas {
   color: #bfbfbf;
 }
 .pagination-div{
-  position: absolute;
-    margin-top: -55px;
+  width: 100%;
+  display: flex;
+  padding: 35px 20px;
+  align-items: center;
+  justify-content: center;
 }

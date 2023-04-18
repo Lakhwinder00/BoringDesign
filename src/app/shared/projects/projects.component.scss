@@ -72,8 +72,6 @@
     }
   }
 }
-
-
 .project-listing {
   background: #ffffff !important;
 }
@@ -81,6 +79,26 @@
 ::ng-deep .project-btn-dialog{
   background: #ffffff !important;
   border-radius: 100px;
+}
+.pagination-div{
+  width: 100%;
+  display: flex;
+  padding: 35px 20px;
+  align-items: center;
+  justify-content: center;
+}
+.btns-group {
+  width: 100%;
+  display: flex;
+  margin-top: 20px;
+  justify-content: flex-end;
+  button {
+    margin-right: 10px;
+    border-radius: 100px;
+    &:last-child{
+      margin-right: 0;
+    }
+  }
 }
 
 @media screen and (max-width: 575px) {
@@ -96,31 +114,14 @@
     }
   }
 }
-.btns-group {
-  width: 100%;
-  display: flex;
-  margin-top: 20px;
-  justify-content: flex-end;
-  button {
-      margin-right: 10px;
-      border-radius: 100px;
-      &:last-child{
-          margin-right: 0;
-      }
-  }
-}
 @media screen and (max-width: 480px) {
   .btns-group {
-      justify-content: center;
-      flex-direction: column;
-      max-width: 200px;
-      margin: 0 auto;
-      button {
-          margin: 5px 0;
-      }
+    justify-content: center;
+    flex-direction: column;
+    max-width: 200px;
+    margin: 0 auto;
+    button {
+      margin: 5px 0;
+    }
   }
-}
-.pagination-div{
-  position: absolute;
-    margin-top: -44px;
 }
