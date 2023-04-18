@@ -74,6 +74,8 @@ export class RegisterComponent implements OnInit {
       this._registerService.ActivateUserAccount(activateCode).subscribe(result => {
         if(result.message!=undefined && result.message!='')
         {
+          localStorage.clear();
+          localStorage.removeItem('token');
           this.activateAccount(result.message);
         }else if(result[0]?.message)
         {
@@ -104,7 +106,7 @@ export class RegisterComponent implements OnInit {
       title:"Registration Complete",
       message:registerMessage,
       buttonText:"Ok"
-    }})
+    },width: '400px',panelClass:'dialog'})
   }
   warning(message:any)
   {
@@ -112,7 +114,7 @@ export class RegisterComponent implements OnInit {
       title:"Warning",
       message:message,
       buttonText:"Ok"
-    },panelClass:'dialog'})
+    },width: '400px',panelClass:'dialog'})
   }
   activateAccount(message:any)
   {
@@ -120,7 +122,7 @@ export class RegisterComponent implements OnInit {
       title:"Activate Account",
       message:message,
       buttonText:"Ok"
-    },panelClass:'dialog'})
+    },width: '400px',panelClass:'dialog'})
   }
 }
 

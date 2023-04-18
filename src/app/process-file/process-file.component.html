@@ -2,6 +2,7 @@
   <div class="cus-container" [ngStyle]="isUpload?{'display': 'block'} : {'display': 'none'}">
     <div class="header-inner">
       <h1  [routerLink]="['/welcome-boring-O-Meter']">BoringOMeter</h1>
+      
       <div class="profile-dropdown">
         <ul>
           <li>
@@ -25,11 +26,11 @@
     </div>
     <div class="cus-pro-container">
       <div class="center-container">
-        <div class="project-left">
+        <!-- <div class="project-left">
           <div class="new-project-head">
             <div class="cus-form">
-              <form class="form-build">
-                <div class="new-project-btn">
+              <form class="form-build" autocomplete="off" [formGroup]="proccessFileForm">
+                <div class="new-project-btn" (click)="newproject()">
                   <h2>New Project</h2>
                 </div>
                 <div class="rep-field w-full">
@@ -37,10 +38,13 @@
                     <mat-label>Project Name</mat-label>
                     <input
                       matInput
-                      type="text"
-                      placeholder="Input"
+                      type="text" formControlName="projectName"
+                      placeholder="Input" [ngClass]="{ 'is-invalid': submitted && f['projectName'].errors }"
                     >
                   </mat-form-field>
+                  <div *ngIf="submitted && f['projectName'].errors" class="invalid-feedback">
+                    <div *ngIf="f['projectName'].errors['required']">Project name is required</div>
+                </div>
                 </div>
               </form>
             </div>
@@ -48,7 +52,7 @@
 
           <div class="cus-dropzone" id="boxupload" appFileUpload (fileDropped)="onFileDropped($event)">
             <div class="dropzone-wrapper">
-              <input type="file"  (change)="fileBrowseHandler($event)" id="fileDropRef" />
+              <input type="file" (click)="resetFile()"  #fileUploader (change)="fileBrowseHandler($event)" id="fileDropRef" />
               <div class="dropzone">
                 <div class="upload-head">
                   <div class="upload-plus-icon" class="upload-head">
@@ -70,121 +74,41 @@
             <p>Uploading...</p>
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
           </div>
-          <!-- <div class="uploaded-btn">
-            <button  (click)="ShowFile()" type="submit" mat-button type="submit">Ok</button>
-          </div> -->
-        </div>
+        
+        </div> -->
         <div class="project-right">
           <div class="project-head">
-            <div class="project-btn">
+            <h2>Projects</h2>
+            <!-- <div class="project-btn">
               <h2>Projects</h2>
-            </div>
+            </div> -->
           </div>
           <div class="project-listing">
-            <ul>
-              <li>
-                <div class="pro-left-icon">
+            <ng-container  *ngIf="ProjectList?.result?.length!=0 else nodata" >
+            <ul *ngFor="let item of ProjectList?.result">
+              <li style="cursor:pointer;">
+                <div class="pro-left-icon"  (click)="updateProject(item)">
                   <mat-icon>business</mat-icon>
-                  <h6>List item</h6>
+                  <h6>{{item.projectName}}</h6>
                 </div>
                 <div class="list-right-icons">
                   <button>
-                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
+                    <mat-icon class="search-icon" (click)="projectAnalysis(item)">search</mat-icon>
                   </button>
                   <button>
-                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
-                  </button>
-                </div>
-              </li>
-              <li>
-                <div class="pro-left-icon">
-                  <mat-icon>business</mat-icon>
-                  <h6>List item</h6>
-                </div>
-                <div class="list-right-icons">
-                  <button>
-                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
-                  </button>
-                  <button>
-                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
-                  </button>
-                </div>
-              </li>
-              <li>
-                <div class="pro-left-icon">
-                  <mat-icon>business</mat-icon>
-                  <h6>List item</h6>
-                </div>
-                <div class="list-right-icons">
-                  <button>
-                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
-                  </button>
-                  <button>
-                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
-                  </button>
-                </div>
-              </li>
-              <li>
-                <div class="pro-left-icon">
-                  <mat-icon>business</mat-icon>
-                  <h6>List item</h6>
-                </div>
-                <div class="list-right-icons">
-                  <button>
-                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
-                  </button>
-                  <button>
-                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
-                  </button>
-                </div>
-              </li>
-              <li>
-                <div class="pro-left-icon">
-                  <mat-icon>business</mat-icon>
-                  <h6>List item</h6>
-                </div>
-                <div class="list-right-icons">
-                  <button>
-                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
-                  </button>
-                  <button>
-                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
-                  </button>
-                </div>
-              </li>
-              <li>
-                <div class="pro-left-icon">
-                  <mat-icon>business</mat-icon>
-                  <h6>List item</h6>
-                </div>
-                <div class="list-right-icons">
-                  <button>
-                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
-                  </button>
-                  <button>
-                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
-                  </button>
-                </div>
-              </li>
-              <li>
-                <div class="pro-left-icon">
-                  <mat-icon>business</mat-icon>
-                  <h6>List item</h6>
-                </div>
-                <div class="list-right-icons">
-                  <button>
-                    <mat-icon class="search-icon" (click)="projectAnalysis()">search</mat-icon>
-                  </button>
-                  <button>
-                    <mat-icon class="delete-icon" (click)="deleteProject()">delete</mat-icon>
+                    <mat-icon class="delete-icon" (click)="deleteProject(item)">delete</mat-icon>
                   </button>
                 </div>
               </li>
             </ul>
+          </ng-container>
+          <ng-template #nodata><span style="position: absolute;top: 50%;left: 47%;"> No record found</span></ng-template><br>
           </div>
+          <div class="pagination-div flex" style="margin-left: 20px;" *ngIf="ProjectList?.result?.length!=0"><app-pagination [pageIndex]="pageIndex" [limit]="pageSize" [total]="count" (pageChange)="pageChanged($event)">
+          </app-pagination></div>
           <div class="pro-btn-group">
-            <button type="button" mat-button type="submit" (click)="ShowFile()">Ok</button>
-            <button type="button" mat-button type="submit" [routerLink]="['/welcome-boring-O-Meter']" >Back</button>
+            <button type="button" mat-button type="submit" (click)="newproject()">New</button>
+            <!-- <button type="button" mat-button type="submit" [routerLink]="['/welcome-boring-O-Meter']" >Back</button> -->
           </div>
         </div>
       </div>
@@ -195,7 +119,8 @@
   <div class="canvas-container"  [ngStyle]="isDisplay?{'display': 'block'} : {'display': 'none'}">
     
     <div class="header-inner white-header">
-      <h1>BoringOMeter</h1>
+      <h1 [routerLink]="['/welcome-boring-O-Meter']">BoringOMeter <br><span class="project-inner-cls">{{NameOfProject}}</span></h1>
+      <br>
       <div class="profile-dropdown">
         <ul>
           <li>
@@ -223,8 +148,8 @@
     </div>
     <div class="canvas-bottom-btns">
       <ul>
-        <li>
-          <div class="canvas-btn"  (click)="createLine()">
+        <li  *ngIf="isClear==false"  >
+          <div class="canvas-btn" (click)="createLine()">
             <mat-icon>timeline</mat-icon >
           </div>
           <p>Plane</p>
@@ -235,7 +160,7 @@
           </div>
           <p>Clear</p>
         </li>
-        <li>
+        <li   *ngIf="isAnalyse==false">
           <div class="canvas-btn"  (click)="analyseModel()">
             <mat-icon>bar_chart</mat-icon>
           </div>

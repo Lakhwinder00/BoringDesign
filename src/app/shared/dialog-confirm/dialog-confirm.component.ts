@@ -20,7 +20,7 @@ export class DialogConfirmComponent  {
      this.ButtonYesText=data.buttonYesText
      this.isShow=data.isShow==undefined || data.isShow==null?false:data.isShow
     }
-  onConfirmClick() {
-    this.modalRef.close(true);
+  onConfirmClick(event:boolean) {
+    this.modalRef.close(event);
   }
 }

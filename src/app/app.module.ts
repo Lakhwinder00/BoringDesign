@@ -31,6 +31,9 @@ import { NewProjectComponent } from './shared/projects/new-project/new-project.c
 import { FileUploadDirective } from './directives/file-upload.directive';
 import { ProcessAnalysisComponent } from './shared/process-analysis/process-analysis.component';
 import { AnalysisResultComponent } from './shared/analysis-result/analysis-result.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ProjectService } from './services/project.service';
+import { PaginationComponent } from './shared/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +53,9 @@ import { AnalysisResultComponent } from './shared/analysis-result/analysis-resul
     NewProjectComponent,
     FileUploadDirective,
     ProcessAnalysisComponent,
-    AnalysisResultComponent
+    AnalysisResultComponent,
+    ResetPasswordComponent,
+    PaginationComponent
   ],
   entryComponents: [DialogConfirmComponent],
   schemas: [
@@ -72,7 +77,13 @@ import { AnalysisResultComponent } from './shared/analysis-result/analysis-resul
       useClass: CustomHttpInterceptor,
       multi: true,
     },
-    UtilService
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:JwtInterceptor,
+      multi:true
+    },
+    UtilService,
+    ProjectService
   ],
   bootstrap: [AppComponent],
 })

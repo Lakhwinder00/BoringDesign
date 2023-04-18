@@ -5,6 +5,7 @@
   border-radius: 20px;
   padding: 0;
   max-height: 550px;
+  min-height: 500px;
   overflow: auto;
   ul {
     padding: 0;
@@ -45,13 +46,14 @@
           border: none;
           background-color: transparent;
           cursor: pointer;
-          width: 20px;
+          // width: 20px;
           height: 20px;
           color: #bfbfbf;
           .mat-icon{
-            width: 20px;
+            // width: 20px;
             height: 20px;
             font-size: 20px;
+            text-align: right;
           }
           &:first-child{
             margin-right: 10px;
@@ -78,7 +80,7 @@
 
 ::ng-deep .project-btn-dialog{
   background: #ffffff !important;
-  border-radius: 12px;
+  border-radius: 100px;
 }
 
 @media screen and (max-width: 575px) {
@@ -93,4 +95,32 @@
       }
     }
   }
+}
+.btns-group {
+  width: 100%;
+  display: flex;
+  margin-top: 20px;
+  justify-content: flex-end;
+  button {
+      margin-right: 10px;
+      border-radius: 100px;
+      &:last-child{
+          margin-right: 0;
+      }
+  }
+}
+@media screen and (max-width: 480px) {
+  .btns-group {
+      justify-content: center;
+      flex-direction: column;
+      max-width: 200px;
+      margin: 0 auto;
+      button {
+          margin: 5px 0;
+      }
+  }
+}
+.pagination-div{
+  position: absolute;
+    margin-top: -44px;
 }

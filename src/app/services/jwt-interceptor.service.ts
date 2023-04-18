@@ -11,14 +11,22 @@ export class JwtInterceptor implements HttpInterceptor {
     this.authService.isTokenExpire();
     let getToken = localStorage.getItem('token');
     if (getToken != null) {
-      let currentUser = JSON.parse(getToken);
-      if (currentUser && currentUser.token) {
         request = request.clone({
           setHeaders: {
-            Authorization: `Bearer ${currentUser.token}`
+            'Content-Type': 'application/json; charset=utf-8',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+            Authorization: `Bearer ${getToken}`
           }
         });
-      }
+    }else{
+      request = request.clone({
+        setHeaders: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'
+        }
+      });
     }
      return next.handle(request).pipe(
       catchError((errordata =>{

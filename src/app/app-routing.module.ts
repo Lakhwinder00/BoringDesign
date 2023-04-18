@@ -8,6 +8,7 @@ import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-passowrd/forgot-password.component';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { WelcomPageComponent } from './welcom-page/welcom-page.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'activate-account/:id', component: RegisterComponent },
+    { path: 'reset-password/:id', component: ResetPasswordComponent },
     
 ]
   },

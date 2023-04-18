@@ -13,12 +13,24 @@
     }
     .btn-dialog{
         min-width: 140px;
-        background: #dbdbdb;
-        border-radius: 100px;
+        background: #dbdbdb!important;
+        border-radius: 100px!important;
+        width: 30%;
+    }
+    .btn-dialog-white{
+        min-width: 140px;
+        background: white!important;
+        border-radius: 100px!important;
+        width: 30%;
     }
     .mat-dialog-actions {
         min-height: auto;
         margin-bottom: 0;
         padding-bottom: 0;
+        button {
+            min-width: auto;
+            border-radius: 0;
+            background: transparent;
+        }
     }
 }

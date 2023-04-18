@@ -12,5 +12,6 @@ export class AppComponent {
   title = 'BoringClient';
   constructor(private authService:AuthService)
   {
+    console.clear();
   }
 }

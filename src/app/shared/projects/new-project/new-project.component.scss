@@ -206,7 +206,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-top: 40px;
+  margin-top: 20px;
   button{
     display: flex;
     align-items: center;
@@ -320,7 +320,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-top: 40px;
+  margin-top: 20px;
   button{
     display: flex;
     align-items: center;
@@ -608,16 +608,3 @@ canvas {
   background: #F3F3F3!important;
   border-radius: 12px!important;
 }
-::ng-deep .mat-progress-bar-fill::after {
-  background-color: hsl(216, 4%, 48%);
-}
-
-::ng-deep .mat-progress-bar-buffer {
-  background:  white;
-}
-
-::ng-deep .mat-progress-bar {
-  border-radius: 2px;
-}
-
-

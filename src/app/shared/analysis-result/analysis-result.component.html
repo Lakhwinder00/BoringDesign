@@ -2,24 +2,67 @@
     <div class="my-project">
         <h2>Analysis Result</h2>
     </div>
-    <form class="form-build">
+    <form class="form-build" autocomplete="off" [formGroup]="analysisFileForm">
         <div class="rep-field w-full">
             <mat-form-field class="w-full">
                 <mat-label>Name</mat-label>
-                <input matInput type="text" matInput placeholder="Input">
+                <input matInput tabindex="-1" type="text" matInput placeholder="Input"  formControlName="analysisName"
+                 [ngClass]="{ 'is-invalid': submitted && f['analysisName'].errors }">
             </mat-form-field>
+            <div *ngIf="submitted && f['analysisName'].errors" class="invalid-feedback">
+                <div *ngIf="f['analysisName'].errors['required']">Name is required</div>
+            </div>
         </div>
     </form>
-    <form class="form-build">
-        <div class="rep-field">
-            <img src="../../../assets/img/building.png" style="width:200px">
-            <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-            <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+        <div class="rep-field" *ngIf="this.isShowResult else nodata">
+            <div class="result-main">
+                <div class="result-img">
+                    <img src="../../../assets/img/building.png">
+                </div>
+                <div class="result-bar">
+                    <div class="cus-progress-bar">
+                        <p>Detail</p>
+                        <div class="prog-inner">
+                            <mat-progress-bar mode="determinate" value="{{detailsValue}}"></mat-progress-bar>
+                            <span>{{details}}</span>
+                        </div>
+                    </div>
+                    <div class="cus-progress-bar">
+                        <p>Volume</p>
+                        <div class="prog-inner">
+                            <mat-progress-bar mode="determinate" value="{{volumeValue}}"></mat-progress-bar>
+                            <span>{{volume}}</span>
+                        </div>
+                    </div>
+                    <div class="cus-progress-bar">
+                        <p>Massing</p>
+                        <div class="prog-inner">
+                            <mat-progress-bar mode="determinate" value="{{massingValue}}"></mat-progress-bar>
+                            <span>{{massing}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </form>
-    <div class="delete-acc-btn">
-         <button type="button" mat-button class="close-btn">Download</button>
-         <button type="button" mat-button class="close-btn">Save</button>
-        <button type="button" mat-button class="close-btn" (click)="closeDialog()">Close</button>
+        <div class="cus-progress-bar" *ngIf="this.isShowResult">
+            <p>Total</p>
+            <div class="prog-inner">
+                <mat-progress-bar mode="determinate" value="{{totalValue}}"></mat-progress-bar>
+                <span>{{total}}</span>
+            </div>
+        </div>
+        <ng-template #nodata>
+            <div class="cus-progress-bar">
+                <p>Loading...</p>
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+        </ng-template>
+   
+
+    <div class="btns-group">
+        <button type="button" tabindex="-1" mat-button>Download</button>
+        <button type="submit" tabindex="-1"  mat-button (click)="onSubmit()">Save</button>
+        <button type="button" tabindex="-1" mat-button (click)="closeDialog()">Close</button>
     </div>
 </div>

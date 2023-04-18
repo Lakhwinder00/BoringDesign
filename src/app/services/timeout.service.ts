@@ -31,9 +31,7 @@ export class TimeoutService {
     });
     // logs out the user and navigates to the login page when the idle timeout is reached
     this.idle.onTimeout.subscribe(() => {
-      debugger
       this.authService.getUserLoggedIn().subscribe(userLoggedIn => {
-        debugger
         if (userLoggedIn) {
           this.idle.watch()
           this.timedOut = false;

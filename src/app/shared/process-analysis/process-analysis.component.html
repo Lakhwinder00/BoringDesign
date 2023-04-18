@@ -1,100 +1,47 @@
 
-<div class="project-head">
+<div class="project-head cus-form">
   <div class="project-btn">
     <h2>Project Analysis</h2>
   </div>
-  <br>
+  <form class="form-build" autocomplete="off" [formGroup]="analysisFileForm">
+    <div class="rep-field w-full">
+        <mat-form-field class="w-full">
+            <mat-label>Name</mat-label>
+            <input matInput tabindex="-1" type="text" matInput placeholder="Input"  formControlName="projectName"
+             [ngClass]="{ 'is-invalid': submitted && f['projectName'].errors }">
+        </mat-form-field>
+        <div *ngIf="submitted && f['projectName'].errors" class="invalid-feedback">
+            <div *ngIf="f['projectName'].errors['required']">Name is required</div>
+        </div>
+    </div>
+</form>
 </div>
 <div class="project-listing">
-  <ul>
+  <ng-container  *ngIf="projectScoreList.length!=0 else nodata" >
+  <ul *ngFor="let item of projectScoreList">
     <li>
       <div class="pro-left-icon">
        <mat-icon>bar_chart</mat-icon>
-        <h6>Project 1</h6>
+        <h6>{{item.projectScoreName}}</h6>
       </div>
       <div class="list-right-icons">
-        <button  (click)="analysesScore()" >
+        <button  (click)="analysesScore(item)" >
           <mat-icon class="search-icon">search</mat-icon>
         </button>
-        <button (click)="deleteProject()">
-          <mat-icon class="delete-icon">delete</mat-icon>
-        </button>
-      </div>
-    </li>
-    <li>
-      <div class="pro-left-icon">
-       <mat-icon>bar_chart</mat-icon>
-        <h6>Project 2</h6>
-      </div>
-      <div class="list-right-icons">
-        <button  (click)="analysesScore()" >
-          <mat-icon class="search-icon">search</mat-icon>
-        </button>
-        <button (click)="deleteProject()">
-          <mat-icon class="delete-icon">delete</mat-icon>
-        </button>
-      </div>
-    </li>
-    <li>
-      <div class="pro-left-icon">
-       <mat-icon>bar_chart</mat-icon>
-        <h6>Project 3</h6>
-      </div>
-      <div class="list-right-icons">
-        <button  (click)="analysesScore()" >
-          <mat-icon class="search-icon">search</mat-icon>
-        </button>
-        <button (click)="deleteProject()">
-          <mat-icon class="delete-icon">delete</mat-icon>
-        </button>
-      </div>
-    </li>
-    <li>
-      <div class="pro-left-icon">
-       <mat-icon>bar_chart</mat-icon>
-        <h6>Project 4</h6>
-      </div>
-      <div class="list-right-icons">
-        <button  (click)="analysesScore()" >
-          <mat-icon class="search-icon">search</mat-icon>
-        </button>
-        <button (click)="deleteProject()">
-          <mat-icon class="delete-icon">delete</mat-icon>
-        </button>
-      </div>
-    </li>
-    <li>
-      <div class="pro-left-icon">
-       <mat-icon>bar_chart</mat-icon>
-        <h6>Project 5</h6>
-      </div>
-      <div class="list-right-icons">
-        <button  (click)="analysesScore()" >
-          <mat-icon class="search-icon">search</mat-icon>
-        </button>
-        <button (click)="deleteProject()">
-        <mat-icon class="delete-icon">delete</mat-icon>
-        </button>
-      </div>
-    </li>
-    <li>
-      <div class="pro-left-icon">
-       <mat-icon>bar_chart</mat-icon>
-        <h6>Project 6</h6>
-      </div>
-      <div class="list-right-icons">
-        <button  (click)="analysesScore()" >
-          <mat-icon class="search-icon">search</mat-icon>
-        </button>
-        <button (click)="deleteProject()">
+        <button (click)="deleteProject(item)">
           <mat-icon class="delete-icon">delete</mat-icon>
         </button>
       </div>
     </li>
   </ul>
+</ng-container>
+<ng-template #nodata><span style="position: absolute;top: 50%;left: 47%;"> No record found</span></ng-template><br>
 </div>
-<div class="pro-btn-group" style="text-align: right;">
-  <button mat-button  class="project-btn-dialog" (click)="closeDialog()">Close</button>
+<div class="pagination-div" style="margin-left: 20px;" *ngIf="projectScoreList.length!=0"><app-pagination [pageIndex]="pageIndex" [limit]="pageSize" [total]="count" (pageChange)="pageChanged($event)">
+</app-pagination></div>
+<div class="btns-group" style="text-align: right;">
+  <button mat-button tabindex="-1" (click)="saveDialog()">Save</button>
+  <button mat-button tabindex="-1" (click)="closeDialog()">Close</button>
 </div>
 
 

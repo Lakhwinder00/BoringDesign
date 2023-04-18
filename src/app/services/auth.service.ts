@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
+import jwt_decode from 'jwt-decode';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private userLoggedIn = new Subject<boolean>();
-  constructor(private router:Router) { 
+  constructor(private router:Router, public dialog: MatDialog) { 
     this.userLoggedIn.next(false);
   }
   setToken(token:any){
@@ -18,7 +20,8 @@ export class AuthService {
     let token= localStorage.getItem('token')
     if(token !=null)
     {
-      const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+      let tokenProp=this.getDecodedAccessToken(token)
+      const expiry =tokenProp.exp;
       if(expiry * 1000 < Date.now())
       {
         localStorage.clear();
@@ -26,6 +29,13 @@ export class AuthService {
       }
     }
     
+  }
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token)
+    } catch(Error) {
+      return null;
+    }
   }
   setEmail(email:any)
   {
@@ -48,5 +58,7 @@ export class AuthService {
   {
     localStorage.clear();
     localStorage.removeItem("token");
+    this.dialog.closeAll();
+    this.router.navigate(['/login']);
   }
 }

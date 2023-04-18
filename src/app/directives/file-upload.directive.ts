@@ -17,7 +17,6 @@ export class FileUploadDirective {
 
   // Dragover listener
   @HostListener('dragover', ['$event']) onDragOver(evt:any) {
-    debugger
     evt.preventDefault();
     evt.stopPropagation();
     this.fileOver = true;
@@ -25,7 +24,6 @@ export class FileUploadDirective {
 
   // Dragleave listener
   @HostListener('dragleave', ['$event']) public onDragLeave(evt:any) {
-    debugger
     evt.preventDefault();
     evt.stopPropagation();
     this.fileOver = false;
@@ -33,7 +31,6 @@ export class FileUploadDirective {
 
   // Drop listener
   @HostListener('drop', ['$event']) public ondrop(evt:any) {
-    debugger
     evt.preventDefault();
     evt.stopPropagation();
     this.fileOver = false;

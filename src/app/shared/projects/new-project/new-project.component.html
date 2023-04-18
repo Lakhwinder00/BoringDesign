@@ -1,29 +1,32 @@
-<div class="inner-container" style="">
-      <div class="project-left">
-        <div class="new-project-head">
-          <div class="cus-form">
-            <form class="form-build">
-              <div class="new-project-btn">
-                <h2>New Project</h2>
-              </div>
-              <div class="rep-field w-full">
-                <mat-form-field class="w-full">
-                  <mat-label>Project Name</mat-label>
-                  <input tabindex="-1" 
-                    matInput
-                    type="text"
-                    placeholder="Input"
-                  >
-                </mat-form-field>
-              </div>
-            </form>
+<div class="inner-container">
+  <div class="project-left">
+    <div class="new-project-head">
+      <div class="cus-form">
+        <form class="form-build" class="form-build" autocomplete="off" [formGroup]="proccessFileForm">
+          <div class="new-project-btn">
+            <h2>{{projectName}}</h2>
           </div>
-        </div>
+          <div class="rep-field w-full">
+            <mat-form-field class="w-full" [ngStyle]="isCreated?{'display': 'block'} : {'display': 'none'}">
+              <mat-label>Project Name</mat-label>
+              <input tabindex="-1" 
+                matInput
+                type="text" formControlName="projectName"
+                placeholder="Input" [ngClass]="{ 'is-invalid': submitted && f['projectName'].errors }"
+              >
+            </mat-form-field>
+            <div *ngIf="submitted && f['projectName'].errors" class="invalid-feedback">
+              <div *ngIf="f['projectName'].errors['required']">Project name is required</div>
+          </div>
+          </div>
+        </form>
+      </div>
+    </div>
     <div class="cus-pro-container">
       <div class="project-left">
         <div class="cus-dropzone" id="boxupload" appFileUpload (fileDropped)="onFileDropped($event)">
           <div class="dropzone-wrapper">
-            <input type="file"  (change)="fileBrowseHandler($event)" id="fileDropRef" />
+            <input type="file" (click)="resetFile()"  #fileUploader  (change)="fileBrowseHandler($event)" id="fileDropRef" />
             <div class="dropzone">
               <div class="upload-head">
                 <div class="upload-plus-icon" class="upload-head">
@@ -47,9 +50,9 @@
         </div>
 
         <div class="uploaded-btn modal-btn-group" align="end">
-          <button  (click)="CreateFile()" mat-button>Create</button>
+          <button  tabindex="-1" (click)="CreateFile()" mat-button>Create</button>
           &nbsp;
-          <button  (click)="cancelCreate()"  mat-button>Cancel</button>
+          <button tabindex="-1"  (click)="cancelCreate()"  mat-button>Cancel</button>
         </div>
       </div>
     </div>

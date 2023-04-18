@@ -1,0 +1,26 @@
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"  [class.disabled]="pageIndex === 1">
+      <a class="page-link  custom-preview"  (click)="pageChangeBackward()" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <!--<a class="page-link" title="Go to previous page" (click)="pageChangeBackward()"><strong>Previous</strong></a>-->
+    </li>
+    <li class="page-item" [class.active]="no === pageIndex" *ngFor="let no of totalPageNo;let i=index">
+      <!--{{i}}-->
+      <div *ngIf="startPage >= this.pageIndexNumberSize&& i==0"><a class="page-link" title="You are on page no 1" (click)="startPageChangeIndex(1)">1</a></div>
+      <div *ngIf="startPage >= this.pageIndexNumberSize && i==1"><a class="page-link" (click)="prevChangeIndex(startPage-this.pageIndexNumberSize)">...</a></div>
+      <div *ngIf="i>=startPage &&i < defaultPage"><a class="page-link" title="You are on page no {{no}}" (click)="pageChangeIndex(no)">{{no}}</a></div>
+      <div *ngIf="i==this.defaultPage"><a class="page-link" (click)="pageChangeIndex(this.defaultPage+1)">...</a></div>
+      <div *ngIf="startPage >= this.pageIndexNumberSize && i==this.defaultPage+1"><a class="page-link" title="You are on page no {{totalPageNo.length}}" (click)="lastChangeIndex(totalPageNo.length)">{{totalPageNo.length}}</a></div>
+    </li>
+    <li class="page-item" [class.disabled]="pageIndex === totalSizeOfPages">
+      <a class="page-link custom-next"  (click)="pageChangeForward()" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+</nav>

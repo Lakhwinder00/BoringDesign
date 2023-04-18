@@ -10,6 +10,7 @@ export class WelcomPageComponent implements OnInit {
   constructor(private utilService: UtilService) {}
 
   ngOnInit(): void {
+    console.clear();
     this.utilService.sendClickEvent(false);
   }
 }

@@ -2,36 +2,54 @@
     <div class="my-project">
         <h2>My Account</h2>
     </div>
-    <form class="form-build">
+    <form class="form-build" [formGroup]="updateEmailForm" (ngSubmit)="updateEmail()">
         <div class="rep-field w-full">
             <mat-form-field class="w-full">
                 <mat-label>Email</mat-label>
-                <input matInput type="text" matInput placeholder="Input">
+                <input tabindex="-1" formControlName="email" [ngClass]="{ 'is-invalid': updateEmailSubmitted && u['email'].errors }" matInput
+                    type="text" matInput placeholder="Input">
             </mat-form-field>
+            <div *ngIf="updateEmailSubmitted && u['email'].errors" class="invalid-feedback">
+                <div *ngIf="u['email'].errors['required']">Email is required</div>
+            </div>
         </div>
         <div class="uploaded-btn">
-            <button type="button" (click)="updateEmail()" mat-button type="submit">Save</button>
+            <button tabindex="-1" mat-button type="submit">Save</button>
         </div>
     </form>
-    <form class="form-build">
+    <form class="form-build" autocomplete="off" [formGroup]="updatePasswordForm" (ngSubmit)="updatePassword()">
         <div class="rep-field w-full">
             <mat-form-field class="w-full">
                 <mat-label>Password</mat-label>
-                <input matInput type="text" matInput placeholder="Input">
+                <input matInput tabindex="-1" formControlName="password"
+                    [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" type="password" matInput
+                    placeholder="Input">
             </mat-form-field>
+            <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                <div *ngIf="f['password'].errors['required']">Password is required</div>
+            </div>
         </div>
         <div class="rep-field w-full">
             <mat-form-field class="w-full">
                 <mat-label>Confirm Password</mat-label>
-                <input matInput type="text" matInput placeholder="Input">
+                <input matInput tabindex="-1" formControlName="confirmPassword" (keyup)="comparePassword($event)"
+                    type="password" matInput [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }"
+                    placeholder="Input">
             </mat-form-field>
         </div>
+        <div *ngIf="isComparePassword" class="invalid-feedback">
+            <div>Confirm Password is not matched with password</div>
+        </div>
+        <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
+            <div *ngIf="f['confirmPassword'].errors['required']">Confirm Password is required</div>
+        </div>
         <div class="uploaded-btn">
-            <button type="submit" (click)="updatePassword()" mat-button type="submit">Update</button>
+            <button  tabindex="-1" mat-button type="submit">Update</button>
         </div>
     </form>
     <div class="delete-acc-btn">
-        <button type="button" mat-button class="delete-btn" type="submit">Delete Account</button>&nbsp;
-        <button type="button" mat-button class="close-btn" (click)="closeDialog()">Close</button>
+        <button type="button" tabindex="-1" mat-button class="delete-btn" (click)="deleteAccount()">Delete
+            Account</button>&nbsp;
+        <button type="button" tabindex="-1" mat-button class="close-btn" (click)="closeDialog()">Close</button>
     </div>
 </div>
