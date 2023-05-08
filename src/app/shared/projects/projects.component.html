@@ -1,39 +1,42 @@
-
 <div class="project-head">
+  <app-circle #apploading></app-circle>
   <div class="project-btn">
     <h2>Projects</h2>
   </div>
-  <br>
 </div>
 <div class="project-listing">
-  <ng-container  *ngIf="ProjectList?.result?.length!=0 else nodata" >
-    <ul *ngFor="let item of ProjectList?.result">
-      <li style="cursor:pointer;">
-        <div class="pro-left-icon"  (click)="updateProject(item)">
-          <mat-icon>business</mat-icon>
-          <h6>{{item.projectName}}</h6>
-        </div>
-        <div class="list-right-icons">
-          <button>
-            <mat-icon class="search-icon" (click)="projectAnalysis(item)">search</mat-icon>
-          </button>
-          <button>
-            <mat-icon class="delete-icon" (click)="deleteProject(item)">delete</mat-icon>
-          </button>
-        </div>
-      </li>
-    </ul>
-  </ng-container>
-  <ng-template #nodata><span style="position: absolute; top: 50%; left: 47%;"> No record found</span></ng-template>
-  <div class="pagination-div" style="margin-left: 20px;" *ngIf="ProjectList?.result?.length!=0">
-    <app-pagination [pageIndex]="pageIndex" [limit]="pageSize" [total]="count" (pageChange)="pageChanged($event)">
+  <div class="inner-height">
+    <ng-container *ngIf="ProjectList?.length!=0 else nodata">
+      <ul *ngFor="let item of ProjectList">
+        <li style="cursor:pointer;">
+          <div class="pro-left-icon" (click)="projectAnalysis(item)">
+            <mat-icon>business</mat-icon>
+            <h6>{{item.projectName}}</h6>
+          </div>
+          <div class="list-right-icons">
+            <button>
+              <img src="../../assets/img/search-icon.svg" (click)="updateProject(item)" class="serach-icon">
+            </button>
+            <button>
+              <mat-icon class="delete-icon" (click)="deleteProject(item)">delete</mat-icon>
+            </button>
+          </div>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-template #nodata>
+      <div class="no-record-found">
+        <!-- <p>No record found</p> -->
+      </div>
+    </ng-template>
+  </div>
+  <div class="pagination-div" *ngIf="ProjectList?.length!=0">
+    <app-pagination [pageIndex]="pageIndex" [limit]="pageSize" [total]="count" [changeDefaultPage]="changeDefaultPage"
+      [changeStartPage]="changeStartPage" (pageChange)="pageChanged($event)">
     </app-pagination>
   </div>
 </div>
 <div class="btns-group">
-  <button mat-button tabindex="-1"  (click)="newProject()">New Project</button>
-  <button mat-button  tabindex="-1" (click)="closeDialog()">Close</button>
+  <button mat-button tabindex="-1" (click)="newProject()">New Project</button>
+  <button mat-button tabindex="-1" (click)="closeDialog()">Close</button>
 </div>
-
-
-     

@@ -1,0 +1,47 @@
+<div class="inner-container">
+  <div class="project-left">
+    <div class="new-project-head">
+      <div class="cus-form">
+        <h2>{{projectName}}</h2>
+      </div>
+    </div>
+    <div class="cus-pro-container">
+      <div class="project-left">
+        <div class="cus-dropzone" id="boxupload" appFileUpload (fileDropped)="onFileDropped($event)">
+          <div class="dropzone-wrapper">
+            <input type="file" (click)="resetFile()" accept="image/png, image/jpg, image/tiff" #fileUploader
+              (change)="fileBrowseHandler($event)" id="fileDropRef" />
+            <div class="dropzone">
+              <div class="upload-head">
+                <div class="upload-plus-icon" class="upload-head">
+                  <img src="../../assets/img/upload-plus.png" />
+                  <h5 *ngIf="filename==''; else files">Drag and drop or <u>browse</u> your file <br />.JPG .PNG .TIFF
+                    <br>
+                    <span class="upload-txt">
+                      Upload a 1000px square image including 3 stories
+                      <!-- <img src="../../../assets/img/question.svg" class="img-upload"> -->
+                    </span>
+                  </h5>
+                  <ng-template #files>
+                    <br>
+                    <h4>{{filename}}</h4>
+                    <mat-icon matTooltip="Delete" style="color: #646464; margin-top: -5px;z-index: 999;"
+                      (click)="deleteModel()">delete_forever</mat-icon>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cus-progress-bar" *ngIf="isLoadFile">
+          <p>Uploading...</p>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <div class="uploaded-btn modal-btn-group" align="end">
+          <button tabindex="-1" (click)="CreateFile()" mat-button>Create</button>
+          &nbsp;
+          <button tabindex="-1" (click)="cancelCreate()" mat-button>Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>

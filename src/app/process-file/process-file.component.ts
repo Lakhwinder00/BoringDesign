@@ -3,15 +3,12 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
-  AfterViewInit,
   ViewChildren,
   QueryList,
-  Renderer2,
   HostListener,
 } from '@angular/core';
 
 import { UtilService } from '../services/util.service';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MyAccountComponent } from '../my-account/my-account.component';
 import { ProjectsComponent } from '../shared/projects/projects.component';
@@ -19,18 +16,7 @@ import { DialogConfirmComponent } from '../shared/dialog-confirm/dialog-confirm.
 import { AuthService } from '../services/auth.service';
 import { ProcessAnalysisComponent } from '../shared/process-analysis/process-analysis.component';
 import { ProjectService } from '../services/project.service';
-import {
-  Project,
-  ProjectAnalysisScoreModel,
-} from '../core/model/project.model';
-import { Result } from 'postcss';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { ProjectAnalysisScoreModel } from '../core/model/project.model';
 import { NewProjectComponent } from '../shared/projects/new-project/new-project.component';
 import { AnalysisResultComponent } from '../shared/analysis-result/analysis-result.component';
 
@@ -44,7 +30,9 @@ export class ProcessFileComponent implements OnInit {
   @ViewChildren('el', { read: ElementRef }) children:
     | QueryList<ElementRef>
     | any;
+  @ViewChild('apploading', { static: true }) apploading: ElementRef | any;
   fileOutput: any;
+  public userId: any;
   public parseObj: any;
   public files: any;
   public isDisplay: boolean = false;
@@ -58,74 +46,89 @@ export class ProcessFileComponent implements OnInit {
   public analysisInterval: any;
   public isClear: boolean = false;
   public isAnalyse: boolean = false;
-  public NameOfProject: any;
-  public ProjectList:any=[];
-  public isUpdateProject:boolean=false;
-  public projectId:any;
-  public count: |any;
-  public pageSize: number|any;
-  public pageIndex: number|any;
-  public pageDifference: number|any;
-  public pageEndRange: number|any;
+  public projectName: any;
+  public projectList: any = [];
+  public isUpdateProject: boolean = false;
+  public projectId: any;
+  public count: any;
+  public pageSize: number | any;
+  public pageIndex: number | any;
+  public pageDifference: number | any;
+  public pageEndRange: number | any;
+  public changeDefaultPage: any | undefined;
+  public changeStartPage: any | undefined;
   pageStartRange = 1;
   skip: number = 0;
   fileReset: any;
   submitted = false;
-  @ViewChild('fileUploader') fileUploader: ElementRef | any;
+  @ViewChild('fileUploader', { static: true }) fileUploader: ElementRef | any;
   constructor(
     private utilService: UtilService,
-    private router: Router,
     public dialog: MatDialog,
-    private renderer: Renderer2,
-    private host: ElementRef,
     private authService: AuthService,
-    private projectService: ProjectService,
-  
+    private projectService: ProjectService
   ) {
     this.utilService.sendClickEvent(true);
+    this.utilService.getFileData().subscribe((result) => {
+      this.loadProject(result);
+    });
     this.count = 0;
     this.customPageSetting();
   }
-
   ngOnInit(): void {
-    this.isUpdateProject=false;
+    this.projectList = [];
+    this.isUpdateProject = false;
     let parameters = {
       skip: this.skip,
       take: this.pageSize,
     };
     this.getProjectList(parameters);
-    this.authService.isTokenExpire();
+    this.authService.isTokenExpired();
     this.loginEmail = localStorage.getItem('userEmail');
-   
-    this.SCENE = new SceneViewer(window.innerWidth, window.innerHeight);
+    const token = this.authService.getToken();
+    if (token != null) {
+      const props = this.authService.getDecodedAccessToken(token);
+      this.userId = props.UserId;
+    }else{this.authService.logout()}
+    if (this.SCENE == undefined || this.SCENE == null) {
+      this.SCENE = new SceneViewer(window.innerWidth, window.innerHeight);
+      const container = document.getElementById('main-canvas');
+      if (container != null) {
+        this.SCENE.add(container);
+        this.SCENE.animate();
+      }
+    }
   }
-  
-  // call this function reset the file value;
+
   resetFile() {
     this.fileUploader.nativeElement.value = null;
   }
-  updateProject(item:any){
-    let UpdateProject= this.dialog.open(NewProjectComponent,{data:item.projectName, width:'500px',panelClass:'new-project-cls'});
-    UpdateProject.afterClosed().subscribe((result)=>{
-      this.loadProject(result);
-    })
-    this.projectId=item.id;
+  updateProject(item: any) {
+    this.projectId = item.id;
+    const update = this.dialog.open(NewProjectComponent, {
+      data: item.projectName,
+      width: '500px',
+      panelClass: 'new-project-cls',
+    });
+    update.afterClosed().subscribe(() => {});
   }
-  // call this function get the list of project
-  getProjectList(parameters:any)
-  {
-    let token=this.authService.getToken();
-    if(token!=null)
-    {
-      let tokenProp=this.authService.getDecodedAccessToken(token);
-      this.projectService.getProjectList(tokenProp.UserId,parameters).subscribe((result)=>{
-        this.ProjectList=result;
-        this.count=result.count;
-      })
-    }
+  getProjectList(parameters: any) {
+    const token = this.authService.getToken();
+    if (token != null) {
+      const props = this.authService.getDecodedAccessToken(token);
+      this.userId = props.UserId;
+      this.apploading.loadingProcessStart();
+      this.projectService
+        .getProjectList(props.UserId, parameters)
+        .subscribe((response) => {
+          this.projectList = response.result;
+          this.count = response.count;
+          this.apploading.loadingProcessStop();
+        });
+    }else{this.authService.logout()}
   }
-  // call this function on recent activity page event
-  pageChanged(Event:any): any {
+  pageChanged(Event: any): any {
+    this.resetPaging();
     this.pageIndex = Event;
     this.pageEndRange = this.pageIndex * this.pageSize;
     this.pageStartRange = this.pageEndRange - this.pageDifference;
@@ -136,66 +139,57 @@ export class ProcessFileComponent implements OnInit {
     };
     this.getProjectList(parameters);
   }
-
-  // call this function create the new project
-  newproject()
-  {
-   let CreateNewProject= this.dialog.open(NewProjectComponent,{data:null,width:'500px',panelClass:'new-project-cls'});
-   CreateNewProject.afterClosed().subscribe((result)=>{
-    this.loadProject(result);
-   })
+  resetPaging() {
+    this.changeDefaultPage = undefined;
+    this.changeStartPage = undefined;
   }
-  
-  loadProject(result:any)
-  {
-    if(result!=undefined)
-    {
-      this.isDisplay=result.isDisplay;
-      if(result.projectId!=undefined)
-      this.projectId=result.projectId;
-      if(this.projectId==null ||this.projectId==undefined)
-      {return}
-      if(result.isDisplay){
-        this.isUpload=false;
+  newproject() {
+    let project = this.dialog.open(NewProjectComponent, {
+      data: null,
+      width: '500px',
+      panelClass: 'new-project-cls',
+    });
+    project.afterClosed().subscribe(() => {});
+  }
+  loadProject(result: any) {
+    if (result != undefined) {
+      if (result.projectId != undefined) this.projectId = result.projectId;
+      if (this.projectId == null || this.projectId == undefined) {
+        return;
       }
-        this.SCENE = new SceneViewer(window.innerWidth, window.innerHeight);
-        if (this.children.first.nativeElement.children.length != 0) {
-          for (
-            var i = 0;
-            i < this.children.first.nativeElement.children.length;
-            i++
-          )
-            this.renderer.removeChild(
-              this.host.nativeElement,
-              this.children.first.nativeElement.children[i]
-            );
+
+      setTimeout(() => {
+        this.SCENE.loadModel(result?.file);
+        this.projectName = result.project;
+        if (result.isDisplay) {
+          this.isUpload = false;
         }
-        const container = document.getElementById('main-canvas');
-        if (container != null) {
-          this.SCENE.add(container);
-          this.SCENE.animate();
-        }
-        this.SCENE.loadModel(result.file);
-        this.NameOfProject=result.project
+        this.isDisplay = result.isDisplay;
         this.isClear = false;
-        clearInterval(this.interval);
         this.isAnalyse = false;
-        clearInterval(this.analysisInterval);
+        this.resetPaging();
         let parameters = {
           skip: this.skip,
           take: this.pageSize,
         };
         this.getProjectList(parameters);
+        this.utilService.fileProcessResult(true);
+      }, 100);
+    } else {
+      this.utilService.fileProcessResult(true);
     }
   }
-  // call this function create the line//
   createLine() {
+    this.clearAnalyse();
     this.SCENE.SELECTOR.startSelection();
     this.hideShowClearButton();
   }
+  disposeScene() {
+    window.location.href = '/home';
+  }
   hideShowClearButton() {
     this.interval = setInterval(() => {
-      if (this.SCENE.SELECTOR.createline == true) {
+      if (this.SCENE.SELECTOR.line != null) {
         this.isClear = true;
         clearInterval(this.interval);
       } else {
@@ -203,28 +197,46 @@ export class ProcessFileComponent implements OnInit {
       }
     });
   }
-  clear() {
+  clearLine() {
     this.SCENE.SELECTOR.dispose();
     this.isClear = false;
-    clearInterval(this.interval);
   }
   analyseModel() {
     if (this.isClear == false) {
-      this.warning('Plane line must be drawn first before analyse');
+      this.warning('Analysis plane must be drawn first');
     } else {
-      this.SCENE.ANALYSER.startAnalyse(this.SCENE.SELECTOR.line, 0.1, 16, 16);
-      this.hideShowAnalyseButton();
-      if (
-        this.SCENE.ANALYSER.results &&
-        this.SCENE.ANALYSER.results.length > 0
-      ) {
-        let outputText = this.SCENE.ANALYSER.results.join('\n');
-        let projectAnalysisScoreModel = new ProjectAnalysisScoreModel();
-        projectAnalysisScoreModel.data = outputText;
-        this.projectService.setProjectScoreModel(projectAnalysisScoreModel);
-        this.dialog.open(AnalysisResultComponent,{data:{projectScoreId:null,projectId:this.projectId},panelClass:'project-analysis-cls'})
-      }
+      this.apploading.loadingProcessStart();
+      setTimeout(() => {
+        this.SCENE.ANALYSER.startAnalyse(this.SCENE.SELECTOR.line, 0.1, 16, 16);
+        this.hideShowAnalyseButton();
+        if (
+          this.SCENE.ANALYSER.results &&
+          this.SCENE.ANALYSER.results.length > 0
+        ) {
+          let outputText = this.SCENE.ANALYSER.results.join('\n');
+          let imageData = this.SCENE.getImage();
+          let projectAnalysisScoreModel = new ProjectAnalysisScoreModel();
+          projectAnalysisScoreModel.data = outputText;
+          projectAnalysisScoreModel.imageData = imageData;
+          this.projectService.setProjectScoreModel(projectAnalysisScoreModel);
+          this.apploading.loadingProcessStop();
+          this.dialog.open(AnalysisResultComponent, {
+            data: {
+              projectScoreId: null,
+              projectId: this.projectId,
+              projectName: this.projectName,
+            },
+            panelClass: 'project-analysis-cls',
+          });
+        }
+      }, 300);
     }
+  }
+  currentViewAnalysis() {
+    this.dialog.open(ProcessAnalysisComponent, {
+      data: { projectId: this.projectId, projectName: this.projectName },
+      panelClass: 'process-cls',
+    });
   }
   clearAnalyse() {
     this.SCENE.ANALYSER.dispose();
@@ -233,7 +245,7 @@ export class ProcessFileComponent implements OnInit {
   }
   hideShowAnalyseButton() {
     this.analysisInterval = setInterval(() => {
-      if (this.SCENE.ANALYSER.analyses == true) {
+      if (this.SCENE.ANALYSER.result != null) {
         this.isAnalyse = true;
         clearInterval(this.analysisInterval);
       } else {
@@ -253,11 +265,13 @@ export class ProcessFileComponent implements OnInit {
   rotateModel() {
     this.SCENE.ROTATOR.startSelection();
   }
+  swapCamera() {
+    this.SCENE.swapCamera();
+  }
   logout() {
     this.authService.setUserLoggedIn(false);
-    localStorage.clear();
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.disposeScene();
   }
   myAccount() {
     this.dialog.open(MyAccountComponent, {
@@ -268,8 +282,8 @@ export class ProcessFileComponent implements OnInit {
   deleteModel() {
     this.filename = '';
   }
-  deleteProject(item:any) {
-   let deleteDialog= this.dialog.open(DialogConfirmComponent, {
+  deleteProject(item: any) {
+    let deleteDialog = this.dialog.open(DialogConfirmComponent, {
       data: {
         title: 'Delete Project',
         message:
@@ -281,47 +295,53 @@ export class ProcessFileComponent implements OnInit {
       width: '400px',
       panelClass: 'dialog',
     });
-    deleteDialog.afterClosed().subscribe((result)=>{
-      if(result==true)
-      {
-        this.projectService.deleteProjectById(item.id).subscribe((result)=>{
-          if(result.statusCode==200)
-          {
+    deleteDialog.afterClosed().subscribe((result) => {
+      if (result == true) {
+        this.projectService.deleteProjectById(item.id).subscribe((result) => {
+          if (result.statusCode == 200) {
             this.customPageSetting();
+            this.changeDefaultPage = 0;
+            this.changeStartPage = 0;
             let parameters = {
               skip: 0,
               take: this.pageSize,
             };
             this.getProjectList(parameters);
           }
-        })
+        });
       }
-    })
+    });
   }
-  projectAnalysis(item:any) {
-   let projectAnalysisDialog= this.dialog.open(ProcessAnalysisComponent, {data:{projectId:item.id,projectName:item.projectName}, panelClass: 'process-cls' });
-   projectAnalysisDialog.afterClosed().subscribe((result=>{
-    if(result)
-    {
-      let parameters = {
-        skip: this.skip,
-        take: this.pageSize,
-      };
-      this.getProjectList(parameters)
-    }
-   })
-   )
+  projectAnalysis(item: any) {
+    let dialog = this.dialog.open(ProcessAnalysisComponent, {
+      data: { projectId: item.id, projectName: item.projectName },
+      panelClass: 'process-cls',
+    });
+    dialog.afterClosed().subscribe((result) => {
+      if (result != undefined && result != '') {
+        let parameters = {
+          skip: this.skip,
+          take: this.pageSize,
+        };
+        this.getProjectList(parameters);
+      }
+    });
   }
   openProjects() {
-   
     let dialogRef = this.dialog.open(ProjectsComponent, {
       panelClass: 'project-cls',
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if(result?.file!=undefined &&result?.file!=null)
-      {
-        this.loadProject(result);
+      if (result != undefined && result != null) {
+        this.projectName = result;
       }
+      this.projectService
+        .projectNameExists(this.projectName, this.userId)
+        .subscribe((result) => {
+          if (result.statusCode != 200 || result.message == false) {
+            this.disposeScene();
+          }
+        });
     });
   }
   warning(message: any) {
@@ -335,19 +355,17 @@ export class ProcessFileComponent implements OnInit {
       panelClass: 'dialog',
     });
   }
-  // call this function for default setting pagination
-  customPageSetting()
-  {
+  customPageSetting() {
     this.pageIndex = 1;
     this.pageSize = 7;
     this.pageDifference = this.pageSize - this.pageIndex;
     this.pageEndRange = this.pageIndex * this.pageSize;
   }
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    const container = document.getElementById('main-canvas');
-    if (container != null && this.SCENE != undefined) {
-      this.SCENE.add(container);
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler() {
+    if (this.SCENE != null) {
+      this.SCENE.dispose();
+      this.SCENE = null;
     }
   }
 }

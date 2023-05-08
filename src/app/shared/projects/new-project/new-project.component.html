@@ -1,23 +1,21 @@
 <div class="inner-container">
+  <app-fileuploader #fileloader></app-fileuploader>
   <div class="project-left">
     <div class="new-project-head">
       <div class="cus-form">
         <form class="form-build" class="form-build" autocomplete="off" [formGroup]="proccessFileForm">
           <div class="new-project-btn">
-            <h2>{{projectName}}</h2>
+            <h2>{{title}}</h2>
           </div>
           <div class="rep-field w-full">
-            <mat-form-field class="w-full" [ngStyle]="isCreated?{'display': 'block'} : {'display': 'none'}">
+            <mat-form-field class="w-full" [ngStyle]="isCreateProject?{'display': 'block'} : {'display': 'none'}">
               <mat-label>Project Name</mat-label>
-              <input tabindex="-1" 
-                matInput
-                type="text" formControlName="projectName"
-                placeholder="Input" [ngClass]="{ 'is-invalid': submitted && f['projectName'].errors }"
-              >
+              <input tabindex="-1" matInput type="text" formControlName="projectName" placeholder="Input"
+                [ngClass]="{ 'is-invalid': isSubmitted && f['projectName'].errors }">
             </mat-form-field>
-            <div *ngIf="submitted && f['projectName'].errors" class="invalid-feedback">
+            <div *ngIf="isSubmitted && f['projectName'].errors" class="invalid-feedback">
               <div *ngIf="f['projectName'].errors['required']">Project name is required</div>
-          </div>
+            </div>
           </div>
         </form>
       </div>
@@ -26,18 +24,22 @@
       <div class="project-left">
         <div class="cus-dropzone" id="boxupload" appFileUpload (fileDropped)="onFileDropped($event)">
           <div class="dropzone-wrapper">
-            <input type="file" (click)="resetFile()"  #fileUploader  (change)="fileBrowseHandler($event)" id="fileDropRef" />
+            <input type="file" (click)="resetFile()" #fileUploader accept=".obj" (change)="fileBrowseHandler($event)"
+              id="fileDropRef" />
             <div class="dropzone">
               <div class="upload-head">
                 <div class="upload-plus-icon" class="upload-head">
-                  <img src="../../assets/img/upload-plus.png"/>
-                  <h5 *ngIf="filename==''; else files">Drag and drop or <u>browse</u> your file <br />.OBJ</h5>
+                  <img src="../../assets/img/upload-plus.png" />
+                  <h5 *ngIf="filename==''; else files">Drag and drop or <u>browse</u> your file <br />.OBJ <br>
+                    <span class="upload-txt">Upload model in METERS</span>
+                  </h5>
                   <ng-template #files>
                     <br>
                     <h4>{{filename}}</h4>
-                    <mat-icon matTooltip="Delete" style="color: #646464; margin-top: -5px;z-index: 999;" (click)="deleteModel()">delete_forever</mat-icon>
+                    <mat-icon matTooltip="Delete" style="color: #646464; margin-top: -5px;z-index: 999;"
+                      (click)="deleteModel()">delete_forever</mat-icon>
                   </ng-template>
-                   
+
                 </div>
               </div>
             </div>
@@ -50,13 +52,13 @@
         </div>
 
         <div class="uploaded-btn modal-btn-group" align="end">
-          <button  tabindex="-1" (click)="CreateFile()" mat-button>Create</button>
+          <button tabindex="-1" (click)="CreateFile()" mat-button>Create</button>
           &nbsp;
-          <button tabindex="-1"  (click)="cancelCreate()"  mat-button>Cancel</button>
+          <button tabindex="-1" (click)="cancelCreate()" mat-button>Cancel</button>
         </div>
       </div>
     </div>
 
- 
-  
-</div>
+
+
+  </div>

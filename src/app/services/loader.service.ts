@@ -5,7 +5,7 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import {Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -16,10 +16,10 @@ import { tap } from 'rxjs/operators';
  * loader service
  * toggle loader gif in website
  */
-export class LoaderService  {
-  public loadingSubject  = new BehaviorSubject<boolean>(false);
-  public loading$=this.loadingSubject.asObservable();
-   show() {
+export class LoaderService {
+  public loadingSubject = new BehaviorSubject<boolean>(false);
+  public loading$ = this.loadingSubject.asObservable();
+  show() {
     this.loadingSubject.next(true);
   }
 

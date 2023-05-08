@@ -2,12 +2,10 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { SSAOPass } from 'three/addons/postprocessing/SSAOPass.js';
-
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import { computeBoundsTree, disposeBoundsTree, acceleratedRaycast } from  "../../../node_modules/three-mesh-bvh";
+
+import { computeBoundsTree, disposeBoundsTree, acceleratedRaycast } from 'three-mesh-bvh';
 
 export class SceneViewer {
 
@@ -19,10 +17,19 @@ export class SceneViewer {
 
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(this.BACKGROUND_COLOR);
-        this.scene.fog = new THREE.Fog(0xffffff, 200, 500);
+        this.scene.fog = new THREE.Fog(0xffffff, 200, 300);
 
-        this.camera = new THREE.PerspectiveCamera(60, this.width / this.height, 0.1, 1000);
-        this.camera.position.set(30, 30, 30);
+        this.perspective = new THREE.PerspectiveCamera(60, this.width / this.height, 0.1, 1000);
+        this.perspective.position.set(30, 30, 30);
+        this.perspective.zoom = 1;
+        this.perspective.updateProjectionMatrix();
+
+        this.ortho = new THREE.OrthographicCamera(-this.width / 2, this.width / 2, this.height / 2, -this.height / 2, 0.1, 1000);
+        this.ortho.position.set(0, 30, 0);
+        this.ortho.zoom = 10;
+        this.ortho.updateProjectionMatrix();
+
+        this.camera = this.perspective;
 
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.setSize(this.width, this.height);
@@ -33,15 +40,14 @@ export class SceneViewer {
         this.renderer.setClearColor(0x000000);
         this.renderer.lineWidth = 5;
 
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        this.controls.enableDamping = true;
-        this.controls.dampingFactor = 0.25;
+        this.pcontrols = new OrbitControls(this.perspective, this.renderer.domElement);
+        this.pcontrols.enableDamping = true;
+        this.pcontrols.dampingFactor = 0.25;
 
-        this.composer = new EffectComposer(this.renderer);
-        const ssaoPass = new SSAOPass(this.scene, this.camera, this.width, this.height);
-        ssaoPass.kernelRadius = 0.01;
+        this.ocontrols = new OrbitControls(this.ortho, this.renderer.domElement);
+        this.ocontrols.enableRotate = false;
 
-        this.composer.addPass(ssaoPass);
+        this.controls = this.pcontrols;
 
         this.hemiLight = new THREE.HemisphereLight(0xffffff, 0xbfd4d2, 0.8);
         this.scene.add(this.hemiLight);
@@ -64,6 +70,12 @@ export class SceneViewer {
         this.object = null;
     }
 
+    animate() {
+        requestAnimationFrame(this.animate);
+        this.controls.update();
+        this.renderer.render(this.scene, this.camera);
+    }
+
     add(element) {
         this.container = element;
         element.appendChild(this.renderer.domElement);
@@ -71,23 +83,13 @@ export class SceneViewer {
     }
 
     setSize() {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
 
-        this.width = width;
-        this.height = height;
-
-        this.camera.aspect = width / height;
+        this.camera.aspect = this.width / this.height;
         this.camera.updateProjectionMatrix();
 
-        this.renderer.setSize(width, height);
-        this.composer.setSize(width, height);
-    }
-
-    animate() {
-        requestAnimationFrame(this.animate);
-        this.controls.update();
-        this.composer.render();
+        this.renderer.setSize(this.width, this.height);
     }
 
     loadModel(contents, callback) {
@@ -107,23 +109,29 @@ export class SceneViewer {
 
         this.clearScene();
 
+        this.setGround();
+
+        this.setLights();
+
         this.setOrigin(object);
 
         this.setMaterials(object);
 
-        this.setGround();
-
         this.setGrid(object);
-
-        this.setLights();
 
         this.updateLights(object);
 
         this.setCamera(object);
 
         this.scene.add(object);
+    }
 
-        this.drawGizmo(5);
+    //scene
+
+    dispose() {
+        this.clearScene();
+        this.renderer.dispose();
+        this.container.innerHTML = "";
     }
 
     clearScene() {
@@ -150,81 +158,46 @@ export class SceneViewer {
         }
     }
 
-    setFog(object) {
-        const box = new THREE.Box3().setFromObject(object);
-        const size = box.getSize(new THREE.Vector3());
-        const maxSize = Math.max(size.x, size.y, size.z);
-        this.scene.fog = new THREE.Fog(0xffffff, maxSize * 3, maxSize * 5);
+    setGround() {
+        const ground = new THREE.Mesh(new THREE.PlaneGeometry(5000, 5000), new THREE.MeshPhongMaterial({ color: 0xffffff, depthWrite: false }));
+        ground.rotation.x = - Math.PI / 2;
+        ground.receiveShadow = true;
+        this.scene.add(ground);
     }
 
-    setGrid(object) {
+    setLights() {
+        this.hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.8);
+        this.scene.add(this.hemiLight);
 
-        let radius = 100;
-        let decay = 35.5;
+        this.directionalLight = new THREE.DirectionalLight(0xffffff, 0.20);
+        this.directionalLight.reverse = false;
+        this.scene.add(this.directionalLight);
+    }
+
+    //object
+
+    setGrid(object) {
+        this.grid = new THREE.GridHelper(10000, 10000, 0xdddddd, 0xdddddd);
+        this.grid.renderOrder = 0;
+        this.scene.add(this.grid);
 
         if (object) {
             const box = new THREE.Box3().setFromObject(object);
             const size = box.getSize(new THREE.Vector3());
-            const maxSize = Math.max(size.x, size.z);
-            if (maxSize > radius) {
-                radius = maxSize * 1.2;
+            const max = Math.max(size.x, size.z);
+            if (max > 100) {
+                this.scene.fog = new THREE.Fog(0xffffff, max * 2, max * 10);
+            }
+            else {
+                this.scene.fog = new THREE.Fog(0xffffff, 100, 300);
             }
         }
-
-        this.grid = new THREE.GridHelper(10000, 10000, 0x000000, 0x000000);
-        this.grid.renderOrder = 0;
-
-        const material = new THREE.ShaderMaterial({
-            uniforms: {
-                center: { value: new THREE.Vector3(0, 0, 0) },
-                radius: { value: radius },
-                fogColor: { value: this.scene.fog.color },
-                fogNear: { value: this.scene.fog.near },
-                fogFar: { value: this.scene.fog.far }
-            },
-            vertexShader: `
-                            varying vec3 vPos;
-
-                            void main() {
-                                vPos = position;
-                                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                            }
-                        `,
-            fragmentShader: `
-                            uniform vec3 center;
-                            uniform float radius;
-                            uniform vec3 fogColor;
-                            uniform float fogNear;
-                            uniform float fogFar;
-                            varying vec3 vPos;
-
-                            void main() {
-                                float dist = length(vPos - center);
-                                float alpha = smoothstep(radius - ${decay}, radius, dist);
-                                vec3 color = mix(vec3(0.8, 0.8, 0.8), vec3(1.0, 1.0, 1.0), alpha);
-
-                                #ifdef USE_FOG
-                                    float fogFactor = smoothstep(fogNear, fogFar, length(vPos));
-                                    color = mix(color, fogColor, fogFactor);
-                                #endif
-
-                                gl_FragColor = vec4(color, 1.0);
-                            }
-                        `
-        });
-
-        material.opacity = 0.1;
-        material.transparent = true;
-
-        this.grid.material = material;
-
-        this.scene.add(this.grid);
     }
 
     setMaterials(object) {
         const material = new THREE.MeshPhongMaterial({
-            color: 0xffffff,
-            flatShading: true,
+            color: 0xf5f5f5,
+            flatShading: false,
             shininess: 0.5,
             transparent: false,
             opacity: 1,
@@ -251,7 +224,7 @@ export class SceneViewer {
         const center = box.getCenter(new THREE.Vector3());
         object.position.set(-center.x, object.position.y, -center.z);
         object.updateMatrix();
-        object.updateMatrixWorld();         
+        object.updateMatrixWorld();
     }
 
     setCamera(object) {
@@ -259,43 +232,39 @@ export class SceneViewer {
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
         const max = Math.max(size.x, size.y, size.z);
-        const x = max;
-        const y = max;
-        const z = max;
-        this.controls.target.copy(center);
-        this.camera.position.set(x, y, z);
-        this.camera.up.set(0, 1, 0);
-        this.camera.lookAt(this.scene.position);
-        this.camera.updateProjectionMatrix();
-    }
 
-    scaleObject(object) {
-        const box = new THREE.Box3().setFromObject(object);
-        const size = box.getSize(new THREE.Vector3());
-        const maxSize = Math.max(size.x, size.y, size.z);
-        if (maxSize > 200) {
-            object.scale.setScalar(0.01);
+        if (this.camera === this.perspective) {
+            this.camera.position.set(max, max, max);
+            this.camera.lookAt(center);
+            this.camera.updateProjectionMatrix();
+        } else if (this.camera === this.ortho) {
+            this.camera.position.set(0, max, 0);
+            this.camera.lookAt(center);
+            this.camera.updateProjectionMatrix();
         }
-    }
 
-    setGround() {
-        const ground = new THREE.Mesh(new THREE.PlaneGeometry(5000, 5000), new THREE.MeshPhongMaterial({ color: 0xffffff, depthWrite: false }));
-        ground.rotation.x = - Math.PI / 2;
-        ground.receiveShadow = true;
-        this.scene.add(ground);
+        if (this.camera === this.perspective) {
+            this.controls = this.pcontrols;
+        } else {
+            this.controls = this.ocontrols;
+        }
+
+        this.controls.reset();
+        this.controls.target.copy(center);
+        this.controls.update();
     }
 
     updateLights(object) {
         const box = new THREE.Box3().setFromObject(object);
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
-        const maxSize = Math.max(size.x, size.y, size.z);
-        const distance = maxSize * 1.5;
+        const max = Math.max(size.x, size.y, size.z);
+        const distance = max * 1.5;
 
-        this.hemiLight.position.copy(center).add(new THREE.Vector3(0, maxSize, 0));
+        this.hemiLight.position.copy(center).add(new THREE.Vector3(0, max, 0));
 
         const direction = this.directionalLight.reverse ? new THREE.Vector3(1, 1, -1).normalize() : new THREE.Vector3(-1, 1, 1).normalize();
-        const lightPosition = center.clone().add(direction.multiplyScalar(maxSize));
+        const lightPosition = center.clone().add(direction.multiplyScalar(max));
         this.directionalLight.position.copy(lightPosition);
         this.directionalLight.castShadow = true;
         this.directionalLight.shadow.mapSize = new THREE.Vector2(2048, 2048);
@@ -311,67 +280,12 @@ export class SceneViewer {
         this.renderer.shadowMap.needsUpdate = true;
     }
 
-    setLights() {
-        this.hemiLight = new THREE.HemisphereLight(0xffffff, 0xbfd4d2, 0.8);
-        this.scene.add(this.hemiLight);
-
-        this.directionalLight = new THREE.DirectionalLight(0xffffff, 0.20);
-        this.directionalLight.reverse = false;
-        this.scene.add(this.directionalLight);
-    }
+    //tools
 
     resetView() {
         if (this.object) {
-            this.setCamera(this.object, this.camera);
+            this.setCamera(this.object);
         }
-    }
-
-    drawGizmo(size) {
-        const redMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 });
-        const greenMaterial = new THREE.LineBasicMaterial({ color: 0x00ff00 });
-        const blueMaterial = new THREE.LineBasicMaterial({ color: 0x0000ff });
-
-        const xLineGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(size, 0, 0)]);
-        const xLine = new THREE.Line(xLineGeometry, redMaterial);
-        this.scene.add(xLine);
-
-        const yLineGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, size, 0)]);
-        const yLine = new THREE.Line(yLineGeometry, greenMaterial);
-        this.scene.add(yLine);
-
-        const zLineGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, size)]);
-        const zLine = new THREE.Line(zLineGeometry, blueMaterial);
-        this.scene.add(zLine);
-    }
-
-    drawBoundingBoxWireframe(object) {
-        const box = new THREE.Box3().setFromObject(object);
-
-        const vertices = [
-            new THREE.Vector3(box.min.x, box.min.y, box.min.z),
-            new THREE.Vector3(box.max.x, box.min.y, box.min.z),
-            new THREE.Vector3(box.max.x, box.min.y, box.max.z),
-            new THREE.Vector3(box.min.x, box.min.y, box.max.z),
-            new THREE.Vector3(box.min.x, box.max.y, box.min.z),
-            new THREE.Vector3(box.max.x, box.max.y, box.min.z),
-            new THREE.Vector3(box.max.x, box.max.y, box.max.z),
-            new THREE.Vector3(box.min.x, box.max.y, box.max.z),
-        ];
-
-        const indices = [
-            0, 1, 1, 2, 2, 3, 3, 0,
-            4, 5, 5, 6, 6, 7, 7, 4,
-            0, 4, 1, 5, 2, 6, 3, 7
-        ];
-
-        const geometry = new THREE.BufferGeometry();
-        geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(vertices.flatMap(v => [v.x, v.y, v.z])), 3));
-        geometry.setIndex(indices);
-
-        const material = new THREE.LineBasicMaterial({ color: 0x000000 });
-
-        const wireframe = new THREE.LineSegments(geometry, material);
-        this.scene.add(wireframe);
     }
 
     rotateLight() {
@@ -381,21 +295,35 @@ export class SceneViewer {
         }
     }
 
-    rotateGrid() {
-        this.grid.rotation.y += Math.PI / 10;
+    swapCamera() {
+
+        if (this.camera === this.perspective) {
+            this.camera = this.ortho;
+        } else {
+            this.camera = this.perspective;
+        }
+
+        if (this.object) {
+            this.setCamera(this.object);
+        }
     }
+
+    getImage() {
+        this.renderer.render(this.scene, this.camera);
+        return this.renderer.domElement.toDataURL("image/png");
+    }
+
 }
 
 export class LineSelector {
-    createline=false;
     constructor(scene) {
+        this.viewer = scene;
         this.scene = scene.scene;
-        this.camera = scene.camera;
         this.renderer = scene.renderer;
         this.mouse = new THREE.Vector2();
         this.onMouseDown = this.onMouseDown.bind(this);
         this.onMouseMove = this.onMouseMove.bind(this);
-        this.snap = false;
+        this.snap = true;
         this.start = null;
         this.end = null;
         this.line = null;
@@ -408,17 +336,25 @@ export class LineSelector {
         this.dispose();
         this.renderer.domElement.addEventListener("mousedown", this.onMouseDown);
         this.renderer.domElement.addEventListener("mousemove", this.onMouseMove);
+        window.addEventListener("keydown", this.onKeyDown);
     }
 
     stopSelection() {
-        this.createline=true;
         this.renderer.domElement.removeEventListener("mousedown", this.onMouseDown);
         this.renderer.domElement.removeEventListener("mousemove", this.onMouseMove);
+        window.removeEventListener("keydown", this.onKeyDown);
         if (this.crosshair !== null) {
             this.crosshair.dispose();
         }
         if (this.crossLine !== null) {
             this.crossLine.dispose();
+        }
+    }
+
+    onKeyDown = (event) => {
+        if (event.key === "Escape" || event.keyCode === 27) {
+            this.dispose();
+            this.stopSelection();
         }
     }
 
@@ -432,6 +368,7 @@ export class LineSelector {
             if (this.start !== null) {
                 this.end = new SelectionPoint(this.scene, position);
                 this.line = new SelectionLine(this.scene, this.start.point, this.end.point);
+                this.line.plane.drawArrows();
                 SelectionText.loadFont('assets/fonts/helvetiker_regular.typeface.json', font => {
                     this.text = new SelectionText(this.scene, this.start.point, font, "TEST");
                     this.text.alignToLine(this.line);
@@ -439,7 +376,7 @@ export class LineSelector {
                 this.stopSelection();
             }
             else {
-                this.start = new SelectionPoint(this.scene, position);;
+                this.start = new SelectionPoint(this.scene, position);
             }
         }
     }
@@ -460,17 +397,25 @@ export class LineSelector {
         if (this.start !== null) {
             if (this.crossLine === null) {
                 this.crossLine = new SelectionLine(this.scene, this.start.point, position);
-
             }
-
             this.crossLine.update(this.start.point, position);
         }
     }
 
     getMousePosition(event) {
+        this.camera = this.viewer.camera;
         const rect = this.renderer.domElement.getBoundingClientRect();
-        this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+        if (this.camera.type === 'OrthographicCamera') {
+            const widthHalf = rect.width / 2;
+            const heightHalf = rect.height / 2;
+
+            this.mouse.x = ((event.clientX - rect.left) - widthHalf) / widthHalf;
+            this.mouse.y = -((event.clientY - rect.top) - heightHalf) / heightHalf;
+        } else {
+            this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        }
     }
 
     getPointOnPlane() {
@@ -487,9 +432,9 @@ export class LineSelector {
     }
 
     dispose() {
-        this.createline=false;
         this.renderer.domElement.removeEventListener("mousedown", this.onMouseDown);
         this.renderer.domElement.removeEventListener("mousemove", this.onMouseMove);
+        window.removeEventListener("keydown", this.onKeyDown);
         if (this.start !== null) {
             this.start.dispose();
             this.start = null;
@@ -522,7 +467,6 @@ export class LineSelector {
 }
 
 export class ModelRotator {
-    
     constructor(scene) {
         this.scene = scene.scene;
         this.camera = scene.camera;
@@ -561,7 +505,7 @@ export class ModelRotator {
     }
 
     stopSelection() {
-    
+
         const objects = this.scene.children.filter(object => object.hasOwnProperty('analyse'));
 
         if (objects.length === 0) {
@@ -702,17 +646,17 @@ export class ModelRotator {
 
     rotateObject(objects) {
         const angle = this.getAngle();
-    
+
         const axis = new THREE.Vector3(0, 1, 0);
         const quaternion = new THREE.Quaternion().setFromAxisAngle(axis, angle);
-    
+
         const offset = objects[0].position.clone().sub(this.start.point);
-    
+
         objects[0].applyQuaternion(quaternion);
-    
+
         const rotatedOffset = offset.clone().applyQuaternion(quaternion);
         objects[0].position.copy(this.start.point).add(rotatedOffset);
-    
+
         objects[0].updateMatrixWorld();
     }
 
@@ -773,25 +717,98 @@ export class SelectionLine extends THREE.Line {
             color: 0xff0000,
             dashSize: 1,
             gapSize: 1,
-            linewidth: 5
+            polygonOffset: true,
+            polygonOffsetFactor: -1,
         });
+
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
         super(geometry, material);
-        this.renderOrder = 1;
         this.computeLineDistances();
         this.start = start;
         this.end = end;
         this.length = start.distanceTo(end);
         this.scene = scene;
         this.scene.add(this);
+        this.plane = new SelectionPlane(this.scene, this.start, this.end);
+        this.renderOrder = 999;
+        this.onBeforeRender = function (renderer) { renderer.clearDepth(); };
+    }
+
+    isParallelToGrid() {
+        const direction = this.end.clone().sub(this.start).normalize();
+        const angle = Math.abs(Math.atan2(direction.x, direction.z));
+        return angle === 0 || angle === Math.PI || angle === Math.PI / 2;
+    }
+
+    updateColor() {
+        if (this.isParallelToGrid()) {
+            this.material.color.set(0x00ff00);
+        } else {
+            this.material.color.set(0xff0000);
+        }
     }
 
     update(start, end) {
+        this.start = start;
+        this.end = end;
         this.geometry.attributes.position.setXYZ(0, start.x, start.y, start.z);
         this.geometry.attributes.position.setXYZ(1, end.x, end.y, end.z);
         this.geometry.attributes.position.needsUpdate = true;
         this.geometry.computeBoundingBox();
         this.geometry.computeBoundingSphere();
+        this.plane.update(start, end);
+        this.updateColor();
+    }
+
+    dispose() {
+        this.scene.remove(this);
+        this.geometry.dispose();
+        this.material.dispose();
+        if (this.plane) {
+            this.plane.dispose();
+            this.plane = null;
+        }
+    }
+}
+
+export class SelectionPlane extends THREE.Mesh {
+    constructor(scene, start, end) {
+        const width = start.distanceTo(end);
+        const height = 16;
+        const geometry = new THREE.PlaneGeometry(width, height);
+        const material = new THREE.MeshPhongMaterial({
+            color: 0xff0000,
+            transparent: true,
+            opacity: 0.1,
+            side: THREE.DoubleSide,
+        });
+        super(geometry, material);
+        this.start = start;
+        this.end = end;
+        this.scene = scene;
+        this.scene.add(this);
+        this.update(start, end);
+    }
+
+    drawArrows() {
+        const center = new THREE.Vector3();
+        this.geometry.computeBoundingBox();
+        this.geometry.boundingBox.getCenter(center);
+
+        const arrow = new THREE.ArrowHelper(this.normal, center, 1.5, 0xff0000, 0.5, 0.5);
+        this.add(arrow);
+    }
+
+    update(start, end) {
+        const width = start.distanceTo(end);
+        const height = 16;
+        const geometry = new THREE.PlaneGeometry(width, height);
+        this.geometry = geometry;
+        const up = new THREE.Vector3(0, 1, 0);
+        const direction = up.clone().cross(end.clone().sub(start).normalize()).normalize();
+        const position = start.clone().add(end).multiplyScalar(0.5).add(new THREE.Vector3(0, 8, 0));
+        this.position.copy(position);
+        this.lookAt(position.clone().add(direction));
     }
 
     dispose() {
@@ -859,11 +876,8 @@ export class SelectionText extends THREE.Mesh {
 }
 
 export class ModelAnalyser {
-    analyses=false;
     constructor(scene, distance = 0.1, height = 16, max = 16) {
         this.scene = scene.scene;
-        this.camera = scene.camera;
-        this.renderer = scene.renderer;
         this.distance = distance;
         this.height = height;
         this.depth = max;
@@ -874,50 +888,37 @@ export class ModelAnalyser {
         this.isRunning = false;
     }
 
-    startAnalyse(line, distance, height, max, log) {
+    startAnalyse(line, distance, height, max) {
+
         this.dispose();
 
         const objects = this.scene.children.filter(object => object.hasOwnProperty('analyse'));
 
         if (objects.length === 0) {
-           // log("no objects to analyse");
             return;
         }
 
         if (line === null) {
             return;
         }
-        
+
         this.distance = distance > 0 ? distance : 0.1;
         this.height = height > 0 ? height : this.getSceneHeight();
         this.depth = max > 0 ? max : Infinity;
 
-        //log("distance: " + this.distance);
-       // log("height: " + this.height);
-       // log("max depth: " + this.depth);
-
         this.dispose();
-        this.analyses=true;
-        var startTime = performance.now();
 
         const rays = this.createRaysOnLine(line, this.distance);
         const grid = this.getRayGrid(rays, this.distance);
 
         const intersections = this.getIntersections(objects, grid);
 
-        var endTime = performance.now();
+        const clean = this.removeInfiniteColumns(intersections);
 
-        var duration = endTime - startTime;
-
-       // log('duration: ' + Math.round(duration) + 'ms');
-
-       // log("intersections: " + intersections.length * intersections[0].length);
-
-        this.results = this.subdivideList(intersections);
+        this.results = this.subdivideList(clean);
     }
 
     dispose() {
-        this.analyses=false
         this.rays.forEach(ray => {
             ray.dispose();
         });
@@ -1028,6 +1029,29 @@ export class ModelAnalyser {
         });
 
         return results;
+    }
+
+    removeInfiniteColumns(matrix) {
+        if (!matrix || !matrix.length || !matrix[0].length) {
+            return [];
+        }
+
+        let leftIndex = 0;
+        let rightIndex = matrix[0].length - 1;
+
+        function isColumnInfinite(matrix, colIndex) {
+            return matrix.every(row => row[colIndex] === Infinity);
+        }
+
+        while (leftIndex <= rightIndex && isColumnInfinite(matrix, leftIndex)) {
+            leftIndex++;
+        }
+
+        while (rightIndex >= leftIndex && isColumnInfinite(matrix, rightIndex)) {
+            rightIndex--;
+        }
+
+        return matrix.map(row => row.slice(leftIndex, rightIndex + 1));
     }
 
     GetMinMax(distance) {

@@ -14,10 +14,8 @@ export class TimeoutService {
     private idle: Idle,
     private keepalive: Keepalive,
     private router: Router,
-    private authService:AuthService
-  ) {
-    
-  }
+    private authService: AuthService
+  ) {}
   start() {
     // sets an idle timeout of 5 minutes
     this.idle.setIdle(15);
@@ -31,15 +29,15 @@ export class TimeoutService {
     });
     // logs out the user and navigates to the login page when the idle timeout is reached
     this.idle.onTimeout.subscribe(() => {
-      this.authService.getUserLoggedIn().subscribe(userLoggedIn => {
+      this.authService.getUserLoggedIn().subscribe((userLoggedIn) => {
         if (userLoggedIn) {
-          this.idle.watch()
+          this.idle.watch();
           this.timedOut = false;
         } else {
           this.idle.stop();
           this.router.navigate(['/login']);
         }
-      })
+      });
     });
     // sets the interrupt sources to listen for user activity
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);

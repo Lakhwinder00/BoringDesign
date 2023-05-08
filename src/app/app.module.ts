@@ -1,4 +1,8 @@
-import { NgModule,CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  NgModule,
+  CUSTOM_ELEMENTS_SCHEMA,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,9 +20,12 @@ import { JwtInterceptor } from './services/jwt-interceptor.service';
 import { AlertService } from './services/alert.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CustomHttpInterceptor, LoaderService } from './services/loader.service';
+import {
+  CustomHttpInterceptor,
+  LoaderService,
+} from './services/loader.service';
 import { LoaderComponent } from './shared/loader/loader.component';
-import { WelcomPageComponent } from './welcom-page/welcom-page.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { UtilService } from './services/util.service';
 import { AuthGuard } from './core/guard/auth-guard.service';
 import { AuthService } from './services/auth.service';
@@ -34,6 +41,10 @@ import { AnalysisResultComponent } from './shared/analysis-result/analysis-resul
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ProjectService } from './services/project.service';
 import { PaginationComponent } from './shared/pagination/pagination.component';
+import { ImageAnalysisResultComponent } from './shared/image-analysis-result/image-analysis-result.component';
+import { CircleLoader, FileuploaderComponent } from './shared/fileuploader/fileuploader.component';
+import { AboutComponent } from './about/about.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +56,7 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
     RegisterComponent,
     ForgotPasswordComponent,
     LoaderComponent,
-    WelcomPageComponent,
+    WelcomePageComponent,
     ProcessFileComponent,
     MyAccountComponent,
     DialogConfirmComponent,
@@ -55,13 +66,15 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
     ProcessAnalysisComponent,
     AnalysisResultComponent,
     ResetPasswordComponent,
-    PaginationComponent
+    PaginationComponent,
+    ImageAnalysisResultComponent,
+    FileuploaderComponent,
+    AboutComponent,
+    ContactUsComponent,
+    CircleLoader
   ],
   entryComponents: [DialogConfirmComponent],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
-    NO_ERRORS_SCHEMA
-  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -71,7 +84,13 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
     BrowserAnimationsModule,
     MaterialModule,
   ],
-  providers: [RegisterService,AuthService,JwtInterceptor,AlertService,ToastrService,LoaderService,
+  providers: [
+    RegisterService,
+    AuthService,
+    JwtInterceptor,
+    AlertService,
+    ToastrService,
+    LoaderService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CustomHttpInterceptor,
@@ -79,12 +98,12 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass:JwtInterceptor,
-      multi:true
+      useClass: JwtInterceptor,
+      multi: true,
     },
     UtilService,
-    ProjectService
+    ProjectService,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

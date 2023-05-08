@@ -1,3 +1,13 @@
+@media screen and (min-width: 1024px) {
+    .main-container {
+        max-width: 1024px;
+    }
+}
+@media screen and (min-width: 1440px) {
+    .main-container {
+        max-width: 1440px;
+    }
+}
 @media screen and (min-width: 1441px) {
     .custom-content{
         .main-wrapper{

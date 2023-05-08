@@ -6,8 +6,9 @@
         <div class="rep-field w-full">
             <mat-form-field class="w-full">
                 <mat-label>Email</mat-label>
-                <input tabindex="-1" formControlName="email" [ngClass]="{ 'is-invalid': updateEmailSubmitted && u['email'].errors }" matInput
-                    type="text" matInput placeholder="Input">
+                <input tabindex="-1" formControlName="email"
+                    [ngClass]="{ 'is-invalid': updateEmailSubmitted && u['email'].errors }" matInput type="text"
+                    matInput placeholder="Input">
             </mat-form-field>
             <div *ngIf="updateEmailSubmitted && u['email'].errors" class="invalid-feedback">
                 <div *ngIf="u['email'].errors['required']">Email is required</div>
@@ -44,7 +45,7 @@
             <div *ngIf="f['confirmPassword'].errors['required']">Confirm Password is required</div>
         </div>
         <div class="uploaded-btn">
-            <button  tabindex="-1" mat-button type="submit">Update</button>
+            <button tabindex="-1" mat-button type="submit">Update</button>
         </div>
     </form>
     <div class="delete-acc-btn">

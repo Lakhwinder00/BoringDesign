@@ -1,4 +1,4 @@
-header{
+header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -6,8 +6,8 @@ header{
   z-index: 3;
   padding: 15px 30px;
   height: 70px;
-  .header-inner{
-    h1{
+  .header-inner {
+    h1 {
       font-weight: 500;
       font-size: 20px;
       letter-spacing: 0.1px;
@@ -16,7 +16,7 @@ header{
       cursor: pointer;
     }
   }
-  .cus-navbar{
+  .cus-navbar {
     width: 100%;
     display: inline-block;
     ul {
@@ -24,19 +24,21 @@ header{
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      li{
-        margin: 0 12px;
-        button{
+      li {
+        margin: 0 4px;
+        button {
           font-weight: 500;
           font-size: 16px;
           letter-spacing: 0.1px;
           color: #000000;
-          padding: 0;
+          padding: 8px 18px;
           min-width: auto;
           line-height: normal;
-          &:hover, &:focus{
-            background-color: transparent;
-            .mat-button-focus-overlay{
+          border-radius: 60px;
+          &:hover,
+          &:focus {
+            background-color: #c8c8c8;
+            .mat-button-focus-overlay {
               display: none;
             }
           }
@@ -49,14 +51,14 @@ header{
 @media screen and (max-width: 767px) {
   header {
     padding: 20px;
-    .header-inner{
-      h1{
+    .header-inner {
+      h1 {
         font-size: 20px;
       }
     }
     .cus-navbar {
-      ul{
-        li{
+      ul {
+        li {
           button {
             font-size: 14px;
           }
@@ -70,9 +72,11 @@ header{
     flex-direction: column;
     justify-content: center;
     .cus-navbar {
-      ul{
+      ul {
         li {
-          margin: 0 6px;
+          button {
+            padding: 6px 15px;
+          }
         }
       }
     }

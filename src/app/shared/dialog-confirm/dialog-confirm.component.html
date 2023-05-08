@@ -4,7 +4,9 @@
     <p [innerHTML]="message"></p>
   </div>
   <div mat-dialog-actions align="end" class="yes-no-btns">
-    <button mat-button tabindex="-1" *ngIf="isShow" [ngClass]="isShow?'btn-dialog-white':'btn-dialog'" (click)="onConfirmClick(true)">{{ButtonYesText}}</button>
-    <button mat-button tabindex="-1" [ngClass]="isShow?'btn-dialog-white':'btn-dialog'"  (click)="onConfirmClick(false)">{{ButtonText}}</button>
+    <button mat-button tabindex="-1" *ngIf="isShow" [ngClass]="isShow?'btn-dialog-white':'btn-dialog'"
+      (click)="onConfirmClick(true)">{{ButtonYesText}}</button>
+    <button mat-button tabindex="-1" [ngClass]="isShow?'btn-dialog-white':'btn-dialog'"
+      (click)="onConfirmClick(false)">{{ButtonText}}</button>
   </div>
 </div>

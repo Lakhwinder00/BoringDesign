@@ -5,47 +5,42 @@ import jwt_decode from 'jwt-decode';
 import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private userLoggedIn = new Subject<boolean>();
-  constructor(private router:Router, public dialog: MatDialog) { 
+  constructor(private router: Router, public dialog: MatDialog) {
     this.userLoggedIn.next(false);
   }
-  setToken(token:any){
-    localStorage.setItem('token',token)
+  setToken(token: any) {
+    localStorage.setItem('token', token);
   }
-  isTokenExpire()
-  {
-    let token= localStorage.getItem('token')
-    if(token !=null)
-    {
-      let tokenProp=this.getDecodedAccessToken(token)
-      const expiry =tokenProp.exp;
-      if(expiry * 1000 < Date.now())
-      {
+  isTokenExpired() {
+    let token = localStorage.getItem('token');
+    if (token != null) {
+      let tokenProp = this.getDecodedAccessToken(token);
+      const expiry = tokenProp.exp;
+      if (expiry * 1000 < Date.now()) {
         localStorage.clear();
         this.router.navigate(['/login']);
       }
     }
-    
   }
   getDecodedAccessToken(token: string): any {
     try {
-      return jwt_decode(token)
-    } catch(Error) {
+      return jwt_decode(token);
+    } catch (Error) {
       return null;
     }
   }
-  setEmail(email:any)
-  {
-    localStorage.setItem('userEmail',email);
+  setEmail(email: any) {
+    localStorage.setItem('userEmail', email);
   }
-  loggedIn(){
+  loggedIn() {
     return !!localStorage.getItem('token');
   }
 
-  getToken(){
+  getToken() {
     return localStorage.getItem('token');
   }
   setUserLoggedIn(userLoggedIn: boolean) {
@@ -54,10 +49,9 @@ export class AuthService {
   getUserLoggedIn(): Observable<boolean> {
     return this.userLoggedIn.asObservable();
   }
-  logout()
-  {
+  logout() {
     localStorage.clear();
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     this.dialog.closeAll();
     this.router.navigate(['/login']);
   }

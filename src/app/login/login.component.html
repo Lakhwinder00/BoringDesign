@@ -1,21 +1,17 @@
 <div class="custom-content">
+  <app-loader></app-loader>
   <div class="main-wrapper">
     <div class="banner_leftContent">
       <h1>Welcome, <br />
         BoringOMeter.</h1>
-      <div class="cus-form">
+      <div class="cus-form login-pg">
         <h3>Login</h3>
         <form class="form-build" [formGroup]="loginform" (ngSubmit)="onSubmit()">
           <div class="rep-field w-full">
             <mat-form-field class="w-full">
               <mat-label>Email</mat-label>
-              <input 
-                matInput
-                type="email"
-                formControlName="email"
-                placeholder="Email"
-                [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
-              >
+              <input matInput type="email" formControlName="email" placeholder="Email"
+                [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
             </mat-form-field>
             <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
               <div *ngIf="f['email'].errors['required']">Email is required</div>
@@ -25,13 +21,8 @@
           <div class="rep-field w-full">
             <mat-form-field class="w-full">
               <mat-label>Password</mat-label>
-              <input
-                matInput
-                type="password"
-                formControlName="password"
-                placeholder="password"
-                [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
-              >
+              <input matInput type="password" formControlName="password" placeholder="password"
+                [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
             </mat-form-field>
             <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
               <div *ngIf="f['password'].errors['required']">Password is required</div>

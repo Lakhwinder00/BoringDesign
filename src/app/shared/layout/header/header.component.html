@@ -1,18 +1,19 @@
 <header>
-    <div class="header-inner" [routerLink]="['/welcome-boring-O-Meter']">
-        <h1 *ngIf="isLogo">BoringOMeter</h1></div> 
+    <div class="header-inner" [routerLink]="['/home']">
+        <h1 *ngIf="isLogo">BoringOMeter</h1>
+    </div>
     <mat-grid-list cols="3">
-       
+
         <div class="cus-navbar">
             <ul>
                 <li>
-                    <button mat-button>About</button>
+                    <button mat-button [routerLink]="['/about']">About</button>
                 </li>
                 <li>
                     <button mat-button>How it works?</button>
                 </li>
                 <li>
-                    <button mat-button>Contact Us</button>
+                    <button mat-button [routerLink]="['/contact-us']">Contact Us</button>
                 </li>
             </ul>
         </div>

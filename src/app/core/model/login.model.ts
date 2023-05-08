@@ -1,15 +1,13 @@
 export interface LoginModel {
-  userId:string;
+  userId: string;
   email: string;
   password: string;
 }
-export interface UpdateEmailModel{
-  oldEmail:string;
-  newEmail:string;
+export interface UpdateEmailModel {
+  oldEmail: string;
+  newEmail: string;
 }
-export interface ResetPasswordModel{
-  code:string;
-  password:string;
+export interface ResetPasswordModel {
+  code: string;
+  password: string;
 }
-
-

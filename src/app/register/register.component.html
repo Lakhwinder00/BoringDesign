@@ -6,66 +6,48 @@
       <div class="cus-form">
         <h3>Register</h3>
         <form class="form-build" [formGroup]="registerform" (ngSubmit)="onSubmit()">
-          
+
           <div class="rep-field w-full">
             <mat-form-field class="w-full">
               <mat-label>Name</mat-label>
-              <input
-              matInput
-              type="name"
-              matInput
-              formControlName="name"
-              placeholder="Name"
-              [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
-            >
-          </mat-form-field>
-          <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
-            <div *ngIf="f['name'].errors['required']">Name is required</div>
+              <input matInput type="name" matInput formControlName="name" placeholder="Name"
+                [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
+            </mat-form-field>
+            <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+              <div *ngIf="f['name'].errors['required']">Name is required</div>
+            </div>
           </div>
-        </div>
 
-        <div class="rep-field w-full">
-          <mat-form-field class="w-full">
-            <mat-label>Email</mat-label>
-            <input
-              matInput
-              type="email"
-              matInput
-              formControlName="email"
-              placeholder="Email"
-              [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
-            >
-          </mat-form-field> 
-          <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
-            <div *ngIf="f['email'].errors['required']">Email is required</div>
+          <div class="rep-field w-full">
+            <mat-form-field class="w-full">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" matInput formControlName="email" placeholder="Email"
+                [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+            </mat-form-field>
+            <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+              <div *ngIf="f['email'].errors['required']">Email is required</div>
+            </div>
           </div>
-        </div>
 
-        <div class="rep-field w-full">
-          <mat-form-field class="w-full">
-            <mat-label>Password</mat-label>
-            <input
-              matInput
-              type="password"
-              matInput
-              formControlName="password"
-              placeholder="password"
-              [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
-            >
-          </mat-form-field>
-          <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
-            <div *ngIf="f['password'].errors['required']">Password is required</div>
+          <div class="rep-field w-full">
+            <mat-form-field class="w-full">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" matInput formControlName="password" placeholder="password"
+                [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+            </mat-form-field>
+            <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+              <div *ngIf="f['password'].errors['required']">Password is required</div>
+            </div>
           </div>
-        </div>
 
-        <div class="button-group">
-          <button type="submit" mat-button>Submit</button>
-          <button type="button" [routerLink]="['/login']" mat-button>Back</button>
-        </div>
-      </form>
-    </div>
-    <div class="building-img">
-      <img src="/assets/img/building.png" />
+          <div class="button-group">
+            <button type="submit" mat-button>Submit</button>
+            <button type="button" [routerLink]="['/login']" mat-button>Back</button>
+          </div>
+        </form>
+      </div>
+      <div class="building-img">
+        <img src="/assets/img/building.png" />
+      </div>
     </div>
   </div>
-</div>

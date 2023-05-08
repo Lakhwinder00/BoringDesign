@@ -1,36 +1,36 @@
-.cus-modal{
-    width: 100%;
-    h1{
-        font-weight: 400;
-        font-size: 24px;
-        color: #000000;
+.cus-modal {
+  width: 100%;
+  h1 {
+    font-weight: 400;
+    font-size: 24px;
+    color: #000000;
+  }
+  p {
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    color: #4d4d4d;
+  }
+  .btn-dialog {
+    min-width: 140px;
+    background: #dbdbdb !important;
+    border-radius: 100px !important;
+    width: 30%;
+  }
+  .btn-dialog-white {
+    min-width: 140px;
+    background: white !important;
+    border-radius: 100px !important;
+    width: 30%;
+  }
+  .mat-dialog-actions {
+    min-height: auto;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    button {
+      min-width: auto;
+      border-radius: 0;
+      background: transparent;
     }
-    p{
-        font-weight: 400;
-        font-size: 14px;
-        letter-spacing: 0.25px;
-        color: #4D4D4D;
-    }
-    .btn-dialog{
-        min-width: 140px;
-        background: #dbdbdb!important;
-        border-radius: 100px!important;
-        width: 30%;
-    }
-    .btn-dialog-white{
-        min-width: 140px;
-        background: white!important;
-        border-radius: 100px!important;
-        width: 30%;
-    }
-    .mat-dialog-actions {
-        min-height: auto;
-        margin-bottom: 0;
-        padding-bottom: 0;
-        button {
-            min-width: auto;
-            border-radius: 0;
-            background: transparent;
-        }
-    }
+  }
 }

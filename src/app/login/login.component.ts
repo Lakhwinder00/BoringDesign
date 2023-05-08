@@ -28,12 +28,11 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private utilServices: UtilService,
     private authService: AuthService,
-    public dialog:MatDialog,
-    
+    public dialog: MatDialog
   ) {
     let isLogged = this.utilServices.IsUserLoggedIn();
     if (isLogged) {
-      this.router.navigate(['/process'])
+      this.router.navigate(['/process']);
     }
   }
 
@@ -42,7 +41,7 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
-    this.utilServices.sendClickEvent(true)
+    this.utilServices.sendClickEvent(true);
   }
   get f(): { [key: string]: AbstractControl } {
     return this.loginform.controls;
@@ -77,22 +76,26 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-  inValidUser(message:any)
-  {
-    this.dialog.open(DialogConfirmComponent,{data:{
-      title:"Invalid User",
-      message:message,
-      buttonText:"Ok",
-      
-    },width: '400px',panelClass:'dialog'})
+  inValidUser(message: any) {
+    this.dialog.open(DialogConfirmComponent, {
+      data: {
+        title: 'Invalid User',
+        message: message,
+        buttonText: 'Ok',
+      },
+      width: '400px',
+      panelClass: 'dialog',
+    });
   }
-  warning(message:any)
-  {
-    this.dialog.open(DialogConfirmComponent,{data:{
-      title:"Warning",
-      message:message,
-      buttonText:"Ok",
-    
-    },width: '400px',panelClass:'dialog'})
+  warning(message: any) {
+    this.dialog.open(DialogConfirmComponent, {
+      data: {
+        title: 'Warning',
+        message: message,
+        buttonText: 'Ok',
+      },
+      width: '400px',
+      panelClass: 'dialog',
+    });
   }
 }

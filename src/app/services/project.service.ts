@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {
   Project,
   ProjectAnalysisScoreModel,
+  ProjectImageAnalysisModel,
   ProjectScore,
 } from '../core/model/project.model';
 import { httpOptions } from '../core/constants/httpHeaders';
@@ -32,6 +33,20 @@ export class ProjectService {
         })
       );
   }
+  public projectImageAnalysisScore(
+    parameters: ProjectImageAnalysisModel
+  ): Observable<any> {
+    var requestBody = JSON.stringify(parameters);
+    return this.http
+      .post(`${BaseUrl.url}api/ProjectImageAnalysis`, requestBody, httpOptions)
+      .pipe(
+        map((response: any) => response),
+        catchError((err) => {
+          console.log(err);
+          return of([err]);
+        })
+      );
+  }
   setProjectScoreModel(model: ProjectAnalysisScoreModel) {
     this.getResult = model;
   }
@@ -50,7 +65,7 @@ export class ProjectService {
       })
     );
   }
-  // Call this use for update the project
+  // Call this use to update the project
   public updateProject(Project: Project) {
     var requestBody = JSON.stringify(Project);
     return this.http.put(`${BaseUrl.url}api/UpdateProject`, requestBody).pipe(
@@ -73,16 +88,17 @@ export class ProjectService {
         })
       );
   }
-  //Call this API check for prjectName is exists in database
-  public IsExistsProjectName(projectName: any): Observable<any> {
-    var requestBody = JSON.stringify(projectName);
-    return this.http.post(`${BaseUrl.url}api/ProjectExists`, requestBody).pipe(
-      map((response: any) => response),
-      catchError((err) => {
-        console.log(err);
-        return of([err]);
-      })
-    );
+  //Call this API check for prjectName exists in database
+  public projectNameExists(projectName: any, UserId: any): Observable<any> {
+    return this.http
+      .get(`${BaseUrl.url}api/ProjectExists/${projectName}/${UserId}`)
+      .pipe(
+        map((response: any) => response),
+        catchError((err) => {
+          console.log(err);
+          return of([err]);
+        })
+      );
   }
 
   // Call this api for get the result of project//
@@ -115,13 +131,15 @@ export class ProjectService {
   // Call this use for update the projectScore
   public updateScoreProject(ProjectScore: ProjectScore) {
     var requestBody = JSON.stringify(ProjectScore);
-    return this.http.put(`${BaseUrl.url}api/UpdateProjectScore`, requestBody).pipe(
-      map((response: any) => response),
-      catchError((err) => {
-        console.log(err);
-        return of([err]);
-      })
-    );
+    return this.http
+      .put(`${BaseUrl.url}api/UpdateProjectScore`, requestBody)
+      .pipe(
+        map((response: any) => response),
+        catchError((err) => {
+          console.log(err);
+          return of([err]);
+        })
+      );
   }
   // Call this api for get the result of project score//
   public getProjectScoreList(
@@ -167,11 +185,12 @@ export class ProjectService {
   }
 
   //Call this API check for prjectScoreName is exists in database
-  public IsExistsProjectScoreName(projectName: any): Observable<any> {
-    debugger
-    var requestBody = JSON.stringify(projectName);
+  public projectScoreNameExists(
+    projectName: any,
+    ProjectId: any
+  ): Observable<any> {
     return this.http
-      .post(`${BaseUrl.url}api/ProjectExistsScore`, requestBody)
+      .get(`${BaseUrl.url}api/ProjectExistsScore/${projectName}/${ProjectId}`)
       .pipe(
         map((response: any) => response),
         catchError((err) => {

@@ -1,8 +1,8 @@
 <div class="inner-container">
+  <app-circle #apploading></app-circle>
   <div class="cus-container" [ngStyle]="isUpload?{'display': 'block'} : {'display': 'none'}">
     <div class="header-inner">
-      <h1  [routerLink]="['/welcome-boring-O-Meter']">BoringOMeter</h1>
-      
+      <h1 (click)="disposeScene()">BoringOMeter</h1>
       <div class="profile-dropdown">
         <ul>
           <li>
@@ -11,7 +11,7 @@
               <img src="../../assets/img/icon-profile.png" />
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item  (click)="myAccount()" >
+              <button mat-menu-item (click)="myAccount()">
                 <img src="../../assets/img/icon-profile.png" />
                 <span>Account</span>
               </button>
@@ -26,102 +26,55 @@
     </div>
     <div class="cus-pro-container">
       <div class="center-container">
-        <!-- <div class="project-left">
-          <div class="new-project-head">
-            <div class="cus-form">
-              <form class="form-build" autocomplete="off" [formGroup]="proccessFileForm">
-                <div class="new-project-btn" (click)="newproject()">
-                  <h2>New Project</h2>
-                </div>
-                <div class="rep-field w-full">
-                  <mat-form-field class="w-full">
-                    <mat-label>Project Name</mat-label>
-                    <input
-                      matInput
-                      type="text" formControlName="projectName"
-                      placeholder="Input" [ngClass]="{ 'is-invalid': submitted && f['projectName'].errors }"
-                    >
-                  </mat-form-field>
-                  <div *ngIf="submitted && f['projectName'].errors" class="invalid-feedback">
-                    <div *ngIf="f['projectName'].errors['required']">Project name is required</div>
-                </div>
-                </div>
-              </form>
-            </div>
-          </div>
-
-          <div class="cus-dropzone" id="boxupload" appFileUpload (fileDropped)="onFileDropped($event)">
-            <div class="dropzone-wrapper">
-              <input type="file" (click)="resetFile()"  #fileUploader (change)="fileBrowseHandler($event)" id="fileDropRef" />
-              <div class="dropzone">
-                <div class="upload-head">
-                  <div class="upload-plus-icon" class="upload-head">
-                    <img src="../../assets/img/upload-plus.png"/>
-                    <h5 *ngIf="filename==''; else files">Drag and drop or <u>browse</u> your file <br />.OBJ</h5>
-                    <ng-template #files>
-                      <br>
-                      <h4>{{filename}}</h4>
-                      <mat-icon matTooltip="Delete" style="color: #646464; margin-top: -5px;z-index: 999;" (click)="deleteModel()">delete_forever</mat-icon>
-                    </ng-template>
-                    
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="cus-progress-bar" *ngIf="isLoadFile">
-            <p>Uploading...</p>
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-          </div>
-        
-        </div> -->
         <div class="project-right">
           <div class="project-head">
             <h2>Projects</h2>
-            <!-- <div class="project-btn">
-              <h2>Projects</h2>
-            </div> -->
           </div>
           <div class="project-listing">
-            <ng-container  *ngIf="ProjectList?.result?.length!=0 else nodata" >
-              <ul *ngFor="let item of ProjectList?.result">
-                <li style="cursor:pointer;">
-                  <div class="pro-left-icon"  (click)="updateProject(item)">
-                    <mat-icon>business</mat-icon>
-                    <h6>{{item.projectName}}</h6>
-                  </div>
-                  <div class="list-right-icons">
-                    <button>
-                      <mat-icon class="search-icon" (click)="projectAnalysis(item)">search</mat-icon>
-                    </button>
-                    <button>
-                      <mat-icon class="delete-icon" (click)="deleteProject(item)">delete</mat-icon>
-                    </button>
-                  </div>
-                </li>
-              </ul>
-            </ng-container>
-            <ng-template #nodata><span style="position: absolute; top: 50%; left: 47%;"> No record found</span></ng-template>
-            <div class="pagination-div" *ngIf="ProjectList?.result?.length!=0">
-              <app-pagination [pageIndex]="pageIndex" [limit]="pageSize" [total]="count" (pageChange)="pageChanged($event)">
-              </app-pagination
-            ></div>
+            <div class="inner-height">
+              <ng-container *ngIf="projectList?.length!=0 else nodata">
+                <ul *ngFor="let item of projectList">
+                  <li style="cursor:pointer;">
+                    <div class="pro-left-icon" (click)="projectAnalysis(item)">
+                      <mat-icon>business</mat-icon>
+                      <h6>{{item.projectName}}</h6>
+                    </div>
+                    <div class="list-right-icons">
+                      <button>
+                        <img src="../../assets/img/search-icon.svg" (click)="updateProject(item)" class="serach-icon">
+                      </button>
+                      <button>
+                        <mat-icon class="delete-icon" (click)="deleteProject(item)">delete</mat-icon>
+                      </button>
+                    </div>
+                  </li>
+                </ul>
+              </ng-container>
+              <ng-template #nodata>
+                <div class="no-record-found">
+                  <!-- <p>No record found</p> -->
+                </div>
+              </ng-template>
+            </div>
+            <div class="pagination-div" *ngIf="projectList?.length!=0">
+              <app-pagination [pageIndex]="pageIndex" [limit]="pageSize" [total]="count"
+                [changeDefaultPage]="changeDefaultPage" [changeStartPage]="changeStartPage"
+                (pageChange)="pageChanged($event)">
+              </app-pagination>
+            </div>
           </div>
           <div class="pro-btn-group">
             <button type="button" mat-button type="submit" (click)="newproject()">New Project</button>
-            <!-- <button type="button" mat-button type="submit" [routerLink]="['/welcome-boring-O-Meter']" >Back</button> -->
           </div>
         </div>
       </div>
     </div>
-
   </div>
-
-  <div class="canvas-container"  [ngStyle]="isDisplay?{'display': 'block'} : {'display': 'none'}">
-    
+  <div class="canvas-container" [ngStyle]="isDisplay?{'display': 'block'} : {'display': 'none'}">
     <div class="header-inner white-header">
-      <h1 [routerLink]="['/welcome-boring-O-Meter']">BoringOMeter <br><span class="project-inner-cls">{{NameOfProject}}</span></h1>
+      <h1><span (click)="disposeScene()"> BoringOMeter </span><br>
+        <span class="project-inner-cls" (click)="openProjects()">{{projectName}}</span>
+      </h1>
       <br>
       <div class="profile-dropdown">
         <ul>
@@ -131,7 +84,7 @@
               <img src="../../assets/img/icon-profile.png" />
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item  (click)="myAccount()" >
+              <button mat-menu-item (click)="myAccount()">
                 <img src="../../assets/img/icon-profile.png" />
                 <span>Account</span>
               </button>
@@ -144,65 +97,61 @@
         </ul>
       </div>
     </div>
-
     <div class="main-canvas-sec">
-      <div id="main-canvas"  #el></div>
+      <div id="main-canvas" #el></div>
     </div>
     <div class="canvas-bottom-btns">
       <ul>
-        <li  *ngIf="isClear==false"  >
+        <li>
+          <p class="header-li">Setup Analysis</p>
+          <div class="canvas-btn" (click)="rotateModel()">
+            <img src="../../assets/img/Align to Grid.svg" class="btn-svg">
+          </div>
+          <p>Align to Grid</p>
+        </li>
+        <li>
           <div class="canvas-btn" (click)="createLine()">
-            <mat-icon>timeline</mat-icon >
+            <img src="../../assets/img/Analysis Plane.svg" class="btn-svg">
           </div>
-          <p>Plane</p>
+          <p>Analysis Plane</p>
         </li>
-        <li  *ngIf="isClear" >
-          <div class="canvas-btn" (click)="clear()">
-            <mat-icon>close</mat-icon>
-          </div>
-          <p>Clear</p>
-        </li>
-        <li   *ngIf="isAnalyse==false">
-          <div class="canvas-btn"  (click)="analyseModel()">
-            <mat-icon>bar_chart</mat-icon>
+        <li>
+          <div class="canvas-btn" (click)="analyseModel()">
+            <img src="../../assets/img/Analyse.svg" class="btn-svg">
           </div>
           <p>Analyse</p>
         </li>
-        <li  *ngIf="isAnalyse">
-          <div class="canvas-btn"  (click)="clearAnalyse()">
-            <mat-icon>restart_alt</mat-icon>
+        <li>
+          <div class="canvas-btn" (click)="currentViewAnalysis()">
+            <img src="../../assets/img/View Analysis.svg" class="btn-svg">
           </div>
-          <p>Clear Analyse</p>
+          <p>View Analysis</p>
+        </li>
+        <div style="border-right: 2px solid white;height: 100px;"></div>
+        <li>
+          <p class="header-li">Tools</p>
+          <div class="canvas-btn" (click)="flipLight()">
+            <img src="../../assets/img/Light Direction.svg" class="btn-svg">
+          </div>
+          <p>Light Direction</p>
         </li>
         <li>
-          <div class="canvas-btn"  (click)="resetView()">
-            <mat-icon>view_in_ar</mat-icon>
+          <div class="canvas-btn" (click)="snap()">
+            <img src="../../assets/img/Snap to grid.svg" class="btn-svg">
+          </div>
+          <p>Snap to Grid</p>
+        </li>
+        <li>
+          <div class="canvas-btn" (click)="resetView()">
+            <img src="../../assets/img/Reset View.svg" class="btn-svg">
           </div>
           <p>Reset View</p>
         </li>
         <li>
-          <div class="canvas-btn"  (click)="flipLight()">
-            <mat-icon>light_mode</mat-icon>
+          <div class="canvas-btn" (click)="swapCamera()">
+            <img src="../../assets/img/Rotate View.svg" class="btn-svg">
           </div>
-          <p>Flip Light</p>
-        </li>
-        <li>
-          <div class="canvas-btn"  (click)="snap()">
-            <mat-icon>check_box_outline_blank</mat-icon>
-          </div>
-          <p>Snap</p>
-        </li>
-        <li>
-          <div class="canvas-btn"  (click)="rotateModel()">
-            <mat-icon>settings_backup_restore</mat-icon>
-          </div>
-          <p>Roate Model</p>
-        </li>
-        <li>
-          <div class="canvas-btn"  (click)="openProjects()">
-            <mat-icon>business</mat-icon>
-          </div>
-          <p>Projects</p>
+          <p>Rotate View</p>
         </li>
       </ul>
     </div>

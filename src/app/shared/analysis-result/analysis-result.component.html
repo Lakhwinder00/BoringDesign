@@ -1,68 +1,143 @@
+<app-fileuploader #appfileloading></app-fileuploader>
 <div class="cus-form">
+
     <div class="my-project">
         <h2>Analysis Result</h2>
     </div>
-    <form class="form-build" autocomplete="off" [formGroup]="analysisFileForm">
-        <div class="rep-field w-full">
-            <mat-form-field class="w-full">
-                <mat-label>Name</mat-label>
-                <input matInput tabindex="-1" type="text" matInput placeholder="Input"  formControlName="analysisName"
-                 [ngClass]="{ 'is-invalid': submitted && f['analysisName'].errors }">
-            </mat-form-field>
-            <div *ngIf="submitted && f['analysisName'].errors" class="invalid-feedback">
-                <div *ngIf="f['analysisName'].errors['required']">Name is required</div>
+    <div #report>
+        <form class="form-build" autocomplete="off" [formGroup]="analysisFileForm">
+            <div class="rep-field w-full">
+                <mat-form-field class="w-full">
+                    <mat-label>Name</mat-label>
+                    <input matInput tabindex="-1" type="text" matInput placeholder="Input"
+                        formControlName="analysisName"
+                        [ngClass]="{ 'is-invalid': submitted && f['analysisName'].errors }">
+                </mat-form-field>
+                <div *ngIf="submitted && f['analysisName'].errors" class="invalid-feedback">
+                    <div *ngIf="f['analysisName'].errors['required']">Name is required</div>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+
         <div class="rep-field" *ngIf="this.isShowResult else nodata">
             <div class="result-main">
-                <div class="result-img">
-                    <img src="../../../assets/img/building.png">
+
+                <div class="result-top">
+                    <div class="result-left">
+                        <div class="result-img">
+                            <img [src]="base64">
+                        </div>
+                    </div>
+                    <div class="result-right">
+                        <div class="result-bar">
+                            <div class="cus-progress-bar">
+                                <p>Detail</p>
+                                <div class="prog-inner">
+                                    <mat-progress-bar mode="determinate" value="{{detailsValue}}"></mat-progress-bar>
+                                    <span>{{details}}</span>
+                                </div>
+                            </div>
+                            <div class="cus-progress-bar">
+                                <p>Volume</p>
+                                <div class="prog-inner">
+                                    <mat-progress-bar mode="determinate" value="{{volumeValue}}"></mat-progress-bar>
+                                    <span>{{volume}}</span>
+                                </div>
+                            </div>
+                            <div class="cus-progress-bar">
+                                <p>Massing</p>
+                                <div class="prog-inner">
+                                    <mat-progress-bar mode="determinate" value="{{massingValue}}"></mat-progress-bar>
+                                    <span>{{massing}}</span>
+                                </div>
+                            </div>
+
+                            <!-- <div class="cus-colour-texture-analysis" *ngIf="isColorTexture!=true">
+                                <div style="height: 10px;" class="cus-progress-bar" (click)="imageAnalysis()">
+                                    <span class="color-texture">Colour Texture Analysis</span>
+                                </div>
+                            </div>
+
+                            <div class="btns-group color-texture-btns" *ngIf="isColorTexture">
+                                <div style="height: 10px;" class="cus-progress-bar">
+                                    <span>Colour</span>
+                                    <ng-container *ngIf="colour==true">
+                                        <mat-icon>done</mat-icon></ng-container>
+                                    <ng-container *ngIf="colour==false">
+                                        <mat-icon>clear</mat-icon></ng-container>
+                                </div>
+                                <div style="height: 10px;" class="cus-progress-bar">
+                                    <span>Texture</span>
+                                    <ng-container *ngIf="taxture==true">
+                                        <mat-icon>done</mat-icon></ng-container>
+                                    <ng-container *ngIf="taxture==false">
+                                        <mat-icon>clear</mat-icon></ng-container>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
                 </div>
-                <div class="result-bar">
-                    <div class="cus-progress-bar">
-                        <p>Detail</p>
-                        <div class="prog-inner">
-                            <mat-progress-bar mode="determinate" value="{{detailsValue}}"></mat-progress-bar>
-                            <span>{{details}}</span>
+
+                <div class="result-bottom">
+                    <div class="result-left">
+                        <div class="colour-sec">
+                            <div class="cus-colour-texture-analysis" *ngIf="isColorTexture!=true; else showImage">
+                                <div class="cus-progress-bar" (click)="imageAnalysis()">
+                                    <img src="../../assets/img/upload-plus.png" />
+                                    <span class="color-texture">Analyse</span>
+                                </div>
+                            </div>
+                            <ng-template #showImage>
+                            <div class="cus-colour-texture-analysis" *ngIf="isUploadLoadImageAnalysis==false" (click)="imageAnalysis()">
+                                    <div class="cus-progress-bar bar-after-img">
+                                        <img [src]="AnalysisImage" />
+                                    </div>
+                            </div></ng-template>
+                            <div class="btns-group color-texture-btns">
+                                <div class="cus-progress-bar">
+                                    <span>Colour</span>
+                                    <ng-container *ngIf="colour==true">
+                                        <mat-icon>done</mat-icon></ng-container>
+                                    <ng-container *ngIf="colour==false">
+                                        <mat-icon>clear</mat-icon></ng-container>
+                                </div>
+                                <div class="cus-progress-bar">
+                                    <span>Texture</span>
+                                    <ng-container *ngIf="taxture==true">
+                                        <mat-icon>done</mat-icon></ng-container>
+                                    <ng-container *ngIf="taxture==false">
+                                        <mat-icon>clear</mat-icon></ng-container>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="cus-progress-bar">
-                        <p>Volume</p>
-                        <div class="prog-inner">
-                            <mat-progress-bar mode="determinate" value="{{volumeValue}}"></mat-progress-bar>
-                            <span>{{volume}}</span>
-                        </div>
-                    </div>
-                    <div class="cus-progress-bar">
-                        <p>Massing</p>
-                        <div class="prog-inner">
-                            <mat-progress-bar mode="determinate" value="{{massingValue}}"></mat-progress-bar>
-                            <span>{{massing}}</span>
+                    <div class="result-right">
+                        <div class="cus-progress-bar total-score" *ngIf="this.isShowResult">
+                            <p>Score</p>
+                            <div class="prog-inner">
+                                <!-- <mat-progress-bar mode="determinate" value="{{totalValue}}"></mat-progress-bar> -->
+                                <span>{{total}}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
-        <div class="cus-progress-bar" *ngIf="this.isShowResult">
-            <p>Total</p>
-            <div class="prog-inner">
-                <mat-progress-bar mode="determinate" value="{{totalValue}}"></mat-progress-bar>
-                <span>{{total}}</span>
-            </div>
+       
+    </div>
+    <ng-template #nodata>
+        <div class="cus-progress-bar">
+            <p>Loading...</p>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         </div>
-        <ng-template #nodata>
-            <div class="cus-progress-bar">
-                <p>Loading...</p>
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-            </div>
-        </ng-template>
-   
+    </ng-template>
+
 
     <div class="btns-group">
-        <button type="button" tabindex="-1" mat-button>Download</button>
-        <button type="submit" tabindex="-1"  mat-button (click)="onSubmit()">Save</button>
+        <button type="button" tabindex="-1" mat-button (click)="downloadPDF()">Download</button>
+        <button type="submit" tabindex="-1" mat-button (click)="onSubmit()">Save</button>
         <button type="button" tabindex="-1" mat-button (click)="closeDialog()">Close</button>
     </div>
 </div>

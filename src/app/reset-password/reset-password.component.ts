@@ -25,7 +25,7 @@ export class ResetPasswordComponent implements OnInit {
     private formBuilder: FormBuilder,
     private _resgisterService: RegisterService,
     private route: ActivatedRoute,
-    private router:Router,
+    private router: Router,
     public dialog: MatDialog
   ) {}
 
